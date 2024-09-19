@@ -1,0 +1,9 @@
+dev.buehler-fahrzeugservice.de
+
+https://dev.buehler-fahrzeugservice.de/karriere/
+1- header vid: done
+2- text: done
+
+https://dev.buehler-fahrzeugservice.de/kontakt/
+3- Farben: Blua -> Rot
+4- Karten: Bühler Stahlbau und Fahrzeugservice sind gleich

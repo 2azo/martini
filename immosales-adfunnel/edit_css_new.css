@@ -1,0 +1,213 @@
+/* Button styles */
+.wp-block-button__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    height: auto; /* Prevents unnecessary stretching */
+}
+
+/* Symbol image styles */
+.symbol-image {
+    width: 30px;
+    height: auto; /* Ensure the height scales automatically */
+    vertical-align: middle;
+    margin-left: 10px; /* Add spacing between text and icon */
+}
+
+/* Hide quotation mark in slider */
+.swiper-slide__text svg {
+    display: none;
+}
+
+/* Hide text under the "interviews" */
+.interviews .swiper-slide__text {
+    visibility: hidden;
+}
+
+.play_text {
+    visibility: hidden;
+  }
+  
+  /*  */
+  /*  */
+  
+/*  */
+  /*  */
+
+#interviews {
+    position: relative;
+  }
+  
+.interviews .swiper-nav {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+.interviews .swiper-prev {
+    left: 10px; /* Adjust this value as needed */
+  }
+  
+.interviews .swiper-next {
+    right: 10px; /* Adjust this value as needed */
+}
+  
+  /*  */
+  /*  */
+
+/*  */
+
+/* Video size for "reveal content_video" */
+/* .reveal.content_video {
+    width: 55%;
+    max-width: 2000px;
+    margin: 0 auto; /* Centers the video */
+} */
+
+/* Interviews video interface styles */
+.interviews .video-interface {
+    width: 25%;
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* Progress bar styles */
+.interviews .video-interface .progress {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+}
+
+.interviews .video-interface .bar {
+    flex-grow: 1;
+    width: 100%;
+    height: 4px;
+    background-color: #ccc;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+
+.interviews .video-interface .bar span {
+    display: block;
+    height: 100%;
+    background-color: #ff9900;
+    width: 0%; /* Initially set to 0%, adjust dynamically with JavaScript */
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* Position of the swiper for "interviews" */
+#interviews {
+    position: relative;
+}
+
+.interviews .swiper-nav {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    z-index: 10;
+}
+
+.interviews .swiper-prev {
+    left: 10px;
+}
+
+.interviews .swiper-next {
+    right: 10px;
+}
+
+/* Hover effect for interview videos */
+.interviews video {
+    transition: transform 0.5s ease;
+}
+
+.interviews video:hover {
+    transform: scale(1.07);
+}
+
+/* responsive */
+
+/* 1st video */
+.wp-block-video {
+    width: 100%; /* Ensures the container (figure) is full width */
+    max-width: 100%; /* Prevents the container from exceeding full width */
+}
+
+.wp-block-video video {
+    width: 100%; /* Make the video stretch to fill the container */
+    height: auto; /* Keep the aspect ratio of the video */
+}
+
+@media (max-width: 767px) {
+    .custom-video-width {
+        width: 100%; /* On mobile, make the video full width */
+    }
+}
+
+/* button */
+
+/* Default button font size (for desktop and larger screens) */
+.wp-block-button__link {
+    font-size: 1.9rem !important; /* Adjust the default font size */
+}
+
+/* Override for tablet view (screens between 768px and 1024px) */
+@media (max-width: 1024px) and (min-width: 768px) {
+    .wp-block-button__link {
+        font-size: 1.5rem !important; /* Ensure font size applies for tablets */
+    }
+}
+
+/* Override for mobile view (screens below 768px) */
+@media (max-width: 767px) {
+    .wp-block-button__link {
+        font-size: 1.1rem !important; /* Ensure font size applies for mobile */
+    }
+}
+
+/* only for mobile view */
+/* Default Symbol image styles for larger screens */
+.symbol-image {
+    width: 30px;
+    height: auto; /* Ensure the height scales automatically */
+    vertical-align: middle;
+    margin-left: 10px; /* Add spacing between text and icon */
+}
+
+/* Mobile-specific styles (screens smaller than 768px) */
+/* Default Symbol image styles for larger screens */
+.symbol-image {
+    width: 30px;
+    height: auto; /* Ensure the height scales automatically */
+    vertical-align: middle;
+    margin-left: 10px; /* Add spacing between text and icon */
+}
+
+/* Mobile-specific styles (screens smaller than 768px) */
+
+@media (max-width: 767px) {
+    .wp-block-button__link {
+        text-align: center; /* Center the text and the symbol */
+    }
+    
+    .symbol-image {
+        display: block; /* Force the symbol to take up the whole line */
+        width: 30px; /* Adjust the width as needed */
+        height: auto;
+        margin-left: auto; /* Center symbol horizontally */
+        margin-right: auto; /* Center symbol horizontally */
+        margin-top: 5px; /* Add spacing between the text and symbol */
+        margin-bottom: 0; /* Optional: You can add space below the symbol if needed */
+    }
+}
+
+

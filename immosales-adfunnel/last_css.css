@@ -1,0 +1,124 @@
+.wp-block-button__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; /* Adjust padding for the button */
+    height: auto; /* Prevents unnecessary stretching */
+  }
+  
+  .symbol-image {
+    width: 30px;
+    height: auto; /* Ensure the height scales automatically */
+    vertical-align: middle;
+  /*   margin-left: 20px; */
+  /* 	spacing between text and icon */ 
+  }
+  
+  /*  */
+  /*  */
+  
+  
+  .swiper-slide__text svg {
+      display: none; /* Hide the quote mark icon */
+  }
+  
+  /*  */
+  /*  */
+  
+  .play_text {
+    visibility: hidden;
+  }
+  
+  /*  */
+  /*  */
+  
+.interviews .swiper-slide__text {
+    visibility: hidden;
+  }
+  
+  /*  */
+  /*  */
+  
+  .reveal.content_video {
+      width: 75%; /* This will make the video full-width */
+      max-width: 2000px; /* Adjust this value as per your requirement */
+      margin:  auto; /* Centers the video */
+  }
+  
+  /*  */
+  /*  */
+  
+  .interviews .video-interface {
+    width: 25%; /* Right quarter of the area */
+    position: absolute;
+    right: 10;
+    display: flex;
+    justify-content: flex-end; /* Align elements to the right */
+    align-items: center; /* Align items vertically */
+  }
+  
+  /* Make the progress bar take up all available space */
+  .interviews .video-interface .progress {
+    flex-grow: 1; /* Take up remaining space in the flex container */
+    display: flex; /* Ensure flex behavior inside progress */
+    align-items: center; /* Align child elements inside vertically */
+    margin: 0; /* Remove any margin around the progress bar */
+    padding: 0; /* Remove any padding */
+  }
+  
+  /* Ensure the bar inside the progress spans fully (this will be the grey part) */
+  .interviews .video-interface .bar {
+    flex-grow: 1; /* Make the bar fill up all available space in the progress container */
+    width: 100%; /* Ensure full width */
+    height: 4px; /* Adjust height as necessary */
+    background-color: #ccc; /* Grey background for the entire progress bar */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    position: relative; /* Positioning for inner span (orange progress) */
+  }
+  
+  /* Span represents the orange progress */
+  .interviews .video-interface .bar span {
+    display: block;
+    height: 100%; /* Span inherits the full height of the bar */
+    background-color: #ff9900; /* Orange color for the progress */
+    width: 0%; /* Initially set to 0%, adjust dynamically with JavaScript for actual progress */
+    position: absolute; /* Positioned inside the bar */
+    top: 0;
+    left: 0;
+  }
+  
+  /*  */
+  /*  */
+  
+  #interviews {
+    position: relative;
+  }
+  
+  .interviews .swiper-nav {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+  .interviews .swiper-prev {
+    left: 10px; /* Adjust this value as needed */
+  }
+  
+  .interviews .swiper-next {
+    right: 10px; /* Adjust this value as needed */
+  }
+
+.interviews .swiper-slide__subheader {
+  display: flex;
+  justify-content: space-between; /* Pushes the play button to the right */
+  align-items: center; /* Vertically aligns the elements */
+}
+
+.interviews .swiper-slide__subheader svg {
+  margin-left: auto; /* Ensures the play button moves to the extreme right */
+}
+
+  
+

@@ -1,0 +1,327 @@
+.wp-block-button__link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px; /* Adjust padding for the button */
+    height: auto; /* Prevents unnecessary stretching */
+  }
+  
+  .symbol-image {
+    width: 30px;
+    height: auto; /* Ensure the height scales automatically */
+    vertical-align: middle;
+  /*   margin-left: 20px; */
+  /* 	spacing between text and icon */ 
+  }
+  
+  /*  */
+  /*  */
+  
+  /* .swiper-slide__info {
+      display: none;
+  } */
+  
+  .swiper-slide__text svg {
+      display: none; /* Hide the quote mark icon */
+  }
+  
+  /*  */
+  /*  */
+  
+  .play_text {
+    visibility: hidden;
+  }
+  
+  /*  */
+  /*  */
+  
+  .interviews .swiper-slide__text {
+    visibility: hidden;
+  }
+  
+  /*  */
+  /*  */
+  
+  .reveal.content_video {
+      width: 75%; /* This will make the video full-width */
+      max-width: 2000px; /* Adjust this value as per your requirement */
+      margin: 0 auto; /* Centers the video */
+  }
+  
+  /*  */
+  /*  */
+  
+  .interviews .video-interface {
+    width: 25%; /* Right quarter of the area */
+    position: absolute;
+    right: 0;
+    display: flex;
+    justify-content: flex-end; /* Align elements to the right */
+    align-items: center; /* Align items vertically */
+  }
+  
+  /* Make the progress bar take up all available space */
+  .interviews .video-interface .progress {
+    flex-grow: 1; /* Take up remaining space in the flex container */
+    display: flex; /* Ensure flex behavior inside progress */
+    align-items: center; /* Align child elements inside vertically */
+    margin: 0; /* Remove any margin around the progress bar */
+    padding: 0; /* Remove any padding */
+  }
+  
+  /* Ensure the bar inside the progress spans fully (this will be the grey part) */
+  .interviews .video-interface .bar {
+    flex-grow: 1; /* Make the bar fill up all available space in the progress container */
+    width: 100%; /* Ensure full width */
+    height: 4px; /* Adjust height as necessary */
+    background-color: #ccc; /* Grey background for the entire progress bar */
+    margin: 0; /* Remove any margin */
+    padding: 0; /* Remove any padding */
+    position: relative; /* Positioning for inner span (orange progress) */
+  }
+  
+  /* Span represents the orange progress */
+  .interviews .video-interface .bar span {
+    display: block;
+    height: 100%; /* Span inherits the full height of the bar */
+    background-color: #ff9900; /* Orange color for the progress */
+    width: 0%; /* Initially set to 0%, adjust dynamically with JavaScript for actual progress */
+    position: absolute; /* Positioned inside the bar */
+    top: 0;
+    left: 0;
+  }
+  
+  /*  */
+  /*  */
+  
+  #interviews {
+    position: relative;
+  }
+  
+  .interviews .swiper-nav {
+    position: absolute;
+    top: 42%;
+    transform: translateY(-50%);
+    z-index: 10;
+  }
+  
+  .interviews .swiper-prev {
+    left: 10px; /* Adjust this value as needed */
+  }
+  
+  .interviews .swiper-next {
+    right: 10px; /* Adjust this value as needed */
+  }
+  
+  /*  */
+  /*  */
+  
+  /* Force the video and caption to behave like flexbox items */
+  .wp-block-video.reveal.content_video {
+      display: flex;
+      flex-direction: column-reverse !important; /* Caption comes first */
+      position: relative;
+  }
+  
+  /* Style the caption to remain on the left side */
+  .wp-block-video .wp-element-caption {
+      order: 2; /* Caption comes second in the layout */
+      text-align: left; /* Align caption to the left */
+      margin-top: 10px !important; /* Space between the video and caption */
+      margin-bottom: 0px !important;
+      flex-grow: 1; /* Make the caption take up available space */
+  }
+  
+  /* Style the video element and make sure controls are aligned correctly */
+  .wp-block-video.reveal.content_video video {
+      order: 1; /* Video comes first in the layout */
+      margin-bottom: 10px; /* Add some space below the video */
+      width: 100%; /* Ensure the video takes up full width */
+  }
+  
+  /* Push video controls to the right */
+  .wp-block-video.reveal.content_video .wp-block-video-controls {
+      display: flex;
+      justify-content: flex-end; /* Move controls to the far right */
+      width: auto;
+      flex-grow: 0;
+  }
+  
+  /* Remove media query behavior  */
+  @media (min-width:768px) {
+      .wp-block-video .wp-element-caption {
+          order: 2 !important;
+          bottom: auto !important;
+          right: auto !important;
+      }
+  }
+  
+  /*  */
+  /*  */
+  
+  /*  
+    Working hover effect 
+  
+   Targeting the video element 
+    .interviews video {
+      transition: transform 0.5s ease;
+  }
+    
+  */
+  
+  /* Applying hover effect */
+  /* 
+   .interviews video:hover {
+      transform: scale(1.05); # enlarging the video
+  } 
+
+  */
+
+  /*  */
+  /*  */
+  
+  /* Working hover effect +1 */
+  
+  /* Wrapper for the video */
+      
+  /* Targeting the video element */
+  /* .interviews video {
+      display: block;
+      transition: transform 0.9s ease;
+  } */
+      
+  /* Targeting the video container */
+  /* .swiper-slide__video .video-wrap {
+      position: relative;
+      overflow: hidden; /* Ensures the overlay stays within the video area */
+  /* }  
+      
+  /* Targeting the video element */
+  /* .swiper-slide__video video {
+      display: block;
+      transition: transform 0.9s ease;
+  } */
+      
+  /* Dark overlay */
+  /* .swiper-slide__video .video-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0); # Initially transparent 
+      transition: background-color 0.9s ease;
+      z-index: 1; #  Ensure the overlay is above the video
+   */
+      
+  /* Text to appear on hover */
+  /* .swiper-slide__video .video-wrap::after {
+      content: 'Du kommst in ein wirklich perfekt strukturiertes Unternehmen'; #  Replace with your desired sentence 
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 38px;
+      opacity: 0; # Initially hidden
+      transition: opacity 0.9s ease;
+      z-index: 2; # Ensure the text is above the overlay 
+      text-align: center;
+  } 
+  */
+      
+  /* Hover effect on video */
+  /* .swiper-slide__video .video-wrap:hover video {
+      transform: none; # Disable zooming  
+    }
+      
+  /* Hover effect to apply dark overlay and show text */
+  /* .swiper-slide__video .video-wrap:hover::before {
+      background-color: rgba(0, 0, 0, 0.5); /* Darken the screen 
+  }
+      
+  .swiper-slide__video .video-wrap:hover::after {
+      opacity: 1; /* Show the sentence 
+  } 
+  
+  
+  /*  */
+  /*  */
+  
+  /* General styles for hover effect */
+  .interviews video {
+      display: block;
+      transition: transform 0.9s ease;
+  }
+  
+  .swiper-slide__video .video-wrap {
+      position: relative;
+      overflow: hidden;
+  }
+  
+  /* Dark overlay for all videos */
+  .swiper-slide__video .video-wrap::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0);
+      transition: background-color 0.9s ease;
+      z-index: 1;
+  }
+  
+  .swiper-slide__video .video-wrap::after {
+      position: absolute;
+      top: 80%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 38px;
+      opacity: 0;
+      transition: opacity 0.9s ease;
+      z-index: 2;
+      text-align: center;
+  }
+  
+  /* Hover effect */
+  .swiper-slide__video .video-wrap:hover video {
+      transform: none;
+  }
+  
+  .swiper-slide__video .video-wrap:hover::before {
+      background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .swiper-slide__video .video-wrap:hover::after {
+      opacity: 1;
+  }
+  
+  /* Specific sentence for each video */
+  #video-1::after {
+      content: 'This is the first video sentence.';
+  }
+  
+  #video-2::after {
+      content: 'This is the second video sentence.';
+  }
+  
+  #video-3::after {
+      content: 'This is the third video sentence.';
+  }
+  
+  /* Make sure hover effects are still applied */
+  #video-1:hover::before,
+  #video-2:hover::before,
+  #video-3:hover::before {
+      background-color: rgba(0, 0, 0, 0.5); /* Dark overlay */
+  }
+  
+  #video-1:hover::after,
+  #video-2:hover::after,
+  #video-3:hover::after {
+      opacity: 1; /* Show sentence on hover */
+  }
+
