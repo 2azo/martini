@@ -287,18 +287,35 @@ body .logo-blue {
 body.fahrzeugservice {
 	--accent-color: #0098D1
 }
+// test
+body {
+	--accent-color: #0098D1
+}
 
 body.fahrzeugservice .logo {
+	display: none
+}
+// test
+body .logo {
 	display: none
 }
 
 body.fahrzeugservice .logo-blue {
 	display: block
 }
+// test
+body .logo-blue {
+	display: block
+}
 
 body.fahrzeugservice .cover_image figcaption::after {
 	content: "Wir machen den Unterschied"
 }
+// test
+body .cover_image figcaption::after {
+	content: "Wir machen den Unterschied"
+}
+
 
 a {
 	color: var(--accent-color-blue);
@@ -1113,6 +1130,11 @@ body.header-shrink .nav-menu-header-categories {
 .fahrzeugservice .nav-menu-header-categories-vehicle.item-open .nav-content .item {
 	width: 13.2%
 }
+// test
+.nav-menu-header-categories.item-open .nav-content .item,
+.nav-menu-header-categories-vehicle.item-open .nav-content .item {
+	width: 13.2%
+}
 
 .nav-menu-header-categories.item-open .nav-content .item.active,
 .nav-menu-header-categories-vehicle.item-open .nav-content .item.active {
@@ -1121,6 +1143,11 @@ body.header-shrink .nav-menu-header-categories {
 
 .fahrzeugservice .nav-menu-header-categories.item-open .nav-content .item.active,
 .fahrzeugservice .nav-menu-header-categories-vehicle.item-open .nav-content .item.active {
+	width: 33%
+}
+// test
+.nav-menu-header-categories.item-open .nav-content .item.active,
+.nav-menu-header-categories-vehicle.item-open .nav-content .item.active {
 	width: 33%
 }
 
@@ -1225,6 +1252,12 @@ body.header-shrink .nav-menu-header-categories {
 
 .fahrzeugservice .nav-menu-header-categories .nav-content .item,
 .fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item {
+	width: 16.5%
+}
+
+// test
+.nav-menu-header-categories .nav-content .item,
+.nav-menu-header-categories-vehicle .nav-content .item {
 	width: 16.5%
 }
 
@@ -3716,8 +3749,19 @@ h3.red {
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content {
 		flex-direction: column
 	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content {
+		flex-direction: column
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item {
+		width: 100%;
+		height: 16.5%;
+		background-size: 100% auto;
+		background-position: center
+	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item {
 		width: 100%;
 		height: 16.5%;
 		background-size: 100% auto;
@@ -3727,12 +3771,31 @@ h3.red {
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item .mob-anchor {
 		display: none
 	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item .mob-anchor {
+		display: none
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item .item-container {
 		flex-direction: column
 	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item .item-container {
+		flex-direction: column
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item .item-container:before {
+		content: "";
+		position: absolute;
+		left: 0;
+		right: 0;
+		top: 0;
+		height: 40%;
+		background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+		opacity: 0
+	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item .item-container:before {
 		content: "";
 		position: absolute;
 		left: 0;
@@ -3751,8 +3814,25 @@ h3.red {
 		line-height: 1;
 		position: relative
 	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item .item-container p {
+		transform: unset;
+		writing-mode: unset;
+		margin: 0 5%;
+		padding: 2.5% 0;
+		line-height: 1;
+		position: relative
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item .item-container .items {
+		margin-bottom: 3vw;
+		margin-left: 5%;
+		overflow: auto;
+		align-self: flex-start;
+		display: none
+	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item .item-container .items {
 		margin-bottom: 3vw;
 		margin-left: 5%;
 		overflow: auto;
@@ -3764,8 +3844,18 @@ h3.red {
 		width: 100% !important;
 		height: 13.8%
 	}
+	// test
+	.nav-menu-header-categories-vehicle.item-open .nav-content .item {
+		width: 100% !important;
+		height: 13.8%
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle.item-open .nav-content .item.active {
+		width: 100% !important;
+		height: 30%
+	}
+	// test
+	.nav-menu-header-categories-vehicle.item-open .nav-content .item.active {
 		width: 100% !important;
 		height: 30%
 	}
@@ -3773,12 +3863,24 @@ h3.red {
 	.fahrzeugservice .nav-menu-header-categories-vehicle.item-open .nav-content .item.active .item-container {
 		background-color: transparent
 	}
+	// test
+	.nav-menu-header-categories-vehicle.item-open .nav-content .item.active .item-container {
+		background-color: transparent
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle.item-open .nav-content .item.active .item-container:before {
 		opacity: 1
 	}
+	// test
+	.nav-menu-header-categories-vehicle.item-open .nav-content .item.active .item-container:before {
+		opacity: 1
+	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle.item-open .nav-content .item.active .item-container p {
+		margin-left: 5% !important
+	}
+	// test
+	.nav-menu-header-categories-vehicle.item-open .nav-content .item.active .item-container p {
 		margin-left: 5% !important
 	}
 }
@@ -4608,6 +4710,10 @@ footer .group .site-footer-right a+a {
 	}
 
 	.fahrzeugservice .nav-menu-header-categories-vehicle .nav-content .item .item-container p {
+		font-size: 1.5rem
+	}
+	// test
+	.nav-menu-header-categories-vehicle .nav-content .item .item-container p {
 		font-size: 1.5rem
 	}
 

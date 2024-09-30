@@ -1210,15 +1210,29 @@
 	});
 
 	// test
-	$(document).on('fullscreenchange', function() {
-		if (document.fullscreenElement) {
-			console.log("Entering fullscreen");
-			$('#toggle-fullscreen').css('display', 'block');
-		} else {
-			console.log("Exiting fullscreen");
-			$('#toggle-fullscreen').css('display', 'none');
-		}
+	$(document).ready(function() {
+		const overlay = $('#fullscreen-overlay');
+		const exitButton = $('#exit-fullscreen');
+	
+		$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function() {
+			if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+				overlay.show();
+			} else {
+				overlay.hide();
+			}
+		});
+	
+		exitButton.on('click', function() {
+			if (document.exitFullscreen) {
+				document.exitFullscreen();
+			} else if (document.webkitExitFullscreen) {
+				document.webkitExitFullscreen();
+			} else if (document.mozCancelFullScreen) {
+				document.mozCancelFullScreen();
+			} else if (document.msExitFullscreen) {
+				document.msExitFullscreen();
+			}
+		});
 	});
 	
-
 })(jQuery);
