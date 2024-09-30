@@ -839,7 +839,7 @@
 		
 		// scene 2
 		var reveal_bg = TweenMax.to(
-			".ww360bg", 1, {
+			".ww360bg", 20, {
 			css: {
 				opacity: "1",
 			}
@@ -1098,4 +1098,9 @@
 		}
 	});
 	
+	// test
+	
+	
+
+
 })(jQuery);
