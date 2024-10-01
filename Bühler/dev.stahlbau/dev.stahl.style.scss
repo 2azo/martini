@@ -6141,3 +6141,33 @@ a[href="https://www.buehler-stahlbau.de/"] {
     z-index: 99999 !important; /* Ensure it's above all other fullscreen content */
     cursor: pointer;
 }
+
+
+// test
+.wp-block-video .video_interface {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	.mute-icon {
+		width: 30px;
+		height: 30px;
+		// background-color: red;
+		border-radius: 50%; 
+		background-size: cover;
+		cursor: pointer;
+		margin-left: 1rem;
+	}
+
+	.unmute-icon {
+		width: 30px;
+		height: 30px;
+		// background-color: green;
+		border-radius: 0; 
+		background-size: cover;
+		cursor: pointer;
+		margin-left: 1rem;
+	}
+}
+
+  

@@ -6,6 +6,13 @@
 	// After how much scrolling to show the header again (in px)
 	const HEADER_SHOW_DISTANCE = 200;
 
+	const audio_full = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M19.114 5.636a9 9 0 0 1 0 12.728M16.463 8.288a5.25 5.25 0 0 1 0 7.424M6.75 8.25l4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+</svg>`;
+	const audio_mute = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
+</svg>`;
+	
 	let scrollTop = window.pageYOffset;
 	let scrollCounter = 0;
 	const parallaxFactor = 0.15;
@@ -1006,8 +1013,8 @@
 		var progressTime = $('<div class="time">.0 sec</div>');
 		var progressBar = $('<div class="bar"></div>').append(progress);
 		var doc = document.documentElement;
-		// video.controls = false;
 		
+		// Create Play button
 		var playButton = $('<div class="play"></div>').click(function() {
 			if (video.paused) {
 				self.addClass('active');
@@ -1018,7 +1025,30 @@
 				video.pause();
 			}
 		});
-		
+	
+		// Create Mute/Unmute button
+		var muteButton = $('<div class="mute"></div>').click(function() {
+			if (video.muted) {
+				video.muted = false;
+				$(this).removeClass('mute-icon').addClass('unmute-icon'); // Change shape to unmute
+				muteButton.html(audio_full);
+			} else {
+				video.muted = true;
+				$(this).removeClass('unmute-icon').addClass('mute-icon'); // Change shape to mute
+				muteButton.html(audio_mute);
+			}
+		});
+		muteButton.html(audio_full);
+	
+		// Set the initial state of the button based on the video's muted status
+		if (video.muted) {
+			muteButton.addClass('mute-icon'); // Video starts muted, show mute icon
+			muteButton.html(audio_mute);
+		} else {
+			muteButton.addClass('unmute-icon'); // Video starts unmuted, show unmute icon
+			muteButton.html(audio_full);
+		}
+	
 		function play() {
 			self.addClass('active');
 			video.play();
@@ -1028,12 +1058,13 @@
 		function pause() {
 			video.pause();
 		}
-		
-		video.addEventListener("play", progressLoop);		
+	
+		video.addEventListener("play", progressLoop);        
 		video.addEventListener("pause", () => {
-			window.clearInterval(progressLoop)
+			window.clearInterval(progressLoop);
 			self.removeClass('active');
 		});
+	
 		video.addEventListener("click", () => {
 			if (video.paused) {
 				play();
@@ -1041,7 +1072,7 @@
 				pause();
 			}
 		});
-		
+	
 		progressBar.click(e => {
 			const rect = e.currentTarget.getBoundingClientRect();
 			const x = e.originalEvent.pageX - rect.left;
@@ -1049,52 +1080,57 @@
 			video.currentTime = x / rect.width * video.duration;
 			progressTime.text("." + Math.round(video.currentTime) + " sec");
 		});
-		
+	
 		function openFullscreen() {
 			if (video.requestFullscreen) {
 				video.requestFullscreen();
-			} else if (video.webkitRequestFullscreen) {
+			} else if (video.webkitRequestFullscreen) { // For Safari
 				video.webkitRequestFullscreen();
-			} else if (video.msRequestFullscreen) {
+			} else if (video.msRequestFullscreen) { // For IE/Edge
 				video.msRequestFullscreen();
 			}
 		}
-
+	
 		function progressLoop() {
 			setInterval(function () {
 				progress.width(Math.round((video.currentTime / video.duration) * 100) + "%");
 				progressTime.text("." + Math.round(video.currentTime) + " sec");
-
-				if (video.currentTime === video.duration) {					
+	
+				if (video.currentTime === video.duration) {                    
 					self.removeClass('active');
-					window.clearInterval(progressLoop)
+					window.clearInterval(progressLoop);
 				}
 			}, 100);
 		}
-		
+	
 		var progressCont = $('<div class="progress">')
 			.append(progressBar)
 			.append(progressTime);
-		
+	
 		$('<div class="video_play">').click(function() {
 			self.addClass('active');
 			video.play();
 			$(this).fadeOut(200);
 		}).appendTo(self);
-		
-		var maximize = $('<div class="maximize">'+maximizeIcon+'</div>').click(function() {
+	
+		var maximize = $('<div class="maximize">' + maximizeIcon + '</div>').click(function() {
 			openFullscreen();
 		});
-		
+	
 		var wrapper = $('<div class="wrapper" />')
-		.append(progressCont)
-		.append(maximize);
+			.append(progressCont)
+			.append(maximize);
 		
+		// Add the mute/unmute button with initial state check
 		$('<div class="video_interface">')
 			.append(playButton)
+			.append(muteButton) // Add the Mute/Unmute button here
 			.append(wrapper)
 			.appendTo(self);
 	});
+	
+	
+	
 	
 	
 	var video_carousel = $('.video_carousel > .wp-block-group__inner-container');
