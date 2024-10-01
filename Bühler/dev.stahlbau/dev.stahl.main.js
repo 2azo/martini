@@ -1082,12 +1082,14 @@
 		});
 	
 		function openFullscreen() {
-			if (video.requestFullscreen) {
-				video.requestFullscreen();
-			} else if (video.webkitRequestFullscreen) { // For Safari
-				video.webkitRequestFullscreen();
-			} else if (video.msRequestFullscreen) { // For IE/Edge
-				video.msRequestFullscreen();
+			const el = self.get(0);
+
+			if (el.requestFullscreen) {
+				el.requestFullscreen();
+			} else if (el.webkitRequestFullscreen) { // For Safari
+				el.webkitRequestFullscreen();
+			} else if (el.msRequestFullscreen) { // For IE/Edge
+				el.msRequestFullscreen();
 			}
 		}
 	
