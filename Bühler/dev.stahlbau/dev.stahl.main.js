@@ -1195,18 +1195,7 @@
 		
 		$owl.on('initialized.owl.carousel', function(event) {
 			// Append the Exit Full-Screen button after the carousel is initialized
-			var exitFullScreenButton = $('<button class="owl-exit-fullscreen">Exit Full Screen</button>').css({
-				position: 'fixed',
-				top: '10px',
-				right: '10px',
-				zIndex: 1000,
-				backgroundColor: 'red',
-				color: 'white',
-				padding: '10px',
-				border: 'none',
-				cursor: 'pointer',
-				display: 'none' // Initially hidden
-			});
+			var exitFullScreenButton = $('<button class="owl-exit-fullscreen">Exit Full Screen</button>');
 	
 			// Append the button to the body
 			$('body').append(exitFullScreenButton);
@@ -1219,10 +1208,16 @@
 					exitFullScreenButton.hide();
 				}
 			}
+
+			// Listen for fullscreen changes on the document, not on the carousel element
+			$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange', toggleExitButtonVisibility);
 	
 			// Add event listeners for full-screen change
-			$owl.on('fullscreenchange webkitfullscreenchange mozfullscreenchange', toggleExitButtonVisibility);
+			// $owl.on('fullscreenchange webkitfullscreenchange mozfullscreenchange', toggleExitButtonVisibility);
 	
+			// Initially hide the exit button
+			// exitFullScreenButton.hide();
+
 			// Exit full screen when the custom button is clicked
 			exitFullScreenButton.on('click', function() {
 				if (document.exitFullscreen) {
@@ -1234,7 +1229,8 @@
 				}
 			});
 		});
-	
+
+		
 		// Initialize the Owl Carousel
 		$owl.owlCarousel({
 			items: 1,
@@ -1248,29 +1244,29 @@
 	});
 
 	// test
-	$(document).ready(function() {
-		const overlay = $('#fullscreen-overlay');
-		const exitButton = $('#exit-fullscreen');
+	// $(document).ready(function() {
+	// 	const overlay = $('#fullscreen-overlay');
+	// 	const exitButton = $('#exit-fullscreen');
 	
-		$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function() {
-			if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
-				overlay.show();
-			} else {
-				overlay.hide();
-			}
-		});
+	// 	$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function() {
+	// 		if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+	// 			overlay.show();
+	// 		} else {
+	// 			overlay.hide();
+	// 		}
+	// 	});
 	
-		exitButton.on('click', function() {
-			if (document.exitFullscreen) {
-				document.exitFullscreen();
-			} else if (document.webkitExitFullscreen) {
-				document.webkitExitFullscreen();
-			} else if (document.mozCancelFullScreen) {
-				document.mozCancelFullScreen();
-			} else if (document.msExitFullscreen) {
-				document.msExitFullscreen();
-			}
-		});
-	});
+	// 	exitButton.on('click', function() {
+	// 		if (document.exitFullscreen) {
+	// 			document.exitFullscreen();
+	// 		} else if (document.webkitExitFullscreen) {
+	// 			document.webkitExitFullscreen();
+	// 		} else if (document.mozCancelFullScreen) {
+	// 			document.mozCancelFullScreen();
+	// 		} else if (document.msExitFullscreen) {
+	// 			document.msExitFullscreen();
+	// 		}
+	// 	});
+	// });
 	
 })(jQuery);
