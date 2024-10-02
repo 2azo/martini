@@ -1130,8 +1130,11 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 		// Add the mute/unmute button with initial state check
 		$('<div class="video_interface">')
 			.append(playButton)
+			.append(progressCont)
 			.append(muteButton) // Add the Mute/Unmute button here
 			.append(wrapper)
+			
+			.append(maximize)
 			.appendTo(self);
 	});
 	
