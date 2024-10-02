@@ -1193,13 +1193,13 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 	}
 
 	// test full screen exit button (full screen toggle)
-	
 	$('.wp-block-video').each(function() {
 		var self = $(this); // Target the specific .wp-block-video container
 		var video = $(this).find('video')[0]; // Target the video inside the container
 
 		// Create a Fullscreen Toggle button with the SVG icon
 		var fullscreenToggleButton = $(`<button class="fullscreen-toggle">${fullscreen_exit}</button>`).click(function() {
+
 			const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
 
 			// Check if the current .wp-block-video container is in fullscreen
