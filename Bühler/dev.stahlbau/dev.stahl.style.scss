@@ -6127,18 +6127,27 @@ a[href="https://www.buehler-stahlbau.de/"] {
   }
 
 // test full screen toggle button
+// 
+// bottom: 1150px;
+// left: 10px;
+// 
 .fullscreen-toggle {
-    position: absolute;
-    bottom: 1150px;
-    left: 10px;
-    padding: 10px 20px;
-    background-color: #ff5722;
-    color: white;
+    background: none;
     border: none;
-    border-radius: 5px;
-    font-size: 16px;
     cursor: pointer;
+    position: absolute;
+	bottom: 1120px;
+	left: 10px; 
+    padding: 5px;
+    // z-index: 9999; /* Ensure it's above other elements */
 }
+
+.fullscreen-toggle svg {
+    width: 48px; /* Adjust the size of the icon */
+    height: 48px;
+    stroke: white; /* Change the color if needed */
+}
+
 
 
 // test sound on/off button

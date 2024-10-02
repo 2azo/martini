@@ -1193,14 +1193,15 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 	}
 
 	// test full screen exit button (full screen toggle)
+	
 	$('.wp-block-video').each(function() {
 		var self = $(this); // Target the specific .wp-block-video container
 		var video = $(this).find('video')[0]; // Target the video inside the container
-	
-		// Create a Fullscreen Toggle button
-		var fullscreenToggleButton = $('<button class="fullscreen-toggle"></button>').click(function() {
+
+		// Create a Fullscreen Toggle button with the SVG icon
+		var fullscreenToggleButton = $(`<button class="fullscreen-toggle">${fullscreen_exit}</button>`).click(function() {
 			const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
-	
+
 			// Check if the current .wp-block-video container is in fullscreen
 			if (fullscreenElement && fullscreenElement === self.get(0)) {
 				// Exit fullscreen
@@ -1215,17 +1216,17 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 				}
 			} 
 		});
-	
+
 		// Initially hide the fullscreen toggle button
 		fullscreenToggleButton.hide();
-	
+
 		// Append the fullscreen toggle button to the .wp-block-video container
 		self.append(fullscreenToggleButton);
-	
+
 		// Listen for fullscreen changes
 		$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange', function() {
 			const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
-	
+
 			// Show the button if the current .wp-block-video container is in fullscreen
 			if (fullscreenElement && fullscreenElement === self.get(0)) {
 				fullscreenToggleButton.show();
