@@ -6126,10 +6126,9 @@ a[href="https://www.buehler-stahlbau.de/"] {
 	color: var(--accent-color);
   }
 
-// test button
+// test full screen toggle button
 #toggle-fullscreen {
-    // display: none; /* Initially hidden */
-    position: absolute; /* Absolute positioning inside fullscreen */
+    position: absolute;
     bottom: 1000px;
     right: 1000px;
     padding: 10px 20px;
@@ -6138,12 +6137,11 @@ a[href="https://www.buehler-stahlbau.de/"] {
     border: none;
     border-radius: 5px;
     font-size: 16px;
-    // z-index: 99999 !important; /* Ensure it's above all other fullscreen content */
     cursor: pointer;
 }
 
 
-// test
+// test sound on/off button
 .wp-block-video .video_interface {
 	display: flex;
 	justify-content: space-between;
@@ -6152,7 +6150,6 @@ a[href="https://www.buehler-stahlbau.de/"] {
 	.mute-icon {
 		width: 30px;
 		height: 30px;
-		// background-color: red;
 		border-radius: 50%; 
 		background-size: cover;
 		cursor: pointer;
@@ -6162,7 +6159,6 @@ a[href="https://www.buehler-stahlbau.de/"] {
 	.unmute-icon {
 		width: 30px;
 		height: 30px;
-		// background-color: green;
 		border-radius: 0; 
 		background-size: cover;
 		cursor: pointer;

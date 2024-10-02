@@ -1188,7 +1188,7 @@
 		video[0].pause();
 	}
 
-	// test
+	// test full screen exit button (full screen toggle)
 	$(document).ready(function() {
 		// Initialize Owl Carousel
 		var $owl = $('.owl-carousel');
@@ -1211,12 +1211,6 @@
 
 			// Listen for fullscreen changes on the document, not on the carousel element
 			$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange', toggleExitButtonVisibility);
-	
-			// Add event listeners for full-screen change
-			// $owl.on('fullscreenchange webkitfullscreenchange mozfullscreenchange', toggleExitButtonVisibility);
-	
-			// Initially hide the exit button
-			// exitFullScreenButton.hide();
 
 			// Exit full screen when the custom button is clicked
 			exitFullScreenButton.on('click', function() {
@@ -1243,30 +1237,5 @@
 		});
 	});
 
-	// test
-	// $(document).ready(function() {
-	// 	const overlay = $('#fullscreen-overlay');
-	// 	const exitButton = $('#exit-fullscreen');
-	
-	// 	$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange MSFullscreenChange', function() {
-	// 		if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
-	// 			overlay.show();
-	// 		} else {
-	// 			overlay.hide();
-	// 		}
-	// 	});
-	
-	// 	exitButton.on('click', function() {
-	// 		if (document.exitFullscreen) {
-	// 			document.exitFullscreen();
-	// 		} else if (document.webkitExitFullscreen) {
-	// 			document.webkitExitFullscreen();
-	// 		} else if (document.mozCancelFullScreen) {
-	// 			document.mozCancelFullScreen();
-	// 		} else if (document.msExitFullscreen) {
-	// 			document.msExitFullscreen();
-	// 		}
-	// 	});
-	// });
 	
 })(jQuery);
