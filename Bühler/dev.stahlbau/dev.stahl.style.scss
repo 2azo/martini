@@ -5945,7 +5945,7 @@ footer {
 	position: relative;
 	video {
 		width: 100%;
-		height: auto;
+		height: 100%;
 	}
 	.video_play {
 		width: 6rem;
@@ -6127,10 +6127,10 @@ a[href="https://www.buehler-stahlbau.de/"] {
   }
 
 // test full screen toggle button
-#toggle-fullscreen {
+.fullscreen-toggle {
     position: absolute;
-    bottom: 1000px;
-    right: 1000px;
+    bottom: 1150px;
+    left: 10px;
     padding: 10px 20px;
     background-color: #ff5722;
     color: white;

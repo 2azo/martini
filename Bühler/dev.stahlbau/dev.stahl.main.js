@@ -12,6 +12,10 @@
 	const audio_mute = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
   <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 9.75 19.5 12m0 0 2.25 2.25M19.5 12l2.25-2.25M19.5 12l-2.25 2.25m-10.5-6 4.72-4.72a.75.75 0 0 1 1.28.53v15.88a.75.75 0 0 1-1.28.53l-4.72-4.72H4.51c-.88 0-1.704-.507-1.938-1.354A9.009 9.009 0 0 1 2.25 12c0-.83.112-1.633.322-2.396C2.806 8.756 3.63 8.25 4.51 8.25H6.75Z" />
 </svg>`;
+const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+</svg>
+`;
 	
 	let scrollTop = window.pageYOffset;
 	let scrollCounter = 0;
@@ -1189,53 +1193,51 @@
 	}
 
 	// test full screen exit button (full screen toggle)
-	$(document).ready(function() {
-		// Initialize Owl Carousel
-		var $owl = $('.owl-carousel');
-		
-		$owl.on('initialized.owl.carousel', function(event) {
-			// Append the Exit Full-Screen button after the carousel is initialized
-			var exitFullScreenButton = $('<button class="owl-exit-fullscreen">Exit Full Screen</button>');
+	$('.wp-block-video').each(function() {
+		var self = $(this); // Target the specific .wp-block-video container
+		var video = $(this).find('video')[0]; // Target the video inside the container
 	
-			// Append the button to the body
-			$('body').append(exitFullScreenButton);
+		// Create a Fullscreen Toggle button
+		var fullscreenToggleButton = $('<button class="fullscreen-toggle"></button>').click(function() {
+			const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
 	
-			// Event listener for full-screen change
-			function toggleExitButtonVisibility() {
-				if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement) {
-					exitFullScreenButton.show();
-				} else {
-					exitFullScreenButton.hide();
-				}
-			}
-
-			// Listen for fullscreen changes on the document, not on the carousel element
-			$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange', toggleExitButtonVisibility);
-
-			// Exit full screen when the custom button is clicked
-			exitFullScreenButton.on('click', function() {
+			// Check if the current .wp-block-video container is in fullscreen
+			if (fullscreenElement && fullscreenElement === self.get(0)) {
+				// Exit fullscreen
 				if (document.exitFullscreen) {
 					document.exitFullscreen();
 				} else if (document.webkitExitFullscreen) {
 					document.webkitExitFullscreen(); // Safari
 				} else if (document.mozCancelFullScreen) {
 					document.mozCancelFullScreen(); // Firefox
+				} else if (document.msExitFullscreen) {
+					document.msExitFullscreen(); // IE/Edge
 				}
-			});
+			} 
 		});
-
-		
-		// Initialize the Owl Carousel
-		$owl.owlCarousel({
-			items: 1,
-			loop: true,
-			nav: true,
-			navText: ['‹', '›'], // Custom navigation text for previous and next buttons
-			autoplay: true,
-			autoplayTimeout: 5000,
-			autoplayHoverPause: true
+	
+		// Initially hide the fullscreen toggle button
+		fullscreenToggleButton.hide();
+	
+		// Append the fullscreen toggle button to the .wp-block-video container
+		self.append(fullscreenToggleButton);
+	
+		// Listen for fullscreen changes
+		$(document).on('fullscreenchange webkitfullscreenchange mozfullscreenchange msfullscreenchange', function() {
+			const fullscreenElement = document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement;
+	
+			// Show the button if the current .wp-block-video container is in fullscreen
+			if (fullscreenElement && fullscreenElement === self.get(0)) {
+				fullscreenToggleButton.show();
+			} else {
+				fullscreenToggleButton.hide();
+			}
 		});
 	});
-
 	
+	
+
 })(jQuery);
+
+// 
+// 
