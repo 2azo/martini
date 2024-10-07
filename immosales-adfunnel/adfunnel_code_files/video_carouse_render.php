@@ -5,11 +5,10 @@
                 $video_url = get_sub_field('video_url'); 
                 $video_title = get_sub_field('video_title');
 				$video_description = get_sub_field('video_description');
-                $hover_image = get_sub_field('hover_image'); // Get the hover image field
             ?>
-            <div class="video-item" data-hover-image="<?php echo esc_url($hover_image); ?>"> <!-- Add hover image as data attribute -->
+            <div class="video-item"> 
                 <div class="video-wrapper">
-                    <video src="<?php echo esc_url($video_url); ?>" class="acf-video" poster="<?php echo esc_url($hover_image); ?>"></video> <!-- Adding hover image as poster -->
+                    <video src="<?php echo esc_url($video_url); ?>" class="acf-video" ></video> 
                     <div class="video-overlay">
                         <?php echo esc_html($video_description); ?>
                     </div>
@@ -56,8 +55,8 @@
   				$poster = $item['poster']?$item['poster']['url']:"";
   			?>
   				<div class="swiper-slide">
-  					<div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>">
-  						<video preload="none" playsinline="" poster="<?= $poster; ?>">
+				  <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="">
+				  	<video preload="none" playsinline="" poster="<?= $poster; ?>">
   							<source src="<?= $item['video']['url']; ?>" type="video/mp4" />
   						</video>
   					</div>					
