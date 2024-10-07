@@ -4727,7 +4727,8 @@ footer .group .site-footer-right a+a {
 
 	.content h1 {
 		font-size: 1.25rem;
-		text-align: left
+		text-align: left;
+		height: 40px !important; // test
 	}
 
 	.content h1+figure {

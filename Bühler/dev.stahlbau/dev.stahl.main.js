@@ -1110,8 +1110,10 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 		}
 	
 		var progressCont = $('<div class="progress">')
+			.append(playButton) // test
 			.append(progressBar)
 			.append(progressTime);
+
 	
 		$('<div class="video_play">').click(function() {
 			self.addClass('active');
@@ -1129,9 +1131,9 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 		
 		// Add the mute/unmute button with initial state check
 		$('<div class="video_interface">')
-			.append(playButton)
+			// .append(playButton) // test
 			.append(progressCont)
-			.append(muteButton) // Add the Mute/Unmute button here
+			.append(muteButton)
 			.append(wrapper)
 			
 			.append(maximize)

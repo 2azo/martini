@@ -5987,7 +5987,7 @@ footer {
 		align-items: center;		
 		padding: 1rem 0.125rem;
 		@include break-sm {
-			padding: 1rem 2rem;
+			// padding: 1rem 2rem; // test
 		}
 		.play {
 			width: 1rem;
@@ -6022,19 +6022,19 @@ footer {
 			}
 		}
 		.wrapper {		
-			margin-left: auto;
+			margin-left: 1.5rem;
 			display: flex;
 			align-items: center;
 		}
 		.progress {
 			display: flex;
 			align-items: flex-end;
-			// margin-right: 2rem;
+			
 			.bar {
 				width: 6rem;
-				margin-top: -0.5rem;
-				margin-bottom: -0.5rem;
-				margin-right: 0.5rem;
+				margin-bottom: -0.35rem;
+				margin-right: 0.9rem;
+				margin-left: 0.9rem;
 				position: relative;
 				overflow: hidden;
 				padding: 0.5rem 0;
@@ -6067,11 +6067,13 @@ footer {
 				font-weight: 700;
 				line-height: 1;
 				min-width: 4.25rem;
+				margin-bottom: 0.1rem;
 			}
 		}
 		.maximize {
 			width: 1.75rem;
 			cursor: pointer;
+			margin-left: auto;
 			svg {
 				width: 100%;
 				height: auto;
@@ -6162,7 +6164,6 @@ a[href="https://www.buehler-stahlbau.de/"] {
 		border-radius: 50%; 
 		background-size: cover;
 		cursor: pointer;
-		margin-left: 1rem;
 	}
 
 	.unmute-icon {
@@ -6171,7 +6172,6 @@ a[href="https://www.buehler-stahlbau.de/"] {
 		border-radius: 0; 
 		background-size: cover;
 		cursor: pointer;
-		margin-left: 1rem;
 	}
 }
 
