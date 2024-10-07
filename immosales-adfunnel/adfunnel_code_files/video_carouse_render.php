@@ -52,13 +52,16 @@
   		<div class="swiper vid_swiper">
   			<div class="swiper-wrapper">
   			<?php foreach( $items as $i=>$item ): 
-  				$poster = $item['poster']?$item['poster']['url']:"";
+  				$poster = $item['poster'] ? $item['poster']['url'] : "";
+                $hover_image = $item['hover_image'] ? $item['hover_image']['url'] : ""; // hover image
   			?>
   				<div class="swiper-slide">
 				  <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="">
 				  	<video preload="none" playsinline="" poster="<?= $poster; ?>">
   							<source src="<?= $item['video']['url']; ?>" type="video/mp4" />
   						</video>
+                        <!-- Hover image to display on hover -->
+                        <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>">
   					</div>					
   					<div class="swiper-slide__info">
   						<div class="swiper-slide__subheader"><svg><use href="#arrow-icon"></use></svg><?=strip_tags($item['subheader'],"<strong><a><br><em>");?></div>
@@ -71,7 +74,8 @@
   		<div class="swiper-nav swiper-prev"><svg><use href="#arrow-icon"></use></svg></div>
   		<div class="swiper-nav swiper-next"><svg><use href="#arrow-icon"></use></svg></div>
   	<?php endif;?>
-  </div>
+</div>
+
 
 <?php
 

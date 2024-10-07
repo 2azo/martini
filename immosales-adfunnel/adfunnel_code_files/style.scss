@@ -1843,3 +1843,33 @@ section {
     opacity: 1;
     background-image: url(attr(data-hover-image));
 }
+
+
+// hover 
+/* Hide the hover image by default */
+.swiper-slide__video .hover-image {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Make sure the image fits well */
+    z-index: 2; /* To ensure it's above the video */
+}
+
+/* On hover, hide the video and show the hover image */
+.swiper-slide__video:hover video {
+    opacity: 0;
+}
+
+.swiper-slide__video:hover .hover-image {
+    display: block;
+    opacity: 1;
+}
+
+.swiper-slide__video video,
+.swiper-slide__video .hover-image {
+    transition: opacity 1.3s ease;
+}
+
