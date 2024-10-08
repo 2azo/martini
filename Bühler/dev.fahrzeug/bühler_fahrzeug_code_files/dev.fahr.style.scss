@@ -4373,11 +4373,13 @@ footer .group .site-footer-right a+a {
 	}
 
 	.video_carousel .owl-carousel .owl-nav button[type="button"].owl-prev {
-		left: 0.5rem
+		left: 0.5rem;
+		margin-top: 14.5px;
 	}
 
 	.video_carousel .owl-carousel .owl-nav button[type="button"].owl-next {
-		right: 0.5rem
+		right: 0.5rem;
+		margin-top: 14.5px;
 	}
 }
 
@@ -4740,6 +4742,31 @@ footer .group .site-footer-right a+a {
 	}
 
 	.content p {
+		
+		.tel {
+			color: black; 
+		}
+	
+		.phone-number-red { 
+			color: var(--accent-color) !important; 
+			// color: black !important; 
+			text-decoration: none !important; 
+			&:hover, 
+    		&:active
+			{
+				color: var(--accent-color) !important;
+				// color: black !important;
+				text-decoration: none !important; 
+			}
+		}
+		
+
+		.phone-number-blue {
+			color: var(--accent-color-blue); 
+			text-decoration: none; 
+			font-weight: bold;
+		}
+
 		font-size: 1rem
 	}
 
