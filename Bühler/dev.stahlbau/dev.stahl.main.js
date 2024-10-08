@@ -1241,7 +1241,42 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 		});
 	});
 	
-	
+	// volume fading
+	function fadeVolumeDown(){
+		var main_video = document.querySelector('.wp-block-group video'); 
+		if(main_video) {
+			if (main_video.muted) return;
+
+			
+			const visual = document.querySelector('.wp-block-group'); 
+			const rect = visual.getBoundingClientRect(); // position of the video container relative to the viewport
+			const windowHeight = window.innerHeight; // height of the viewport
+
+			// distance of the video container's center from the center of the viewport
+			const videoCenter = rect.top + (rect.height / 2);
+			const viewportCenter = windowHeight / 2;
+			const distanceFromCenter = Math.abs(videoCenter - viewportCenter);
+
+			// maximum distance allowed before the volume fades out completely
+			const maxDistance = windowHeight / 2;
+
+			// Calculate volume based on the distance from the center of the viewport
+			let vol = 1 - (distanceFromCenter / maxDistance);
+
+			if (vol < 0) {
+				main_video.volume = 0;
+			} else if (vol > 1) {
+				main_video.volume = 1;
+			} else {
+				main_video.volume = vol;
+			}
+		}
+	}
+
+	// Add a scroll event listener to the window
+	window.addEventListener('scroll', function() {
+		fadeVolumeDown(); // Call fadeVolumeDown function on scroll
+	});
 
 })(jQuery);
 

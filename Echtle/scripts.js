@@ -685,6 +685,7 @@
 	$('.wp-block-video').each(function() {
 		const self = $(this);
 		const video = self.find('video').get(0);
+		const parent = self.get(0);
 		const progressCont = $('<div class="progress_cont" />');
 		const pauseButton = $('<div class="icon pause"><svg><use href="#pause-icon"></use></div>').appendTo(progressCont);
 		const volumeButton = $('<div class="icon volume"><svg><use href="#volume-xmark-icon"></use></div>').appendTo(progressCont);
@@ -692,8 +693,21 @@
 		const progress = $('<div class="progress" />').appendTo(progressBar);
 		const progressTime = $('<div class="progress_time">00.<span>sek</span></div>').appendTo(progressCont);
 		let interval;
-		
+
 		const playButton = $('<div class="play"></div>').appendTo(self);
+
+		const fullscreenButton = document.createElement("button");
+		fullscreenButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15" />
+			</svg>`;
+		fullscreenButton.classList.add("fullscreen");
+		fullscreenButton.addEventListener("click", function() {
+			if (document.fullscreenElement) {
+				document.exitFullscreen();	
+			} else {
+				parent.requestFullscreen();
+			}
+		});
 		
 		if(!video.muted) {
 			volumeButton.find('use').attr('href', icons.volume_full);
@@ -747,28 +761,35 @@
 		volumeButton.click(volumeToggle);
 		
 		function progressLoop() {
-			interval = setInterval(function () {
-				var currentTime = video.currentTime;
-				var duration = video.duration;
-				progress.width(Math.round((currentTime / duration) * 100) + "%");
-				progressTime.html(zeroPad(Math.round(currentTime),2) + ".<span>sek</span>");
+			var currentTime = video.currentTime;
+			var duration = video.duration;
+			progress.width(Math.round((currentTime / duration) * 100) + "%");
+			progressTime.html(zeroPad(Math.round(currentTime),2) + ".<span>sek</span>");
 
-				if (video.currentTime === video.duration) {
-					window.clearInterval(interval);
-					playButton.fadeIn(300);
-					pauseButton.fadeOut(300);
-				}
-			}, 100);
+			if (video.currentTime === video.duration) {
+				playButton.fadeIn(300);
+				pauseButton.fadeOut(300);
+			}
 		}
-		
+
 		playButton.click(play);
 		pauseButton.click(pause);
-		
+
 		video.addEventListener("play", play);
 		video.addEventListener("pause", pause);
+		video.addEventListener("timeupdate", progressLoop);
 		video.addEventListener("click", playToggle);
 		
+		parent.addEventListener("fullscreenchange", function() {
+			if (document.fullscreenElement) {
+				parent.classList.add("is-fullscreen");
+			} else {
+				parent.classList.remove("is-fullscreen");
+			}
+		});
+
 		if(!self.hasClass('no_controls')) {
+			parent.append(fullscreenButton);
 			self.append(progressCont);
 		}
 	});

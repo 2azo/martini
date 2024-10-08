@@ -4376,11 +4376,11 @@ footer {
 	
 	.content {
 		.wp-block-separator.blue {
-			margin: 1em 0 1em;
+			margin: 3em 0 1em;
 		}
 
         .wp-block-separator.blue.last {
-			margin: 3em 0 3em;
+			margin: 1em 0 3em;
 		}
 		
 		.wp-block-spacer {
@@ -4764,7 +4764,7 @@ footer {
 			height: auto;
 			vertical-align: top;
 			position: relative;
-			left: -25%;
+			left: -50%;
 			max-width: unset;
 		}
 	}

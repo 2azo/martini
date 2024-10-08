@@ -1460,9 +1460,10 @@ body.header-shrink .nav-menu-header-categories {
 	margin-right: auto
 }
 
-.video_carousel .wp-block-video {
-	margin: 0 !important
-}
+// test
+// .video_carousel .wp-block-video {
+// 	margin: 0 !important
+// }
 
 .video_carousel video {
 	aspect-ratio: 1.7777777778;
@@ -4682,7 +4683,11 @@ footer .group .site-footer-right a+a {
 	}
 
 	.content .wp-block-separator.blue {
-		margin: 1em 0 1em
+		margin: 3em 0 1em
+	}
+
+	.content .wp-block-separator.blue.last {
+		margin: 1em 0 3em;
 	}
 
 	.content .wp-block-spacer {
@@ -4749,13 +4754,11 @@ footer .group .site-footer-right a+a {
 	
 		.phone-number-red { 
 			color: var(--accent-color) !important; 
-			// color: black !important; 
 			text-decoration: none !important; 
 			&:hover, 
     		&:active
 			{
 				color: var(--accent-color) !important;
-				// color: black !important;
 				text-decoration: none !important; 
 			}
 		}
@@ -5008,6 +5011,7 @@ footer .group .site-footer-right a+a {
 	.wp-block-columns .wp-block-column .wp-block-spacer {
 		height: 5px !important
 	}
+
 }
 
 @media screen and (max-width:599px) {
