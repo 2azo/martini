@@ -1846,35 +1846,35 @@ section {
 
 
 // hover 
-/* Style the hover image inside the video container */
-.swiper-slide__video {
-    position: relative; /* Make it a positioning context */
+.video-player video,
+.video-player .hover-image {
+    transition: opacity 0.9s ease; /* Smooth transition for opacity */
+    opacity: 1; /* Set both to fully visible by default */
 }
 
-.swiper-slide__video .hover-image {
+/* Ensure hover image is hidden initially */
+.video-player .hover-image {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
-    z-index: 1; /* Set a lower z-index than the video controls */
-    opacity: 0;
-    transition: opacity 0.3s ease;
+    z-index: 2;
+    opacity: 0; /* Start with hover image fully hidden */
 }
 
-/* Video styles remain the same */
-.swiper-slide__video video {
-    position: relative;
-    z-index: 2; /* Ensure video and controls appear above the hover image */
+/* On hover, fade out video and fade in hover image */
+.video-player:hover video {
+    opacity: 0; /* Video fades out */
 }
 
-/* Hover effect */
-.swiper-slide__video:hover .hover-image {
+.video-player:hover .hover-image {
     opacity: 1; /* Hover image fades in */
 }
 
-.swiper-slide__video:hover video {
-    opacity: 0; /* Video fades out */
+.swiper-slide__video {
+    position: relative; /* to make .hover-image position relative to this container */
 }
+
 

@@ -58,11 +58,13 @@
   			?>
   				<div class="swiper-slide">
 				  <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="">
-				  	<video preload="none" playsinline="" poster="<?= $poster; ?>">
+				  	<div class="video-player">
+				  		<video preload="none" playsinline="" poster="<?= $poster; ?>">
   							<source src="<?= $item['video']['url']; ?>" type="video/mp4" />
   						</video>
-                        <!-- Move hover image inside the video container -->
+                        <!-- Hover image inside the video-player -->
                         <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>">
+				  	</div>
   					</div>					
   					<div class="swiper-slide__info">
   						<div class="swiper-slide__subheader"><svg><use href="#arrow-icon"></use></svg><?=strip_tags($item['subheader'],"<strong><a><br><em>");?></div>
@@ -76,6 +78,7 @@
   		<div class="swiper-nav swiper-next"><svg><use href="#arrow-icon"></use></svg></div>
   	<?php endif;?>
 </div>
+
 
 
 
