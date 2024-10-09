@@ -931,11 +931,18 @@
 							swiper.slideTo(this.index, 0);
 						},
 					},
+					// test
 					// zoom: {
-						// opener: function(x) {
-							// return $(swiper.slides[x.index]).find('img')
-						// }
+					// 	enabled: true, // By default it's false, so don't forget to enable it
+					// 	duration: 300, // duration of the effect, in milliseconds
+					// 	easing: 'ease-in-out', 
+
 					// }
+					zoom: {
+						opener: function(x) {
+							return $(swiper.slides[x.index]).find('img')
+						}
+					}
 				}, swiper.activeIndex);
 			});
 		}

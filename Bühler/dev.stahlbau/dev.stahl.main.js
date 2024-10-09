@@ -1140,10 +1140,6 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 			.appendTo(self);
 	});
 	
-	
-	
-	
-	
 	var video_carousel = $('.video_carousel > .wp-block-group__inner-container');
 	video_carousel.addClass('owl-carousel');
 	video_carousel.owlCarousel({
