@@ -46,6 +46,7 @@
   		$class_name .= ' ' . $block['className'];
   	}
   ?>
+  
   <div <?= $anchor; ?> class="<?= esc_attr($class_name); ?>">
   	<?php if($items): ?>
   		<div class="swiper-pagination-vid"></div>
@@ -60,7 +61,7 @@
 				  	<video preload="none" playsinline="" poster="<?= $poster; ?>">
   							<source src="<?= $item['video']['url']; ?>" type="video/mp4" />
   						</video>
-                        <!-- Hover image to display on hover -->
+                        <!-- Move hover image inside the video container -->
                         <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>">
   					</div>					
   					<div class="swiper-slide__info">
@@ -75,6 +76,7 @@
   		<div class="swiper-nav swiper-next"><svg><use href="#arrow-icon"></use></svg></div>
   	<?php endif;?>
 </div>
+
 
 
 <?php

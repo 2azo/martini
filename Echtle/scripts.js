@@ -924,25 +924,19 @@
 			
 			maximize.click(function() {
 				$.magnificPopup.open({
-					items: Array.from(items),
+					items: Array.from(items), // source of the image
 					type: 'image',
 					callbacks: {
 						close: function() {
 							swiper.slideTo(this.index, 0);
 						},
 					},
-					// test
-					// zoom: {
-					// 	enabled: true, // By default it's false, so don't forget to enable it
-					// 	duration: 300, // duration of the effect, in milliseconds
-					// 	easing: 'ease-in-out', 
 
+					// zoom: {
+					// 	opener: function(x) {
+					// 		return $(swiper.slides[x.index]).find('img')
+					// 	}
 					// }
-					zoom: {
-						opener: function(x) {
-							return $(swiper.slides[x.index]).find('img')
-						}
-					}
 				}, swiper.activeIndex);
 			});
 		}
