@@ -55,15 +55,17 @@
   			<?php foreach( $items as $i=>$item ): 
   				$poster = $item['poster'] ? $item['poster']['url'] : "";
                 $hover_image = $item['hover_image'] ? $item['hover_image']['url'] : ""; // hover image
+                $enable_hover = isset($item['enable_hover_image']) ? $item['enable_hover_image'] : false; // new checkbox field
   			?>
   				<div class="swiper-slide">
-				  <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="">
+				  <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="<?= $enable_hover ? 'true' : 'false'; ?>">
 				  	<div class="video-player">
 				  		<video preload="none" playsinline="" poster="<?= $poster; ?>">
   							<source src="<?= $item['video']['url']; ?>" type="video/mp4" />
   						</video>
-                        <!-- Hover image inside the video-player -->
-                        <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>">
+                        <?php if($enable_hover && $hover_image): ?>
+                            <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>">
+                        <?php endif; ?>
 				  	</div>
   					</div>					
   					<div class="swiper-slide__info">
@@ -78,9 +80,6 @@
   		<div class="swiper-nav swiper-next"><svg><use href="#arrow-icon"></use></svg></div>
   	<?php endif;?>
 </div>
-
-
-
 
 <?php
 

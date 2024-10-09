@@ -1846,35 +1846,46 @@ section {
 
 
 // hover 
-.video-player video,
-.video-player .hover-image {
-    transition: opacity 0.9s ease; /* Smooth transition for opacity */
-    opacity: 1; /* Set both to fully visible by default */
-}
-
-/* Ensure hover image is hidden initially */
-.video-player .hover-image {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: 2;
-    opacity: 0; /* Start with hover image fully hidden */
-}
-
-/* On hover, fade out video and fade in hover image */
-.video-player:hover video {
-    opacity: 0; /* Video fades out */
-}
-
-.video-player:hover .hover-image {
-    opacity: 1; /* Hover image fades in */
-}
-
+// Base styles for video player
 .swiper-slide__video {
     position: relative; /* to make .hover-image position relative to this container */
 }
 
+.video-player {
+    video,
+    .hover-image {
+        transition: opacity 0.9s ease; /* Smooth transition for opacity */
+        opacity: 1; /* Set both to fully visible by default */
+    }
 
+    /* Hover image base styles */
+    .hover-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 2;
+        opacity: 0; /* Start with hover image fully hidden */
+        display: none; /* Hide by default */
+    }
+}
+
+/* Styles for when hover is enabled */
+.swiper-slide__video[data-hover="true"] {
+    .video-player {
+        .hover-image {
+            display: block; /* Show the hover image when enabled */
+        }
+
+        &:hover {
+            video {
+                opacity: 0; /* Video fades out */
+            }
+            .hover-image {
+                opacity: 1; /* Hover image fades in */
+            }
+        }
+    }
+}
