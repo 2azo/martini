@@ -1867,7 +1867,7 @@ section {
         height: 100%;
         object-fit: cover;
         z-index: 2;
-        opacity: 0; /* Start with hover image fully hidden */
+        opacity: 0; /* image fully hidden */
         display: none; /* Hide by default */
     }
 }
@@ -1881,11 +1881,16 @@ section {
 
         &:hover {
             video {
-                opacity: 0; /* Video fades out */
+                opacity: 0;
             }
             .hover-image {
-                opacity: 1; /* Hover image fades in */
+                opacity: 1; 
             }
         }
     }
+}
+
+// hiding the "video-interface" for a specific video
+#video-player-1 .video-interface {
+    display: none !important;
 }
