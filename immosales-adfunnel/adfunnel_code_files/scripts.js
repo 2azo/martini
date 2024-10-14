@@ -856,28 +856,33 @@
 		
 		// scene 2
 		var reveal_bg = TweenMax.to(
-			".ww360bg", 5, { // test was 20
-			css: {
+			".ww360bg",
+			20, // test was 20
+			{ 
+			css: 
+				{
 				opacity: "1",
+				}
 			}
-		})
+		)
 		
 		// scene 1
 		var hide_heading = TweenMax.to(
-			".ww360_title_cont", 5, { // test was 20
+			".ww360_title_cont", 20, { // test was 20
 			css: {
 				opacity: "0"
 			}
 		});
 		
-		var count = TweenMax.to(".ww360_title_cont .t2 span", 25, {
+		var count = TweenMax.to(".ww360_title_cont .t2 span", 25, 
+			{
 			onStart: function() {
 				const self = $(this.target[0]);
 				//if(self.text() === "360") return;
 				self.animate({
 					countNum: 360
 				}, {
-					duration: 1000, // test was 1500
+					duration: 2000, // test was 1500
 					easing: "swing",
 					start: function(anim) {
 						anim.tweens[0].start = 0;
@@ -891,10 +896,10 @@
 				// let progress = Math.round(this.progress()*360);				
 				// $(this.target[0]).text(progress);
 			// },
-		});
+			});
 		
 		var reveal_border = TweenMax.to(
-			".ww360_border_wrapper", 5, { // test was 20
+			".ww360_border_wrapper", 40, { // test was 20
 			css: {
 				opacity: "1",
 				transform: "translateY(0) scale(1)"
@@ -902,7 +907,7 @@
 		});
 		
 		var reveal_logo = TweenMax.to(
-			".ww360_logo .animate", 5, { // test was 20
+			".ww360_logo .animate", 20, { // test was 20
 			css: {
 				opacity: "1",
 				transform: "translateY(0) scale(1)"
@@ -910,14 +915,16 @@
 		});
 		
 		$(".ww360 .item .image_wrap").each(function(i) {
-			var t = (i+1)*3; // test was (i+1)*5
-			var image = TweenMax.to($(this), 5, { // test was 20
-				delay: t,
-				css: {
-					opacity: "1",
-					transform: "scale(1)"
-				}
-			});
+			var t = (i+1)*10; // test was (i+1)*5
+			var image = TweenMax.to($(this), 10, // test was 20
+				{ 
+					delay: t,
+					css: {
+						opacity: "1",
+						transform: "scale(1)"
+					}
+				},
+			);
 			reveal_images.push(image);
 		});
 		
@@ -929,8 +936,9 @@
 			}
 		});
 		
+		// smoothness of transitions between scenes
 		var animate_bg = TweenMax.to(
-			".ww360bg", 5, { // test was 20
+			".ww360bg", 20, { // test was 20
 			delay: 10,
 			css: {
 				opacity: 0
@@ -947,7 +955,7 @@
 		);
 		
 		var reveal_text = TweenMax.to(
-			".ww360 .item .text", 5, { // test was 10
+			".ww360 .item .text", 15, { // test was 10
 			css: {
 				opacity: "1",
 				visibility: "visible",
@@ -980,7 +988,7 @@
 
 		var scene1 = new ScrollMagic.Scene({
 			triggerElement: ".trigger",
-			duration: "390%",
+			duration: "390%", // test was "390%" 
 			triggerHook: 0,
 			reverse: true
 		}).setPin(".trigger").setTween(timeline).addTo(controller);
@@ -1114,6 +1122,7 @@
 			}
 		}
 	});
+
 	
 })(jQuery);
 
