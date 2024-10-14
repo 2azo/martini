@@ -522,16 +522,19 @@
 			},
 			onUpdate: (e) => {
 				let progress = part1.progress()*100;
+
 				$(".trigger.part1 .picture .img").css({'background-position': 'center '+progress * 0.75+'%'});
 			}
 		});
 		
 		// enlarge picture to full screen
+		
 		let a1 = gsap.timeline({
 			onStart: () => {
 				// p1_pic.css({position:"absolute"});
 			}
 		})
+
 		.to('.trigger.part1 .picture', {
 			duration: 1,
 			left: 0,

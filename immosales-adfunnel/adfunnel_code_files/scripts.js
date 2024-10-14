@@ -882,7 +882,7 @@
 				self.animate({
 					countNum: 360
 				}, {
-					duration: 2000, // test was 1500
+					duration: 1500, // test was 1500
 					easing: "swing",
 					start: function(anim) {
 						anim.tweens[0].start = 0;
@@ -899,7 +899,7 @@
 			});
 		
 		var reveal_border = TweenMax.to(
-			".ww360_border_wrapper", 40, { // test was 20
+			".ww360_border_wrapper", 20, { // test was 20
 			css: {
 				opacity: "1",
 				transform: "translateY(0) scale(1)"
@@ -915,8 +915,8 @@
 		});
 		
 		$(".ww360 .item .image_wrap").each(function(i) {
-			var t = (i+1)*10; // test was (i+1)*5
-			var image = TweenMax.to($(this), 10, // test was 20
+			var t = (i+1)*100; // test was (i+1)*5
+			var image = TweenMax.to($(this), 20, // test was 20
 				{ 
 					delay: t,
 					css: {
@@ -929,14 +929,14 @@
 		});
 		
 		var border_color = TweenMax.to(
-			".ww360_border", 5, { // test was 20
+			".ww360_border", 20, { // test was 20
 			delay: 10,
 			css: {
 				borderColor: "rgba(0,0,0,.035)",
 			}
 		});
 		
-		// smoothness of transitions between scenes
+		
 		var animate_bg = TweenMax.to(
 			".ww360bg", 20, { // test was 20
 			delay: 10,
@@ -946,7 +946,7 @@
 		});	
 		
 		var show_small_heading = TweenMax.to(
-			".ww360_title_cont--smaller", 5, { // test was 20
+			".ww360_title_cont--smaller", 20, { // test was 20
 				delay: 10,
 				css: {
 					opacity: "1"
@@ -955,7 +955,7 @@
 		);
 		
 		var reveal_text = TweenMax.to(
-			".ww360 .item .text", 15, { // test was 10
+			".ww360 .item .text", 10, { // test was 10
 			css: {
 				opacity: "1",
 				visibility: "visible",

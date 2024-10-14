@@ -1594,6 +1594,7 @@ section {
     .video-container .wp-element-caption {
         max-width: 70%; /* Adjust based on caption length */
     }
+
 }
 
 
@@ -1806,25 +1807,25 @@ section {
 		top: 28%;
 	}
 
+	// hiding hover effect test
+	.swiper-slide__video[data-hover="true"] {
+        .video-player {
+            .hover-image {
+                display: none !important; /* Disable hover-related elements */
+            }
+
+            &:hover {
+				video,
+                .hover-image {
+                    opacity: 1 !important; /* Prevent hover changes on mobile */
+                }
+            }
+        }
+    }
+
 }
 
-// // test hover (worked)
-// .swiper-slide__video .video-wrap::before {
-//     content: 'test';
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     background-color: rgba(0, 0, 0, 0); /* Initially transparent */
-//     transition: background-color 0.9s ease; /* Smooth transition */
-//     z-index: 1; /* Ensure the overlay stays above the video */
-// }
 
-// /* On hover, darken the video by changing the background-color */
-// .swiper-slide__video .video-wrap:hover::before {
-//     background-color: rgba(0, 0, 0, 0.5); /* 50% opacity to darken */
-// }
 
 // test
 .video-item::before {
