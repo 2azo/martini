@@ -649,8 +649,6 @@
 // 		})
 		.appendTo(container);
 
-		
-		// container.wrapInner('<div class="video-player" />');
 
 		// sequential ID 
 		var videoPlayerId = 'video-player-' + videoPlayerCounter;
@@ -849,169 +847,305 @@
 	}
 	
 	function createScrollMagic() {
-		const controller = new ScrollMagic.Controller();
-		var timeline = new TimelineMax();		
+        // 1. no need for controller
+		// const controller = new ScrollMagic.Controller();
+        
+        // 2. new gsap timeline
+        // 2. populating the timeline directly, as appose to creating an empty one then add it to another timeine
+		// var timeline = new TimelineMax();
+        // var timeline = gsap.timeline();	
+        var timeline = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".trigger",      // Element that triggers the animation
+                start: "top top",         // Start when `.trigger` hits the top of the viewport
+                end: "+=390%",            // End after scrolling down 390% of the viewport height
+                scrub: 1,                // Smoothly sync animation to scroll
+                pin: ".trigger",          // Pin the `.trigger` element during the scroll
+                toggleActions: "play none none reverse", // Play and reverse on scroll
+                markers: false             // Optional: Add markers for debugging
+            }
+        });
+        
 		var reveal_images = [];
 		
 		// scene 2
-		var reveal_bg = TweenMax.to(".ww360bg",20,{css: {opacity: "1",}})
-		// var reveal_bg = gsap.to(".ww360bg", 20, { opacity: "1"});
+        // 3. deleted, merged into the gsap.to() as replacement to scene2
+		// var reveal_bg = TweenMax.to(".ww360bg",20,{css: {opacity: "1"}})
+        // var reveal_bg = gsap.to(".ww360bg", {
+        //     duration: 20,
+        //     opacity: 1
+        // });
 		
 		// scene 1
-		var hide_heading = TweenMax.to(
-			".ww360_title_cont",
-			20,
-			{ 
-			css: 
-				{opacity: "0"}
-			}
-		);
+        // 4. standalone gsap tween 
+		// var hide_heading = TweenMax.to(".ww360_title_cont",20,{ css: {opacity: "0"}});
+        var hide_heading = gsap.to(".ww360_title_cont", {
+            duration: 20,
+            opacity: 0
+        });
+        
 		
-		var count = TweenMax.to(".ww360_title_cont .t2 span", 25, 
-			{
-			onStart: function() {
-				const self = $(this.target[0]);
-				self.animate({
-					countNum: 360
-				}, {
-					duration: 1500, 
-					easing: "swing",
-					start: function(anim) {
-						anim.tweens[0].start = 0;
-					},
-					step: function(now) {
-						self.text(Math.floor(now));
-					},
-				});
-			}
-			});
-		
-		var reveal_border = TweenMax.to(
-			".ww360_border_wrapper", 20, { 
-			css: {
-				opacity: "1",
-				transform: "translateY(0) scale(1)"
-			}
-		});
-		
-		var reveal_logo = TweenMax.to(
-			".ww360_logo .animate", 20, { 
-			css: {
-				opacity: "1",
-				transform: "translateY(0) scale(1)"
-			}
-		});
-		
-		$(".ww360 .item .image_wrap").each(function(i) {
-			var t = (i+1)*3; // test was (i+1)*5 
-			var image = TweenMax.to($(this), 5, // test was 20
-				{ 
-					delay: t, // how much to wait till the next element
-					css: {
-						opacity: "1",
-						transform: "scale(1)"
-					},
-				},
-			);
-			reveal_images.push(image);
-		});
+        // 5. stadalone gsap tween
+		// var count = TweenMax.to(".ww360_title_cont .t2 span", 25, 
+		// 	{
+		// 	onStart: function() {
+		// 		const self = $(this.target[0]);
+		// 		self.animate({
+		// 			countNum: 360
+		// 		}, {
+		// 			duration: 1500, 
+		// 			easing: "swing",
+		// 			start: function(anim) {
+		// 				anim.tweens[0].start = 0;
+		// 			},
+		// 			step: function(now) {
+		// 				self.text(Math.floor(now));
+		// 			},
+		// 		});
+		// 	}
+		// });
 
+        var count = gsap.to(".ww360_title_cont .t2 span", {
+            duration: 25,
+            onStart: function() {
+                const self = $(this.targets()[0]);
+                self.animate({
+                    countNum: 360
+                }, {
+                    duration: 1500,
+                    easing: "swing",
+                    start: function(anim) {
+                        anim.tweens[0].start = 0;
+                    },
+                    step: function(now) {
+                        self.text(Math.floor(now));
+                    }
+                });
+            }
+        });
+        
+		// 6. stadalone gsap tween
+		// var reveal_border = TweenMax.to(
+		// 	".ww360_border_wrapper", 20, { 
+		// 	css: {
+		// 		opacity: "1",
+		// 		transform: "translateY(0) scale(1)"
+		// 	}
+		// });
+		var reveal_border = gsap.to(".ww360_border_wrapper", {
+            duration: 20,
+            opacity: 1,
+            y: 0,
+            scale: 1
+        });
+
+        // 7. stadalone gsap tween
+		// var reveal_logo = TweenMax.to(
+		// 	".ww360_logo .animate", 20, { 
+		// 	css: {
+		// 		opacity: "1",
+		// 		transform: "translateY(0) scale(1)"
+		// 	}
+		// });
+
+        var reveal_logo = gsap.to(".ww360_logo .animate", {
+            duration: 20,
+            opacity: 1,
+            y: 0,
+            scale: 1
+        });
+        
+
+		// 8. stadalone gsap tween
+		// $(".ww360 .item .image_wrap").each(function(i) {
+		// 	var t = (i+1)*3; // test was (i+1)*5 
+		// 	var image = TweenMax.to($(this), 5, // test was 20
+		// 		{ 
+		// 			delay: t, // how much to wait till the next element
+		// 			css: {
+		// 				opacity: "1",
+		// 				transform: "scale(1)"
+		// 			},
+		// 		},
+		// 	);
+		// 	reveal_images.push(image);
+		// });
+        $(".ww360 .item .image_wrap").each(function(i) {
+            var t = (i + 1) * 3; // Adjust the delay as needed
+            var image = gsap.to($(this), {
+                duration: 5, // Duration of the animation
+                delay: t,    // Delay before the animation starts
+                opacity: 1,
+                scale: 1
+            });
+            reveal_images.push(image);
+        });
+        
+        // 9. stadalone gsap tween
+		// var border_color = TweenMax.to(
+		// 	".ww360_border", 20, { // test was 20
+		// 	delay: 10,
+		// 	css: {
+		// 		borderColor: "rgba(0,0,0,.035)",
+		// 	}
+		// });
+        var border_color = gsap.to(".ww360_border", {
+            duration: 20, 
+            delay: 10,     
+            borderColor: "rgba(0,0,0,.035)" 
+        });
+        
+        // 10. stadalone gsap tween
+		// var animate_bg = TweenMax.to(
+		// 	".ww360bg", 20, { // test was 20
+		// 	delay: 10,
+		// 	css: {
+		// 		opacity: 0
+		// 	}
+		// });
+        var animate_bg = gsap.to(".ww360bg", {
+            duration: 20,
+            delay: 10,
+            opacity: 0
+        });	
 		
-		var border_color = TweenMax.to(
-			".ww360_border", 20, { // test was 20
-			delay: 10,
-			css: {
-				borderColor: "rgba(0,0,0,.035)",
-			}
-		});
+        // 11. stadalone gsap tween
+		// var show_small_heading = TweenMax.to(
+		// 	".ww360_title_cont--smaller", 20, { // test was 20
+		// 		delay: 10,
+		// 		css: {
+		// 			opacity: "1"
+		// 		}
+		// 	}
+		// );
+        var show_small_heading = gsap.to(".ww360_title_cont--smaller", {
+            duration: 10,
+            delay: 10,
+            opacity: 1
+        });	
 		
-		
-		var animate_bg = TweenMax.to(
-			".ww360bg", 20, { // test was 20
-			delay: 10,
-			css: {
-				opacity: 0
-			}
-		});	
-		
-		var show_small_heading = TweenMax.to(
-			".ww360_title_cont--smaller", 20, { // test was 20
-				delay: 10,
-				css: {
-					opacity: "1"
-				}
-			}
-		);
-		
-		var reveal_text = TweenMax.to(
-			".ww360 .item .text", 10, { // test was 10
-			css: {
-				opacity: "1",
-				visibility: "visible",
-				top: "0"
-			}
-		});
+        // 12. stadalone gsap tween
+		// var reveal_text = TweenMax.to(
+		// 	".ww360 .item .text", 10, { // test was 10
+		// 	css: {
+		// 		opacity: "1",
+		// 		visibility: "visible",
+		// 		top: "0"
+		// 	}
+		// });
+        var reveal_text = gsap.to(".ww360 .item .text", {
+            duration: 10,
+            opacity: 1,
+            visibility: "visible",
+			top: "0"
+        });	
 		
 		timeline
 			.add([count])
 			.add([reveal_logo, reveal_border, hide_heading])
 			.add([reveal_images, animate_bg, border_color, show_small_heading],"-=3") 
 			.add([reveal_text]);
+
 			
-		
-		var scene2 = new ScrollMagic.Scene({
-			triggerElement: ".trigger_top",
-			duration: "1%", 
-			triggerHook: 0,
-			reverse: true,
-		}).setTween(reveal_bg).addTo(controller);
+		// 13. reaplacing scrollMagic scene with gsap.to() with ScrollTrigger()
+		// var scene2 = new ScrollMagic.Scene({
+		// 	triggerElement: ".trigger_top",
+		// 	duration: "1%", 
+		// 	triggerHook: 0,
+		// 	reverse: true,
+		// }).setTween(reveal_bg).addTo(controller);
 
-		// new
-		let scene2 = gsap.timeline({scrollTrigger: {
-				trigger: ".trigger_top",
-				start: "top top",   // Start when ".trigger_top" reaches the top of the viewport
-				end: "+=1%",        // End after 1% of the viewport height
-				// scrub: true,        // Smoothly animate as you scroll
-				toggleActions: "play none none reverse",  // Play on scroll down, reverse on scroll up
-				// markers: true       // Optional: add markers for debugging
-			}
-		});
+        gsap.to(".ww360bg", {
+            duration: 2,
+            opacity: 1,
+            scrollTrigger: {
+                trigger: ".trigger_top",
+                start: "top top",
+                end: "99%", // test was top 99%
+                scrub: false,
+                toggleActions: "play none none reverse"
+            }
+        });
+        
+        // 14. replacing it with gsap.timeline()
+        // 14. deleting this timeline, and just keeping the first one
 
-		var scene1 = new ScrollMagic.Scene({
-			triggerElement: ".trigger",
-			duration: "390%",
-			triggerHook: 0,
-			reverse: true,
-			scrub: 15 // test
-		}).setPin(".trigger").setTween(timeline).addTo(controller);
+		// var scene1 = new ScrollMagic.Scene({
+		// 	triggerElement: ".trigger",
+		// 	duration: "390%",
+		// 	triggerHook: 0,
+		// 	reverse: true,
+		// 	scrub: 15 // test
+		// }).setPin(".trigger").setTween(timeline).addTo(controller);
 
+        // gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: ".trigger",      // Element that triggers the animation
+        //         start: "top top",         // Start when `.trigger` hits the top of the viewport
+        //         end: "+=390%",            // End after scrolling down 390% of the viewport height
+        //         scrub: 15,                // Smoothly sync animation to scroll
+        //         pin: ".trigger",          // Pin the `.trigger` element during the scroll
+        //         toggleActions: "play none none reverse", // Play and reverse on scroll
+        //         // markers: true             // Optional: Add markers for debugging
+        //     }
+        // }).add(timeline);
+        
+
+		// 15. changing this snippet to be gsap3
+		// let lineArray = [];
+		// let tX = new TimelineMax();
 		
-		let lineArray = [];
-		let tX = new TimelineMax();
+		// $('.modul_block p').each(function(i) {
+		// 	var t = 0.5+(i*0.065);
+		// 	let line = TweenMax.from($(this), 1, {
+		// 		delay: t,
+		// 		y: '110%',
+		// 		opacity: 0,
+		// 		duration: 1,
+		// 		ease: 'power3',
+		// 	});
+		// 	lineArray.push(line);
+		// });
 		
-		$('.modul_block p').each(function(i) {
-			var t = 0.5+(i*0.065);
-			let line = TweenMax.from($(this), 1, {
-				delay: t,
-				y: '110%',
-				opacity: 0,
-				duration: 1,
-				ease: 'power3',
-			});
-			lineArray.push(line);
-		});
+		// tX.add(lineArray);
 		
-		tX.add(lineArray);
-		
-		var sceneX = new ScrollMagic.Scene({
-			triggerElement: ".modul_block",
-			triggerHook: 1,
-			reverse: true
-		}).setTween(tX).addTo(controller);
-		
+		// var sceneX = new ScrollMagic.Scene({
+		// 	triggerElement: ".modul_block",
+		// 	triggerHook: 1,
+		// 	reverse: true
+		// }).setTween(tX).addTo(controller);
+
+        let lineArray = [];
+
+        // Use a GSAP timeline directly
+        let tX = gsap.timeline({
+            scrollTrigger: {
+                trigger: ".modul_block", // Element that triggers the animation
+                start: "top bottom",     // Start when the top of `.modul_block` hits the bottom of the viewport
+                end: "top top",          // End when the top of `.modul_block` reaches the top of the viewport
+                scrub: true,             // Smoothly animate based on scroll
+                toggleActions: "play none none reverse" // Play on scroll down, reverse on scroll up
+            }
+        });
+
+        // Iterate through each paragraph and create an animation
+        $('.modul_block p').each(function(i) {
+            let t = 0.5 + (i * 0.065);
+            let line = gsap.from($(this), {
+                y: '110%',
+                opacity: 0,
+                duration: 1,
+                delay: t, // Apply delay to each line based on its index
+                ease: 'power3'
+            });
+            lineArray.push(line);
+        });
+
+        // Add all animations to the GSAP timeline
+        tX.add(lineArray);
+
 		return controller;
 	}
-
 	
 	$(window).on("resize", function() {		
 		if (window.innerWidth < 1024) {
@@ -1097,12 +1231,6 @@
 		}
 	});
 	
-	// $('body').on('click', function(event){
-	   // if(!$(event.target).closest('.ww360 .item').hasClass('active')){
-		 // $('.ww360 .item.active').removeClass("active");
-		 
-	   // }
-	// });
 	
 	$('.item.left i, .row .more').click(function() {
 		var parent = $(this).closest(".row");

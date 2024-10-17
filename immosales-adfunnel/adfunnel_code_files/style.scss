@@ -1825,8 +1825,6 @@ section {
 
 }
 
-
-
 // test
 .video-item::before {
     content: '';
@@ -1895,3 +1893,15 @@ section {
 #video-player-1 .video-interface {
     display: none !important;
 }
+
+// // test
+// .trigger_top {
+//     border: 2px solid red; /* Add a red border to clearly see the element */
+//     padding: 10px; /* Optional: Add some padding inside the border */
+// }
+
+// // test
+// .trigger {
+//     border: 2px solid red; /* Add a red border to clearly see the element */
+//     padding: 10px; /* Optional: Add some padding inside the border */
+// }
