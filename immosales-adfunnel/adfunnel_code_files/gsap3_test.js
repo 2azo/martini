@@ -879,6 +879,7 @@
 		// scene 1
         // 4. standalone gsap tween 
 		// var hide_heading = TweenMax.to(".ww360_title_cont",20,{ css: {opacity: "0"}});
+		// commented out -> passed
         var hide_heading = gsap.to(".ww360_title_cont", {
             duration: 20,
             opacity: 0
@@ -904,7 +905,8 @@
 		// 		});
 		// 	}
 		// });
-
+		
+		// commented out -> passed
         var count = gsap.to(".ww360_title_cont .t2 span", {
             duration: 25,
             onStart: function() {
@@ -932,6 +934,7 @@
 		// 		transform: "translateY(0) scale(1)"
 		// 	}
 		// });
+		// commented out -> passed
 		var reveal_border = gsap.to(".ww360_border_wrapper", {
             duration: 20,
             opacity: 1,
@@ -948,6 +951,7 @@
 		// 	}
 		// });
 
+		// commented out -> passed
         var reveal_logo = gsap.to(".ww360_logo .animate", {
             duration: 20,
             opacity: 1,
@@ -970,6 +974,8 @@
 		// 	);
 		// 	reveal_images.push(image);
 		// });
+
+		// coommented out -> passed
         $(".ww360 .item .image_wrap").each(function(i) {
             var t = (i + 1) * 3; // Adjust the delay as needed
             var image = gsap.to($(this), {
