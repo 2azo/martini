@@ -823,8 +823,9 @@
 			$("body").removeClass("text_white");
 		}
 	});
-	
-	backgroundObserver.observe($(".next_level_animated").get(0));
+	//if($(".next_level_animated").length) {
+		backgroundObserver.observe($(".next_level_animated").get(0));
+	//}
 	
 	
 	const backgroundObserverMob = new IntersectionObserver((entries, observer) => {
@@ -854,27 +855,34 @@
 		var reveal_images = [];
 		
 		// scene 2
-		var reveal_bg = TweenMax.to(".ww360bg",20,{css: {opacity: "1",}})
-		// var reveal_bg = gsap.to(".ww360bg", 20, { opacity: "1"});
+		var reveal_bg = TweenMax.to(
+			".ww360bg",
+			20, // test was 20
+			{ 
+			css: 
+				{
+				opacity: "1",
+				}
+			}
+		)
 		
 		// scene 1
 		var hide_heading = TweenMax.to(
-			".ww360_title_cont",
-			20,
-			{ 
-			css: 
-				{opacity: "0"}
+			".ww360_title_cont", 20, { // test was 20
+			css: {
+				opacity: "0"
 			}
-		);
+		});
 		
 		var count = TweenMax.to(".ww360_title_cont .t2 span", 25, 
 			{
 			onStart: function() {
 				const self = $(this.target[0]);
+				//if(self.text() === "360") return;
 				self.animate({
 					countNum: 360
 				}, {
-					duration: 1500, 
+					duration: 20, // test was 1500
 					easing: "swing",
 					start: function(anim) {
 						anim.tweens[0].start = 0;
@@ -884,10 +892,14 @@
 					},
 				});
 			}
+			// onUpdate: function() {
+				// let progress = Math.round(this.progress()*360);				
+				// $(this.target[0]).text(progress);
+			// },
 			});
 		
 		var reveal_border = TweenMax.to(
-			".ww360_border_wrapper", 20, { 
+			".ww360_border_wrapper", 40, { // test was 20
 			css: {
 				opacity: "1",
 				transform: "translateY(0) scale(1)"
@@ -895,7 +907,7 @@
 		});
 		
 		var reveal_logo = TweenMax.to(
-			".ww360_logo .animate", 20, { 
+			".ww360_logo .animate", 20, { // test was 20
 			css: {
 				opacity: "1",
 				transform: "translateY(0) scale(1)"
@@ -903,29 +915,28 @@
 		});
 		
 		$(".ww360 .item .image_wrap").each(function(i) {
-			var t = (i+1)*3; // test was (i+1)*5 
-			var image = TweenMax.to($(this), 5, // test was 20
+			var t = (i+1)*10; // test was (i+1)*5
+			var image = TweenMax.to($(this), 10, // test was 20
 				{ 
-					delay: t, // how much to wait till the next element
+					delay: t,
 					css: {
 						opacity: "1",
 						transform: "scale(1)"
-					},
+					}
 				},
 			);
 			reveal_images.push(image);
 		});
-
 		
 		var border_color = TweenMax.to(
-			".ww360_border", 20, { // test was 20
+			".ww360_border", 5, { // test was 20
 			delay: 10,
 			css: {
 				borderColor: "rgba(0,0,0,.035)",
 			}
 		});
 		
-		
+		// smoothness of transitions between scenes
 		var animate_bg = TweenMax.to(
 			".ww360bg", 20, { // test was 20
 			delay: 10,
@@ -935,7 +946,7 @@
 		});	
 		
 		var show_small_heading = TweenMax.to(
-			".ww360_title_cont--smaller", 20, { // test was 20
+			".ww360_title_cont--smaller", 5, { // test was 20
 				delay: 10,
 				css: {
 					opacity: "1"
@@ -944,7 +955,7 @@
 		);
 		
 		var reveal_text = TweenMax.to(
-			".ww360 .item .text", 10, { // test was 10
+			".ww360 .item .text", 15, { // test was 10
 			css: {
 				opacity: "1",
 				visibility: "visible",
@@ -952,39 +963,36 @@
 			}
 		});
 		
+		// var color_heading = TweenMax.to(
+			// ".trigger h2", 20, {
+			// delay: 10,
+			// css: {					
+				// color: "#000",
+				// borderColor: "#000"
+			// }
+		// });
+		
 		timeline
 			.add([count])
 			.add([reveal_logo, reveal_border, hide_heading])
-			.add([reveal_images, animate_bg, border_color, show_small_heading],"-=3") 
+			.add([reveal_images, animate_bg, border_color, show_small_heading],"-=3")
 			.add([reveal_text]);
 			
 		
 		var scene2 = new ScrollMagic.Scene({
 			triggerElement: ".trigger_top",
-			duration: "1%", 
+			duration: "1%",
 			triggerHook: 0,
-			reverse: true,
+			reverse: true
 		}).setTween(reveal_bg).addTo(controller);
-
-		// new
-		let scene2 = gsap.timeline({scrollTrigger: {
-				trigger: ".trigger_top",
-				start: "top top",   // Start when ".trigger_top" reaches the top of the viewport
-				end: "+=1%",        // End after 1% of the viewport height
-				// scrub: true,        // Smoothly animate as you scroll
-				toggleActions: "play none none reverse",  // Play on scroll down, reverse on scroll up
-				// markers: true       // Optional: add markers for debugging
-			}
-		});
 
 		var scene1 = new ScrollMagic.Scene({
 			triggerElement: ".trigger",
-			duration: "390%",
+			duration: "390%", // test was "390%" 
 			triggerHook: 0,
-			reverse: true,
-			scrub: 15 // test
+			reverse: true
 		}).setPin(".trigger").setTween(timeline).addTo(controller);
-
+		
 		
 		let lineArray = [];
 		let tX = new TimelineMax();
@@ -1011,7 +1019,6 @@
 		
 		return controller;
 	}
-
 	
 	$(window).on("resize", function() {		
 		if (window.innerWidth < 1024) {
@@ -1022,17 +1029,14 @@
 		if (window.innerWidth < HOMEPAGE_SCROLLMAGIC_WIDTH && controller) {
 			controller.destroy(true);
 			controller = null;
-			
-
+		} else if (window.innerWidth >= HOMEPAGE_SCROLLMAGIC_WIDTH && !controller) {
+			controller = createScrollMagic();
 		}
 	});
 	
 	$('.ww360 .item .image').click(function () {
 		let self = $(this);
-		let item  
-		
-		
-		= self.closest('.item');
+		let item = self.closest('.item');
 		let cont = self.closest('.container');
 		let video = self.find('video')[0];
 		

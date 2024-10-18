@@ -859,7 +859,7 @@
                 trigger: ".trigger",      // Element that triggers the animation
                 start: "top top",         // Start when `.trigger` hits the top of the viewport
                 end: "+=390%",            // End after scrolling down 390% of the viewport height
-                scrub: 1,                // Smoothly sync animation to scroll
+                scrub: 2,                // Smoothly sync animation to scroll
                 pin: ".trigger",          // Pin the `.trigger` element during the scroll
                 toggleActions: "play none none reverse", // Play and reverse on scroll
                 markers: false             // Optional: Add markers for debugging
