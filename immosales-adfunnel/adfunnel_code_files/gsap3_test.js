@@ -1121,34 +1121,35 @@
 		// 	reverse: true
 		// }).setTween(tX).addTo(controller);
 
-        let lineArray = [];
+		// element ".module_block" doesn't exist
+        // let lineArray = [];
 
-        // Use a GSAP timeline directly
-        let tX = gsap.timeline({
-            scrollTrigger: {
-                trigger: ".modul_block", // Element that triggers the animation
-                start: "top bottom",     // Start when the top of `.modul_block` hits the bottom of the viewport
-                end: "top top",          // End when the top of `.modul_block` reaches the top of the viewport
-                scrub: true,             // Smoothly animate based on scroll
-                toggleActions: "play none none reverse" // Play on scroll down, reverse on scroll up
-            }
-        });
+        // // Use a GSAP timeline directly
+        // let tX = gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: ".modul_block", // Element that triggers the animation
+        //         start: "top bottom",     // Start when the top of `.modul_block` hits the bottom of the viewport
+        //         end: "top top",          // End when the top of `.modul_block` reaches the top of the viewport
+        //         scrub: true,             // Smoothly animate based on scroll
+        //         toggleActions: "play none none reverse" // Play on scroll down, reverse on scroll up
+        //     }
+        // });
 
-        // Iterate through each paragraph and create an animation
-        $('.modul_block p').each(function(i) {
-            let t = 0.5 + (i * 0.065);
-            let line = gsap.from($(this), {
-                y: '110%',
-                opacity: 0,
-                duration: 1,
-                delay: t, // Apply delay to each line based on its index
-                ease: 'power3'
-            });
-            lineArray.push(line);
-        });
+        // // Iterate through each paragraph and create an animation
+        // $('.modul_block p').each(function(i) {
+        //     let t = 0.5 + (i * 0.065);
+        //     let line = gsap.from($(this), {
+        //         y: '110%',
+        //         opacity: 0,
+        //         duration: 1,
+        //         delay: t, // Apply delay to each line based on its index
+        //         ease: 'power3'
+        //     });
+        //     lineArray.push(line);
+        // });
 
-        // Add all animations to the GSAP timeline
-        tX.add(lineArray);
+        // // Add all animations to the GSAP timeline
+        // tX.add(lineArray);
 
 		return controller;
 	}
