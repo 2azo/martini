@@ -812,31 +812,32 @@
 		}
 	});
 	
-	const backgroundObserver = new IntersectionObserver((entries, observer) => {
-		if (entries[0].isIntersecting) {
-			$(".bg.next_level").addClass("active");
-			$("body").addClass("text_white");
-		} else {
-			$(".bg.next_level").removeClass("active");
-			$("body").removeClass("text_white");
-		}
-	});
+	// test comment out
+	// const backgroundObserver = new IntersectionObserver((entries, observer) => {
+	// 	if (entries[0].isIntersecting) {
+	// 		$(".bg.next_level").addClass("active");
+	// 		$("body").addClass("text_white");
+	// 	} else {
+	// 		$(".bg.next_level").removeClass("active");
+	// 		$("body").removeClass("text_white");
+	// 	}
+	// });
 	
-	backgroundObserver.observe($(".next_level_animated").get(0));
+	// backgroundObserver.observe($(".next_level_animated").get(0));
 	
 	
-	const backgroundObserverMob = new IntersectionObserver((entries, observer) => {
-		if(window.innerWidth < 1024) {
-			if (entries[0].isIntersecting) {
-				$(".bg.ww360mob").addClass("active");
-				$("body").addClass("text_white_mob");
-			} else {
-				$(".bg.ww360mob").removeClass("active");
-				$("body").removeClass("text_white_mob");
-			}			
-		}
-	});
-	backgroundObserverMob.observe($(".ww360_animated").get(0));
+	// const backgroundObserverMob = new IntersectionObserver((entries, observer) => {
+	// 	if(window.innerWidth < 1024) {
+	// 		if (entries[0].isIntersecting) {
+	// 			$(".bg.ww360mob").addClass("active");
+	// 			$("body").addClass("text_white_mob");
+	// 		} else {
+	// 			$(".bg.ww360mob").removeClass("active");
+	// 			$("body").removeClass("text_white_mob");
+	// 		}			
+	// 	}
+	// });
+	// backgroundObserverMob.observe($(".ww360_animated").get(0));
 	
 	
 	// WW360 animation
@@ -859,7 +860,7 @@
                 trigger: ".trigger",      // Element that triggers the animation
                 start: "top top",         // Start when `.trigger` hits the top of the viewport
                 end: "+=390%",            // End after scrolling down 390% of the viewport height
-                scrub: 2,                // Smoothly sync animation to scroll
+                scrub: 1,                // Smoothly sync animation to scroll
                 pin: ".trigger",          // Pin the `.trigger` element during the scroll
                 toggleActions: "play none none reverse", // Play and reverse on scroll
                 markers: false             // Optional: Add markers for debugging
@@ -977,12 +978,14 @@
 
 		// coommented out -> passed
         $(".ww360 .item .image_wrap").each(function(i) {
-            var t = (i + 1) * 3; // Adjust the delay as needed
+            var t = (i + 1) * 5; // Adjust the delay as needed
             var image = gsap.to($(this), {
-                duration: 5, // Duration of the animation
+                duration: 10, // Duration of the animation
                 delay: t,    // Delay before the animation starts
                 opacity: 1,
                 scale: 1
+				// onStart: () => console.log("reveal_images started (out of 5)"),
+  				// onComplete: () => console.log("reveal_images completed (out of 5)")
             });
             reveal_images.push(image);
         });
@@ -997,8 +1000,10 @@
 		// });
         var border_color = gsap.to(".ww360_border", {
             duration: 20, 
-            delay: 10,     
-            borderColor: "rgba(0,0,0,.035)" 
+            // delay: 10,     
+            borderColor: "rgba(0,0,0,.035)",
+			onStart: () => console.log("border_color started"),
+  			onComplete: () => console.log("border_color completed")
         });
         
         // 10. stadalone gsap tween
@@ -1009,10 +1014,12 @@
 		// 		opacity: 0
 		// 	}
 		// });
-        var animate_bg = gsap.to(".ww360bg", {
-            duration: 20,
-            delay: 10,
-            opacity: 0
+        var animate_bg = gsap.to(".background", { // test was ww360bg
+            duration: 20, // test was 20
+            // delay: 10, // test was 10
+            opacity: 0,
+			onStart: () => console.log("animate_bg started"),
+  			onComplete: () => console.log("animate_bg completed")
         });	
 		
         // 11. stadalone gsap tween
@@ -1025,9 +1032,11 @@
 		// 	}
 		// );
         var show_small_heading = gsap.to(".ww360_title_cont--smaller", {
-            duration: 10,
-            delay: 10,
-            opacity: 1
+            duration: 20,
+            // delay: 10,
+            opacity: 1,
+			onStart: () => console.log("show_small_heading started"),
+  			onComplete: () => console.log("show_small_heading completed")
         });	
 		
         // 12. stadalone gsap tween
@@ -1061,14 +1070,14 @@
 		// 	reverse: true,
 		// }).setTween(reveal_bg).addTo(controller);
 
-        gsap.to(".ww360bg", {
-            duration: 2,
+        gsap.to(".ww360bg", { // test was ww360bg
+            duration: 1,
             opacity: 1,
             scrollTrigger: {
                 trigger: ".trigger_top",
                 start: "top top",
-                end: "99%", // test was top 99%
-                scrub: false,
+                end: "top 99%", // test was top 99%
+                scrub: 1,
                 toggleActions: "play none none reverse"
             }
         });

@@ -1295,6 +1295,46 @@ section {
 	}
 }
 
+// test start - removing redundancies 
+
+// .background {
+//     width: 100vw;
+//     height: 100vh;
+//     @include position(0, 0, 0, 0, fixed);
+//     z-index: -1;
+//     pointer-events: none;
+
+//     .bg {
+//         @include position();
+//         height: 100%;
+//         width: 100%;
+//         @include transition(opacity 0.8s ease);
+
+//         &.next_level, // doesn't exist in scripts js
+//         &.ww360mob, // doesn't exist in scripts js
+//         &.ww360bgs,
+//         &.ww360bg {
+//             opacity: 0;
+//             box-sizing: border-box;
+//             background-color: var(--theme-sub);
+//         }
+
+//         &.ww360bg {
+//             @include transition(unset);
+//         }
+
+//         &.active {
+//             opacity: 1;
+//         }
+
+//         &.ww360bgs.active {
+//             opacity: 0.75;
+//         }
+//     }
+// }
+
+// test end 
+
 @media only screen and (max-width: 640px) {
 	.datenschutzerklarung {
 		h1 {
