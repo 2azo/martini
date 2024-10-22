@@ -48,38 +48,41 @@
   ?>
   
   <div <?= $anchor; ?> class="<?= esc_attr($class_name); ?>">
-  	<?php if($items): ?>
-  		<div class="swiper-pagination-vid"></div>
-  		<div class="swiper vid_swiper">
-  			<div class="swiper-wrapper">
-  			<?php foreach( $items as $i=>$item ): 
-  				$poster = $item['poster'] ? $item['poster']['url'] : "";
+    <?php if($items): ?>
+        <div class="swiper-pagination-vid"></div>
+        <div class="swiper vid_swiper">
+            <div class="swiper-wrapper">
+            <?php foreach( $items as $i => $item ):
+                $poster = $item['poster'] ? $item['poster']['url'] : "";
                 $hover_image = $item['hover_image'] ? $item['hover_image']['url'] : ""; // hover image
                 $enable_hover = isset($item['enable_hover_image']) ? $item['enable_hover_image'] : false; // new checkbox field
-  			?>
-  				<div class="swiper-slide">
-				  <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="<?= $enable_hover ? 'true' : 'false'; ?>">
-				  	<div class="video-player">
-				  		<video preload="none" playsinline="" poster="<?= $poster; ?>">
-  							<source src="<?= $item['video']['url']; ?>" type="video/mp4" />
-  						</video>
-                        <?php if($enable_hover && $hover_image): ?>
-                            <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>">
-                        <?php endif; ?>
-				  	</div>
-  					</div>					
-  					<div class="swiper-slide__info">
-  						<div class="swiper-slide__subheader"><svg><use href="#arrow-icon"></use></svg><?=strip_tags($item['subheader'],"<strong><a><br><em>");?></div>
-  						<div class="swiper-slide__text"><svg><use href="#quote-icon"></use></svg><?=strip_tags($item['description'], "<strong><a><br><em>");?><div class="play_text"><svg><use href="#arrow-icon"></use></svg>play video</div></div>
-  					</div>
-  				</div>	
-  			<?php endforeach; ?>
-  			</div>
-  		</div>
-  		<div class="swiper-nav swiper-prev"><svg><use href="#arrow-icon"></use></svg></div>
-  		<div class="swiper-nav swiper-next"><svg><use href="#arrow-icon"></use></svg></div>
-  	<?php endif;?>
+            ?>
+                <div class="swiper-slide">
+                    <div class="swiper-slide__video" data-total="<?=$count;?>" data-id="<?= $i; ?>" data-gid="<?= $ID; ?>" data-hover="<?= $enable_hover ? 'true' : 'false'; ?>">
+                        <div class="video-player">
+                            <!-- Add loading="lazy" to the video poster -->
+                            <video preload="none" playsinline="" poster="<?= $poster; ?>" loading="lazy">
+                                <source src="<?= $item['video']['url']; ?>" type="video/mp4" />
+                            </video>
+                            <!-- Lazy load hover image -->
+                            <?php if($enable_hover && $hover_image): ?>
+                                <img class="hover-image" src="<?= $hover_image; ?>" alt="Hover image for video <?= $i; ?>" loading="lazy">
+                            <?php endif; ?>
+                        </div>
+                    </div>                 
+                    <div class="swiper-slide__info">
+                        <div class="swiper-slide__subheader"><svg><use href="#arrow-icon"></use></svg><?=strip_tags($item['subheader'], "<strong><a><br><em>");?></div>
+                        <div class="swiper-slide__text"><svg><use href="#quote-icon"></use></svg><?=strip_tags($item['description'], "<strong><a><br><em>");?><div class="play_text"><svg><use href="#arrow-icon"></use></svg>play video</div></div>
+                    </div>
+                </div>    
+            <?php endforeach; ?>
+            </div>
+        </div>
+        <div class="swiper-nav swiper-prev"><svg><use href="#arrow-icon"></use></svg></div>
+        <div class="swiper-nav swiper-next"><svg><use href="#arrow-icon"></use></svg></div>
+    <?php endif; ?>
 </div>
+
 
 <?php
 

@@ -1002,8 +1002,8 @@
             duration: 20, 
             // delay: 10,     
             borderColor: "rgba(0,0,0,.035)",
-			onStart: () => console.log("border_color started"),
-  			onComplete: () => console.log("border_color completed")
+			// onStart: () => console.log("border_color started"),
+  			// onComplete: () => console.log("border_color completed")
         });
         
         // 10. stadalone gsap tween
@@ -1018,8 +1018,8 @@
             duration: 20, // test was 20
             // delay: 10, // test was 10
             opacity: 0,
-			onStart: () => console.log("animate_bg started"),
-  			onComplete: () => console.log("animate_bg completed")
+			// onStart: () => console.log("animate_bg started"),
+  			// onComplete: () => console.log("animate_bg completed")
         });	
 		
         // 11. stadalone gsap tween
@@ -1035,8 +1035,8 @@
             duration: 20,
             // delay: 10,
             opacity: 1,
-			onStart: () => console.log("show_small_heading started"),
-  			onComplete: () => console.log("show_small_heading completed")
+			// onStart: () => console.log("show_small_heading started"),
+  			// onComplete: () => console.log("show_small_heading completed")
         });	
 		
         // 12. stadalone gsap tween
