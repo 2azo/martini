@@ -843,9 +843,15 @@
 	// WW360 animation
 	let controller = null;
 	
-	if (windowWidth >= HOMEPAGE_SCROLLMAGIC_WIDTH) {
+	// if (windowWidth >= HOMEPAGE_SCROLLMAGIC_WIDTH) {
+	// 	controller = createScrollMagic();
+	// }
+
+	// only on homepage
+	if (window.location.pathname === "/" && windowWidth >= HOMEPAGE_SCROLLMAGIC_WIDTH) {
 		controller = createScrollMagic();
 	}
+	
 	
 	function createScrollMagic() {
         // 1. no need for controller
@@ -976,7 +982,7 @@
 		// 	reveal_images.push(image);
 		// });
 
-		// coommented out -> passed
+		// commented out -> passed
         $(".ww360 .item .image_wrap").each(function(i) {
             var t = (i + 1) * 5; // Adjust the delay as needed
             var image = gsap.to($(this), {
