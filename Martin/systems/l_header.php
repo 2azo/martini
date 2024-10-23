@@ -1,24 +1,46 @@
+<!-- get the id of this page and store it in CURRENT_PAGE -->
+ <!-- define an empty variable "ptitle" -->
 <?php	define("CURRENT_PAGE", get_queried_object_id()); $ptitle = '';?>
+
+<!-- telling browser that this page is HTML5 -->
 <!DOCTYPE html>
+
+<!-- language_attribute get's the language settings -->
+<!-- no-js no-svg is a technique to check if js and/or svg is supported -->
 <html <?php language_attributes(); ?> class="no-js no-svg">
 
+<!-- the place where all meta data exist normally (general information/settings) -->
 <head>
+    <!-- character encoding set, it exist else where (wp confirgurations), but there's a point for mentioning it here -->
 	<meta charset="<?php bloginfo( 'charset' ); ?>">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+	
+    <!-- setting viewport width to device width (good for mobile?), and initial scale to 1 -> no zooming in or out -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- setting theme color, it changes some color in the browser to red -->
 	<meta name="theme-color" content="#981e32">
+
+    <!-- the four lines are for icons that appear in different browsers when pinned or something -->
 	<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 	<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#981e32">
+
+    <!-- manifest concept in web is to make website appears like an app in phone -->
 	<link rel="manifest" href="/site.webmanifest"> 
-	<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#981e32">
+
+    <!-- tile color in windows, when website is pinned to the start minue  -->
 	<meta name="msapplication-TileColor" content="#981e32">
+
+    <!-- sets the tap title depending on the page title -->
 	<title><?= (!is_front_page() ? wp_title("", false) . " | " : ""); ?> Martin Mechanic - Technologie &amp; Automation</title>
+
+    <!-- important for plugins to allow them to manipulate this section -->
 	<?php wp_head(); ?>
 </head>
 
 <body <?php body_class(); ?> data-anchor="top">
 	
-
 	<header>
 
 		<div class="menu_button_cont">
@@ -41,7 +63,7 @@
 		
 		<?php 
 			$show_submenu = get_field('show_submenu');
-
+            
 			if(!is_page_template() && $show_submenu) {
 				$menu_name = 'top';
 				if (($locations = get_nav_menu_locations()) && isset($locations[$menu_name])) {
