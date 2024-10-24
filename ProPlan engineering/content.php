@@ -27,23 +27,47 @@
 					<img src="<?=$image;?>" alt="" />
 				<?php endif; ?>
 			</div>
-			
-		<?php elseif (get_row_layout() == 'slider'): 
-			$anchor = get_sub_field('acnhor');
-		?>
-			<?php if(have_rows('slide')):?>
-				<div class="slider_block" data-anchor="<?=$anchor?>">
-					<div class="slider_wrap">
-						<?php while(have_rows('slide')): the_row();?>
-							<div class="slide">
-								<img src="<?=get_sub_field('image');?>" alt="" />
-							</div>
-						<?php endwhile; ?>
-					</div>
-					<div class="slide_controls"></div>
-				</div>
-			<?php endif; ?>
-			
+
+
+            <?php elseif (get_row_layout() == 'slider'): 
+                $anchor = get_sub_field('anchor'); 
+                $slider_content_type = get_sub_field('slider_content_type');
+            ?>
+                <?php if(have_rows('slide')): ?>
+                    <div class="slider_block" data-anchor="<?= $anchor; ?>">
+                        <div class="slider_wrap">
+                            <?php if($slider_content_type == 'images'): ?>
+                                <!-- Loop through slides for images -->
+                                <?php while(have_rows('slide')): the_row();
+                                    $image = get_sub_field('image');
+                                ?>
+                                    <div class="slide">
+                                        <?php if($image): ?>
+                                            <img src="<?= esc_url($image); ?>" alt="" />
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endwhile; ?>
+
+                            <?php elseif($slider_content_type == 'video'): ?>
+                               
+                                <?php while(have_rows('slide')): the_row();
+                                    $video = get_sub_field('video_mp4');
+                                ?>
+                                    <div class="slide">
+                                        <?php if($video): ?>
+                                            <video controls>
+                                                <source src="<?= esc_url($video['url']); ?>" type="video/mp4">
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endwhile; ?>
+                            <?php endif; ?>
+                        </div>
+                        <div class="slide_controls"></div>
+                    </div>
+            <?php endif; ?>
+
 		<?php elseif (get_row_layout() == 'selector'):
 			/*$active[1] = 'active';
 			<?=$active[get_row_index()];?>*/
