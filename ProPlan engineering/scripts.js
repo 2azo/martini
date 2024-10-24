@@ -356,7 +356,7 @@
 		
 		$(element).append(prev).append(next);
 		$(element).slide({
-			// effect: 'fade',
+			effect: 'fade',
 			elements: $(element).find('.slide'),
 			autoplay: true,
 			stopOnManualChange: false,

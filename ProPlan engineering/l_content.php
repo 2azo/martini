@@ -31,7 +31,8 @@
 					<img src="<?=$image;?>" alt="" />
 				<?php endif; ?>
 			</div>
-			
+		
+         
 		<?php elseif (get_row_layout() == 'slider'): 
 			$anchor = get_sub_field('acnhor');
 		?>
