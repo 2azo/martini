@@ -30,14 +30,13 @@
 
 
             <?php elseif (get_row_layout() == 'slider'): 
-                $anchor = get_sub_field('anchor'); 
-                $slider_content_type = get_sub_field('slider_content_type');
+                $anchor = get_sub_field('anchor');
+                $slider_content_type = get_sub_field('slider_content_type'); 
             ?>
                 <?php if(have_rows('slide')): ?>
                     <div class="slider_block" data-anchor="<?= $anchor; ?>">
                         <div class="slider_wrap">
                             <?php if($slider_content_type == 'images'): ?>
-                                <!-- Loop through slides for images -->
                                 <?php while(have_rows('slide')): the_row();
                                     $image = get_sub_field('image');
                                 ?>
@@ -47,15 +46,15 @@
                                         <?php endif; ?>
                                     </div>
                                 <?php endwhile; ?>
+                                <div class="slide_controls"></div>
 
                             <?php elseif($slider_content_type == 'video'): ?>
-                               
                                 <?php while(have_rows('slide')): the_row();
                                     $video = get_sub_field('video_mp4');
                                 ?>
                                     <div class="slide">
                                         <?php if($video): ?>
-                                            <video controls>
+                                            <video autoplay loop muted playsinline>
                                                 <source src="<?= esc_url($video['url']); ?>" type="video/mp4">
                                                 Your browser does not support the video tag.
                                             </video>
@@ -64,9 +63,10 @@
                                 <?php endwhile; ?>
                             <?php endif; ?>
                         </div>
-                        <div class="slide_controls"></div>
                     </div>
             <?php endif; ?>
+
+
 
 		<?php elseif (get_row_layout() == 'selector'):
 			/*$active[1] = 'active';
