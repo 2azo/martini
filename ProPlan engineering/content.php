@@ -1,4 +1,6 @@
 <?php if (have_rows('block')): ?>
+	<?php $text_wrap_counter = 1; ?>
+
 	<?php while (have_rows('block')): the_row(); ?>
 		<?php if (get_row_layout() == 'header'): $type = get_sub_field('type');?>
 			<div class="header_cont content_block--wide reveal" data-anchor="<?=get_sub_field('anchor');?>">
@@ -16,17 +18,22 @@
 				<h2><?=get_sub_field('text');?></h2>
 			</div>
 			
-		<?php elseif (get_row_layout() == 'text_block'):
-			$image = get_sub_field('image');
-			$border_top = (get_sub_field('border_top'))?" border_top":"";
-			$border_bottom = (get_sub_field('border_bottom'))?" border_bottom":"";
-		?>
-			<div class="text_block content_block reveal<?=$border_top;?><?=$border_bottom;?>" data-anchor="<?=get_sub_field('anchor');?>">
-				<div class="text_wrap"><?=get_sub_field('text');?></div>
-				<?php if($image): ?>
-					<img src="<?=$image;?>" alt="" />
-				<?php endif; ?>
-			</div>
+			
+			<?php
+			elseif (get_row_layout() == 'text_block'):
+				$image = get_sub_field('image');
+				$border_top = (get_sub_field('border_top')) ? " border_top" : "";
+				$border_bottom = (get_sub_field('border_bottom')) ? " border_bottom" : "";
+			?>
+				<div class="text_block content_block reveal<?= $border_top; ?><?= $border_bottom; ?>" data-anchor="<?= get_sub_field('anchor'); ?>">
+					<div class="text_wrap" id="text_wrap_<?= $text_wrap_counter; ?>"><?= get_sub_field('text'); ?></div>
+					<?php 
+						$text_wrap_counter++;
+					?>
+					<?php if($image): ?>
+						<img src="<?= $image; ?>" alt="" />
+					<?php endif; ?>
+				</div>
 
 
             <?php elseif (get_row_layout() == 'slider'): 
