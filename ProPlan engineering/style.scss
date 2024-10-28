@@ -1,6 +1,6 @@
 @import 'normalize', 'mixins', 'fonts';
 
-// font-family:'Neue Helvetica W05';
+// font-family:'Neue Helvetica W05'; # out
 // 300, 500, 700
 // font-family: 'Nordstern';
 // 300, 400, 700
@@ -8,7 +8,7 @@
 // 300, 300 italic, 400, 700
   
 
-$font_main: 'Neue Helvetica W05';
+$font_main: 'Roboto Condensed';
 $font_sec: 'Nordstern';
 
 html {
@@ -291,7 +291,7 @@ a {
 					}
 					> a {
 						color: #aaa;
-						font-family:'Neue Helvetica W05';
+						font-family:'Roboto Condensed';
 						white-space: nowrap;
 					}
 				}
@@ -318,7 +318,7 @@ a {
 				text-transform: uppercase;
 				font-style: normal;
 				letter-spacing: 0.05rem;
-				font-family: 'Neue Helvetica W05', "Arial Narrow", sans-serif;
+				font-family: 'Roboto Condensed', "Arial Narrow", sans-serif;
 				vertical-align: super;
 				top: 5px;
 				position: relative;
@@ -1503,7 +1503,6 @@ footer {
 		font-weight: 300;
     	font-style: italic;
 
-        /* Set bullet points color to blue */
         li::marker {
             color: var(--theme);
         }

@@ -522,19 +522,16 @@
 			},
 			onUpdate: (e) => {
 				let progress = part1.progress()*100;
-
 				$(".trigger.part1 .picture .img").css({'background-position': 'center '+progress * 0.75+'%'});
 			}
 		});
 		
 		// enlarge picture to full screen
-		
 		let a1 = gsap.timeline({
 			onStart: () => {
 				// p1_pic.css({position:"absolute"});
 			}
 		})
-
 		.to('.trigger.part1 .picture', {
 			duration: 1,
 			left: 0,
@@ -927,19 +924,25 @@
 			
 			maximize.click(function() {
 				$.magnificPopup.open({
-					items: Array.from(items), // source of the image
+					items: Array.from(items),
 					type: 'image',
 					callbacks: {
 						close: function() {
 							swiper.slideTo(this.index, 0);
 						},
 					},
-
+					// test
 					// zoom: {
-					// 	opener: function(x) {
-					// 		return $(swiper.slides[x.index]).find('img')
-					// 	}
+					// 	enabled: true, // By default it's false, so don't forget to enable it
+					// 	duration: 300, // duration of the effect, in milliseconds
+					// 	easing: 'ease-in-out', 
+
 					// }
+					zoom: {
+						opener: function(x) {
+							return $(swiper.slides[x.index]).find('img')
+						}
+					}
 				}, swiper.activeIndex);
 			});
 		}
