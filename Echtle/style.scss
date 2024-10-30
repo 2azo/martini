@@ -2222,7 +2222,7 @@ footer {
 }
 
 .ha2_block + .wp-block-group {
-	@include break-xl {
+	@include break-3xl {
 		margin-top: -30rem;
 	}
 }

@@ -160,22 +160,117 @@
 	};
 	
 	var main_video = $('.main_slider video')[0];
+	// function fadeVolumeDown(){
+	// 	if(main_video) {
+	// 		if (main_video.muted) return;
+			
+	// 		const visual = document.querySelector('.main_slider');
+	// 		const vol = 1 - window.scrollY / visual.clientHeight;
+			
+	// 		if (vol < 0) {
+	// 			main_video.volume = 0;
+	// 		} else if (vol > 1) {
+	// 			main_video.volume = 1;
+	// 		} else {
+	// 			main_video.volume = vol;
+	// 		}
+	// 	}
+	// }
+
+	// test
+	var video = $('.main_slider video')[0];
+	// function toggleVolume() {
+	// 	if (video.muted) {
+	// 		volume_unmuted.style.display = "initial";
+	// 		volume_muted.style.display = "none";
+	// 		video.muted = false;
+	// 		video.volume = 1;
+	// 		volume_slider_fill.style.width = (video.volume * 100) + "%";
+	// 		volume_slider_knob.style.left = (video.volume * 100) + "%";
+	// 	} else {
+	// 		volume_unmuted.style.display = "none";
+	// 		volume_muted.style.display = "initial";
+	// 		video.muted = true;
+	// 		volume_slider_fill.style.width = 0;
+	// 		volume_slider_knob.style.left = 0;
+	// 	}
+	// }
+	createDebugElement();
+
 	function fadeVolumeDown(){
 		if(main_video) {
 			if (main_video.muted) return;
 			
+			// if iphone
+			if (isIphone()) {
+				// debug("I am an Iphone!")
+			}
+				
 			const visual = document.querySelector('.main_slider');
+			var video = $('.main_slider video')[0];
 			const vol = 1 - window.scrollY / visual.clientHeight;
 			
 			if (vol < 0) {
-				main_video.volume = 0;
+				video.volume = 0;
+				// video.muted = true;
+				// debug("1+" + vol)
 			} else if (vol > 1) {
-				main_video.volume = 1;
+				video.volume = 1;
+				// video.muted = false;
+				// debug("2+" + vol)
 			} else {
-				main_video.volume = vol;
+				video.volume = vol;
+				// video.muted = false;
+				// debug("3+" + video.volume)
 			}
 		}
+
 	}
+
+	// test
+	// ScrollTrigger.create({
+	// 	trigger: '.main_slider', 
+	// 	start: 'top top',        
+	// 	end: 'bottom top',       
+	// 	onUpdate: (self) => {
+	// 		const progress = 1 - self.progress; 
+	// 		main_video.volume = progress;
+	// 		// console.log("Volume:", main_video.volume);
+	// 	},
+	// 	scrub: true,
+	// 	markers: false
+	// });
+
+	// test
+	// Select the element you want to observe (e.g., a video with id="myVideo")
+	const videoElement = document.querySelector("main_slider");
+
+	if (videoElement) {
+		// Create an intersection observer
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach(entry => {
+					if (entry.isIntersecting) {
+						console.log("Video has intersected with the top of the screen!");
+						videoElement.style.width = "10%"; // Shrink the video width to 10%
+						// You can perform any action here, e.g., play the video or change its style
+					} else {
+						console.log("Video is no longer intersecting the top.");
+						videoElement.style.width = "100%"; // Reset the width when it leaves
+					}
+				});
+			},
+			{
+				root: null, // viewport
+				rootMargin: "0px 0px -100% 0px", // Trigger when top of element is at the top of viewport
+				threshold: 0 // Trigger as soon as any part of the element is visible
+			}
+		);
+
+		// Start observing the video element
+		observer.observe(videoElement);
+}
+
 
 
 	window.requestAnimationFrame(onAnimationFrame);
@@ -1294,5 +1389,72 @@
 			overlay.fadeOut(300);
 		}
 	});
+
+	// test
+	// function videoVisibilityObserver() {
+	// 	const videoElement = document.querySelector('.slider_block.main_slider video');
+	  
+	// 	if (!videoElement) {
+	// 	  console.log('Video element not found');
+	// 	  return;
+	// 	}
+	  
+	// 	// Create a new Intersection Observer
+	// 	const observer = new IntersectionObserver(
+	// 	  (entries) => {
+	// 		entries.forEach((entry) => {
+	// 		  if (entry.isIntersecting) {
+	// 			videoElement.muted = false;
+	// 		  } else {
+	// 			videoElement.muted = true;
+	// 		  }
+	// 		});
+	// 	  },
+	// 	  {
+	// 		rootMargin: '0px',
+	// 		threshold: 0.1,
+	// 	  }
+	// 	);
+	  
+	// 	// Start observing the video element
+	// 	observer.observe(videoElement);
+	// }
 	
+	// // Call the function initially
+	// // window.addEventListener('load', videoVisibilityObserver);
+	// // window.addEventListener('resize', videoVisibilityObserver);
+	// window.addEventListener('scroll', videoVisibilityObserver);
+
+	// test debugging
+	// Create the debugging element dynamically
+	function createDebugElement() {
+		const debugElement = document.createElement('div');
+		debugElement.id = 'debugInfo';
+		debugElement.style.position = 'fixed';
+		debugElement.style.bottom = '10px';
+		debugElement.style.left = '10px';
+		debugElement.style.backgroundColor = 'rgba(0,0,0,0.7)';
+		debugElement.style.color = 'white';
+		debugElement.style.padding = '5px';
+		debugElement.style.fontSize = '12px';
+		debugElement.style.zIndex = '1000';
+		debugElement.style.display = 'none'; // Hide initially
+		document.body.appendChild(debugElement);
+	}
+
+	// Function to log messages to the debugging element
+	function debug(message) {
+		const debugElement = document.getElementById('debugInfo');
+		debugElement.style.display = 'block'; // Make it visible
+		debugElement.innerText += message + "\n"; // Append each message
+	}
+
+	// Run the setup and check functions
+	createDebugElement();
+
+	// test is iphone
+	function isIphone() {
+		return /iPhone/i.test(navigator.userAgent);
+	}
+
 })(jQuery);

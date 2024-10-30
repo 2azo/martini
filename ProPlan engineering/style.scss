@@ -335,7 +335,7 @@ a {
 		margin: 50px auto;
 		font-size: 1.25rem;
 		line-height: 1.4;
-		letter-spacing: 0.03rem;
+		letter-spacing: 0.00rem;
 		a {
 			&:hover {
 				color: var(--theme);
@@ -1508,6 +1508,18 @@ footer {
         }
     }
 }
+
+
+h1.small {
+	p {
+		em {
+			display: inline-grid;
+			letter-spacing: 0rem;
+		}
+	}
+}
+
+
  
   
 
