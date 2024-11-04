@@ -1,4 +1,6 @@
 (function($) {
+	// let volumeButton; // test
+
 	"use strict";
 	
 	if (navigator.platform.indexOf("Mac") != -1) {
@@ -202,9 +204,9 @@
 			if (main_video.muted) return;
 			
 			// if iphone
-			if (isIphone()) {
+			// if (isIphone()) {
 				// debug("I am an Iphone!")
-			}
+			// }
 				
 			const visual = document.querySelector('.main_slider');
 			var video = $('.main_slider video')[0];
@@ -341,8 +343,20 @@
 			
 			$('.menu li').removeClass("active");
 			$('a[href="'+pathname+'#'+id+'"]').parent().addClass("active");
+			
+			fadeVolumeDown();
 
-			fadeVolumeDown();			
+			// const hrefValue = volumeButton.find('use').attr('href');
+
+			// if (hrefValue === '#volume-xmark-icon') {
+			// 	console.log('Href matches #volume-xmark-icon');
+			// 	// Your logic here
+			// } else {
+			// 	console.log('Href does not match');
+			// }
+
+				
+		
 			
 			scrollTop = st;
 		}
@@ -1136,6 +1150,7 @@
 			const progressCont = $('<div class="progress_cont" />');
 			const pauseButton = $('<div class="icon pause"><svg><use href="#pause-icon"></use></div>').appendTo(progressCont);
 			const volumeButton = $('<div class="icon volume"><svg><use href="#volume-xmark-icon"></use></div>').appendTo(progressCont);
+			// volumeButton = $('<div class="icon volume"><svg><use href="#volume-xmark-icon"></use></div>').appendTo(progressCont); // test
 			const progressBar = $('<div class="progress_bar" />').appendTo(progressCont);
 			const progress = $('<div class="progress" />').appendTo(progressBar);
 			const progressTime = $('<div class="progress_time">00.<span>sek</span></div>').appendTo(progressCont);
@@ -1391,34 +1406,34 @@
 	});
 
 	// test
-	// function videoVisibilityObserver() {
-	// 	const videoElement = document.querySelector('.slider_block.main_slider video');
+	function videoVisibilityObserver() {
+		const videoElement = document.querySelector('.slider_block.main_slider video');
 	  
-	// 	if (!videoElement) {
-	// 	  console.log('Video element not found');
-	// 	  return;
-	// 	}
+		if (!videoElement) {
+		  console.log('Video element not found');
+		  return;
+		}
 	  
-	// 	// Create a new Intersection Observer
-	// 	const observer = new IntersectionObserver(
-	// 	  (entries) => {
-	// 		entries.forEach((entry) => {
-	// 		  if (entry.isIntersecting) {
-	// 			videoElement.muted = false;
-	// 		  } else {
-	// 			videoElement.muted = true;
-	// 		  }
-	// 		});
-	// 	  },
-	// 	  {
-	// 		rootMargin: '0px',
-	// 		threshold: 0.1,
-	// 	  }
-	// 	);
+		// Create a new Intersection Observer
+		const observer = new IntersectionObserver(
+		  (entries) => {
+			entries.forEach((entry) => {
+			  if (entry.isIntersecting) {
+				videoElement.muted = false;
+			  } else {
+				videoElement.muted = true;
+			  }
+			});
+		  },
+		  {
+			rootMargin: '0px',
+			threshold: 0.1,
+		  }
+		);
 	  
-	// 	// Start observing the video element
-	// 	observer.observe(videoElement);
-	// }
+		// Start observing the video element
+		observer.observe(videoElement);
+	}
 	
 	// // Call the function initially
 	// // window.addEventListener('load', videoVisibilityObserver);

@@ -416,7 +416,7 @@
 		}
 	});
 	
-	$('#menu-main-menu > li > span').click(function() {
+	$('#menu-hauptmenue > li > span').click(function() {
 		var self = $(this);
 		var parent = self.parent();
 		var menu = parent.find('.sub-menu');
