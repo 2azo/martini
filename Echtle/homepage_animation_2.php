@@ -26,45 +26,47 @@
 	$vwc = get_field('video_with_caption');
 ?>
 
-<div <?=$anchor;?> class="<?php echo esc_attr($class_name); ?>">
-	<div class="ha2_block_wrap">
-		<div class="trigger part2">
-			<div class="picture">
-				<div class="img" style="background-image: url('<?=$picture['url'];?>');">
-					<div class="overlay"></div>
-				</div>
-			</div>
-			<div class="text">
-				<div class="row"><?=$text1;?></div>
-				<div class="row">
-					<div class="col">
-						<?=$text2;?>
-						<div class="wp-block-video white">
-							<div class="image">
-								<img src="<?=$pwc['picture']['url'];?>" alt="<?=$pwc['picture']['alt'];?>" />
-								<div class="caption">
-									<?=$pwc['caption'];?>
-								</div>
-							</div>
-							<video playsinline poster="<?= $vwc["video_poster"]; ?>" src="<?=$vwc['video']['url'];?>"></video>
-						</div>
-					</div>
-					<div class="col">
-						<?=$text3;?>
-						<div class="caption">
-							<?=$vwc['caption'];?>
-						</div>
-					</div>
-				</div>
-				<div class="mob">
-					<div class="image"><img src="<?=$pwc['picture']['url'];?>" alt="<?=$pwc['picture']['alt'];?>" /></div>
-					<div class="caption"><?=$pwc['caption'];?></div>
-					<div class="wp-block-video">
-						<video playsinline src="<?=$vwc['video']['url'];?>"></video>
-					</div>
-					<div class="caption"><?=$vwc['caption'];?></div>
-				</div>
-			</div>
-		</div>
-	</div>
+<div <?= $anchor; ?> class="<?php echo esc_attr($class_name); ?>">
+    <div class="ha2_block_wrap">
+        <div class="trigger part2">
+            <div class="picture">
+                <div class="img" style="background-image: url('<?= $picture['url']; ?>');">
+                    <div class="overlay"></div>
+                </div>
+            </div>
+            <div class="text">
+                <div class="row"><?= $text1; ?></div>
+                <div class="row">
+                    <div class="col">
+                        <?= $text2; ?>
+                        <div class="wp-block-video white">
+                            <div class="image">
+                                <img src="<?= $pwc['picture']['url']; ?>" alt="<?= $pwc['picture']['alt']; ?>" />
+                                <div class="caption">
+                                    <?= $pwc['caption']; ?>
+                                </div>
+                            </div>
+                            <video playsinline poster="<?= esc_url($vwc['video_poster']); ?>" src="<?= esc_url($vwc['video']['url']); ?>"></video>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <?= $text3; ?>
+                        <div class="caption">
+                            <?= $vwc['caption']; ?>
+                        </div>
+                    </div>
+                </div>
+                <div class="mob">
+                    <div class="image">
+                        <img src="<?= $pwc['picture']['url']; ?>" alt="<?= $pwc['picture']['alt']; ?>" />
+                    </div>
+                    <div class="caption"><?= $pwc['caption']; ?></div>
+                    <div class="wp-block-video">
+                        <video playsinline poster="<?= esc_url($vwc['video_poster']); ?>" src="<?= esc_url($vwc['video']['url']); ?>"></video>
+                    </div>
+                    <div class="caption"><?= $vwc['caption']; ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

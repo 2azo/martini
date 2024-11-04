@@ -1,0 +1,109 @@
+// Global Mixins
+@mixin radius($value...) {
+    -moz-border-radius: $value;
+    -webkit-border-radius: $value;
+    border-radius: $value;
+  }
+  @mixin transition($value...) {
+    -webkit-transition: $value;
+    -moz-transition: $value;
+    -o-transition: $value;
+    transition: $value;
+  }
+  @mixin transform($value...) {
+    $value: if(length($value) == 0, translate(-50%, -50%), $value);
+    -webkit-transform: $value;
+    -ms-transform: $value;
+    transform: $value;
+  }
+  @mixin box-shadow($value...) {
+    -webkit-box-shadow: $value;
+    -moz-box-shadow: $value;
+    box-shadow: $value;
+  }
+  @mixin placeholder {
+    &::-webkit-input-placeholder {
+      @content;
+    }
+    &:-moz-placeholder {
+      @content;
+    }
+    &::-moz-placeholder {
+      @content;
+    }
+    &:-ms-input-placeholder {
+      @content;
+    }
+  }
+  @mixin position($top: 0, $right: 0, $bottom: 0, $left: 0, $pos: absolute) {
+    position: $pos;
+    top: $top;
+    bottom: $bottom;
+    right: $right;
+    left: $left;
+  }
+  @mixin clear() {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0;
+    visibility: hidden;
+    clear: both;
+  }
+  
+  @-webkit-keyframes rotating {
+    from {
+      -webkit-transform: rotate(0deg) translate(-50%,-50%);
+      -o-transform: rotate(0deg) translate(-50%,-50%);
+      transform: rotate(0deg) translate(-50%,-50%);
+    }
+    to {
+      -webkit-transform: rotate(360deg) translate(-50%,-50%);
+      -o-transform: rotate(360deg) translate(-50%,-50%);
+      transform: rotate(360deg) translate(-50%,-50%);
+    }
+  }
+  @keyframes rotating {
+    from {
+      @include transform(rotate(0deg));
+    }
+    to {
+      @include transform(rotate(360deg));
+    }
+  }
+  
+  @mixin break-xxs {
+      @media (min-width: 380px) { @content; }
+  }
+  
+  @mixin break-xs {
+      @media (min-width: 480px) { @content; }
+  }
+  
+  @mixin break-sm {
+      @media (min-width: 640px) { @content; }
+  }
+  
+  @mixin break-md {
+      @media (min-width: 768px) { @content; }
+  }
+  
+  @mixin break-lg {
+      @media (min-width: 1024px) { @content; }
+  }
+  
+  @mixin break-xl {
+      @media (min-width: 1280px) { @content; }
+  }
+  
+  @mixin break-1xl {
+      @media (min-width: 1366px) { @content; }
+  }
+  
+  @mixin break-2xl {
+      @media (min-width: 1536px) { @content; }
+  }
+  
+  @mixin break-3xl {
+      @media (min-width: 1920px) { @content; }
+  }
