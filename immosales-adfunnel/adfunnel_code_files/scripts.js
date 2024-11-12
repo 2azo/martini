@@ -693,62 +693,62 @@
 		}
 	});
 	
-	$("#contact-form").on("submit", function(e) {
-		e.preventDefault();
-		var self = $(this);
-		var overlay = $('.mail_pending');
-		var message = self.find('.message');
-		var invalid = false;
-		var bchk = self.find('#bchk').val();
-		if(bchk !== '') {
-			invalid = false;
-		}
-		$(".required").each(function() {
-			var el = $(this);
-			var input = el.find('input,select');
+	// $("#contact-form").on("submit", function(e) {
+	// 	e.preventDefault();
+	// 	var self = $(this);
+	// 	var overlay = $('.mail_pending');
+	// 	var message = self.find('.message');
+	// 	var invalid = false;
+	// 	var bchk = self.find('#bchk').val();
+	// 	if(bchk !== '') {
+	// 		invalid = false;
+	// 	}
+	// 	$(".required").each(function() {
+	// 		var el = $(this);
+	// 		var input = el.find('input,select');
 			
-			if ($.trim(input.val()).length == 0) {
-				invalid = true;
-				el.addClass('field_error');
-			} else {
-				el.removeClass('field_error');
-			}
-		});
+	// 		if ($.trim(input.val()).length == 0) {
+	// 			invalid = true;
+	// 			el.addClass('field_error');
+	// 		} else {
+	// 			el.removeClass('field_error');
+	// 		}
+	// 	});
 		
-		if (invalid) {
-			message.text('Es wurden nicht alle Felder ausgefüllt');
-		} else {
-			overlay.fadeIn(300);
-			var contact_form = self[0];
-			var data = new FormData(contact_form);
-			data.append("action", "send_mail");
+	// 	if (invalid) {
+	// 		message.text('Es wurden nicht alle Felder ausgefüllt');
+	// 	} else {
+	// 		overlay.fadeIn(300);
+	// 		var contact_form = self[0];
+	// 		var data = new FormData(contact_form);
+	// 		data.append("action", "send_mail");
 			
-			$.ajax({
-				type: "POST",
-				url: "/wp-admin/admin-ajax.php",
-				contentType : false,
-				processData : false,
-				data: data,
-				success: function(msg) {
-					if(msg == "success") {
-						message.text('E-Mail erfolgreich gesendet!');
-						$(".input_cont").each(function() {
-							$(this).find('input[type=text],input[type=tel],input[type=email],textarea').val('');
-						});
-					} else {
-						message.text('Error!');
-						console.log("Error: " + msg);
-					}
-				}, 
-				error: function(msg){
-					message.text("Error: " + msg);
-					console.log("Error: " + msg);
-				}
-			});
+	// 		$.ajax({
+	// 			type: "POST",
+	// 			url: "/wp-admin/admin-ajax.php",
+	// 			contentType : false,
+	// 			processData : false,
+	// 			data: data,
+	// 			success: function(msg) {
+	// 				if(msg == "success") {
+	// 					message.text('E-Mail erfolgreich gesendet!');
+	// 					$(".input_cont").each(function() {
+	// 						$(this).find('input[type=text],input[type=tel],input[type=email],textarea').val('');
+	// 					});
+	// 				} else {
+	// 					message.text('Error!');
+	// 					console.log("Error: " + msg);
+	// 				}
+	// 			}, 
+	// 			error: function(msg){
+	// 				message.text("Error: " + msg);
+	// 				console.log("Error: " + msg);
+	// 			}
+	// 		});
 			
-			overlay.fadeOut(300);
-		}
-	});
+	// 		overlay.fadeOut(300);
+	// 	}
+	// });
 	
 	
 	
