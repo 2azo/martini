@@ -149,6 +149,10 @@
 	var main_video = $('.main_video video')[0];
 	function fadeVolumeDown(){
 		if(main_video) {
+			
+			// test
+			// console.log("Hi");
+
 			if (main_video.muted) return;
 			
 			const visual = document.querySelector('.main_video');

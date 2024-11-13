@@ -169,8 +169,8 @@
 		var st = window.pageYOffset;
 		var ww = window.innerWidth;
 		var wh = $(window).innerHeight();
-		// test
-		var video = container.find('video');
+		// // test
+		// var video = find('video');
 		
 		if (st !== scrollTop) {
 			if (ww > 1199) {
