@@ -354,7 +354,9 @@
 						workQueue();
 					}
 				});
+				// test
 				video.preload = "metadata";
+				// video.preload = "none";
 			}
 		};
 		

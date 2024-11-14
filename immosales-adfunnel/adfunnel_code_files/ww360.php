@@ -58,7 +58,8 @@
                             <div class="overlay"><svg><use href="#play-icon"></use></svg></div>
 
                             <!-- Lazy loading for videos -->
-                            <video preload="metadata" playsinline poster="<?= $item['image']['url']; ?>" loading="lazy">
+                            <!-- deleted preload="metadata" -->
+                            <video preload="none" playsinline poster="<?= $item['image']['url']; ?>" loading="lazy">
                                 <source src="<?= $item['video']['url']; ?>" type="video/mp4" />
                             </video>
                         </div>

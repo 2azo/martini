@@ -834,7 +834,7 @@ section {
 				font-weight: 700;
 				font-size: 0.875rem;
 				line-height: 1;
-				margin-left: 0.75rem;
+				margin-left: 0.73rem;
 				height: 0.625rem;
 			}
 		}
@@ -1545,6 +1545,7 @@ section {
 
 .interviews .swiper-slide__subheader svg {
   margin-left: auto; /* Ensures the play button moves to the extreme right */
+//   display: none; // test
 }
 
   
@@ -1828,7 +1829,7 @@ section {
 
 	.video-player .video-interface .progress .time {
 		font-size: 0.8rem;
-		margin-left: 0.7rem;
+		margin-left: 0.51rem;
 	}
 
 	.video_carousel.col4 .vid_swiper .swiper-wrapper .swiper-slide__video .video-player .video-interface .progress .bar {
@@ -1935,6 +1936,7 @@ section {
     display: none !important;
 }
 
+
 // // test
 // .trigger_top {
 //     border: 2px solid red; /* Add a red border to clearly see the element */
@@ -1946,3 +1948,7 @@ section {
 //     border: 2px solid red; /* Add a red border to clearly see the element */
 //     padding: 10px; /* Optional: Add some padding inside the border */
 // }
+
+.swiper-slide__subheader svg use[href="#arrow-icon"] {
+    display: none;
+}
