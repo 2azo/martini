@@ -1140,6 +1140,10 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 			.appendTo(self);
 	});
 	
+	
+	
+	
+	
 	var video_carousel = $('.video_carousel > .wp-block-group__inner-container');
 	video_carousel.addClass('owl-carousel');
 	video_carousel.owlCarousel({
@@ -1238,41 +1242,74 @@ const fullscreen_exit = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" vie
 	});
 	
 	// volume fading
-	function fadeVolumeDown(){
-		var main_video = document.querySelector('.wp-block-group video'); 
-		if(main_video) {
-			if (main_video.muted) return;
+	
+// 	function fadeVolumeDown(){
+//     var main_video = document.querySelector('.wp-block-group video');
+//     if(main_video) {
+//         if (main_video.muted) return;
+        
+//         const visual = document.querySelector('.wp-block-group');
+//         const vol = 1 - window.scrollY / visual.clientHeight;
 
-			
-			const visual = document.querySelector('.wp-block-group'); 
-			const rect = visual.getBoundingClientRect(); // position of the video container relative to the viewport
-			const windowHeight = window.innerHeight; // height of the viewport
+//         // Set video volume based on scroll position
+//         if (vol < 0) {
+//             main_video.volume = 0;
+//         } else if (vol > 1) {
+//             main_video.volume = 1;
+//         } else {
+//             main_video.volume = vol;
+//         }
+//     }
+// }
 
-			// distance of the video container's center from the center of the viewport
-			const videoCenter = rect.top + (rect.height / 2);
-			const viewportCenter = windowHeight / 2;
-			const distanceFromCenter = Math.abs(videoCenter - viewportCenter);
+// // Add a scroll event listener to the window
+// window.addEventListener('scroll', function() {
+//     fadeVolumeDown(); 
+// });
 
-			// maximum distance allowed before the volume fades out completely
-			const maxDistance = windowHeight / 2;
+// test
 
-			// Calculate volume based on the distance from the center of the viewport
-			let vol = 1 - (distanceFromCenter / maxDistance);
+// Assuming fadeVolumeDown() is already defined
+function fadeVolumeDown(){
+    var main_video = document.querySelector('.wp-block-group video'); // Adjust selector for your video element
+    if(main_video) {
+        if (main_video.muted) return;
 
-			if (vol < 0) {
-				main_video.volume = 0;
-			} else if (vol > 1) {
-				main_video.volume = 1;
-			} else {
-				main_video.volume = vol;
-			}
-		}
-	}
+        // Get the video container element
+        const visual = document.querySelector('.wp-block-group'); // Adjust selector for your video container
+        const rect = visual.getBoundingClientRect(); // Get the position of the video container relative to the viewport
+        const windowHeight = window.innerHeight; // Get the height of the viewport
 
-	// Add a scroll event listener to the window
-	window.addEventListener('scroll', function() {
-		fadeVolumeDown(); // Call fadeVolumeDown function on scroll
-	});
+        // Calculate the distance of the video container's center from the center of the viewport
+        const videoCenter = rect.top + (rect.height / 2);
+        const viewportCenter = windowHeight / 2;
+        const distanceFromCenter = Math.abs(videoCenter - viewportCenter);
+
+        // Calculate the maximum distance allowed before the volume fades out completely
+        const maxDistance = windowHeight / 2;
+
+        // Calculate volume based on the distance from the center of the viewport
+        let vol = 1 - (distanceFromCenter / maxDistance);
+
+        // Set the volume (ensure it stays between 0 and 1)
+        if (vol < 0) {
+            main_video.volume = 0;
+        } else if (vol > 1) {
+            main_video.volume = 1;
+        } else {
+            main_video.volume = vol;
+        }
+    }
+}
+
+// Add a scroll event listener to the window
+window.addEventListener('scroll', function() {
+    fadeVolumeDown(); // Call fadeVolumeDown function on scroll
+});
+
+//  test end
+
+	
 
 })(jQuery);
 
