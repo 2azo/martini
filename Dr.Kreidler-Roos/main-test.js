@@ -30,6 +30,7 @@
 	});
 	
 	$('#top-link > span').click(function() {
+        // console.log("I am inside span click")
 		$('body, html').animate({
 			scrollTop: 0
 		}, 1000);
@@ -244,7 +245,6 @@
 		var value = Math.min(25, (st * 25 / wh));
 		
 		if (ww >= 960) {
-			console.log(ww);
 			$('#visual > .inside').css('transform', 'translate(0, ' + value + '%)');
 			$('#visual_container .headline').css('transform', 'translate(0, ' + (st * 0.125) + 'px)');
 		} else {
@@ -275,6 +275,11 @@
 	});
 
 
+    // test - didn't work
+    $('.toggler').click(function() {
+        console.log("toggler is clicked!")
+        $('.accordion').slideToggle(300);
+    });
     
     
 })(jQuery);
