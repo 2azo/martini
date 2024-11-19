@@ -92,26 +92,45 @@
 	}
 	
 	function scrollTo(e, v) {
+		// console.log("I'm inside ScrollTo")
+
+		// v is optional, provided value or zero
 		v = v || 0;
+
+		// normalizing e (e.g. if %20 -> space)
 		e = decodeURI(e);
+
+		// making it lowercase
 		e = e.toLowerCase();
 
 		let trans = 0;
+
+		// looks for an element with data-anchor = "e"
 		const target = $('[data-anchor="' + e + '"]');
 
 		if (target.length < 1) {
 			return;
 		}
 
+		// not sure
 		if (!target.hasClass('reveal_visible')) {
 			trans += 100;
 		}
 		
-		// const headerHeight = 96;
 		const headerHeight = 56;
-		const scroll_num = $('[data-anchor="' + e + '"]').offset().top - trans + v - headerHeight;
+
+		// offse().top: offset of the element from the top of the screen
+		// trans: "adjustment for hidder elements"
+		// why subtracting the headerHeight?
+		const scroll_num = target.offset().top - trans + v - headerHeight;
+
+		// .animate is a JQuery animation method
 		page.animate({
+
+			// scroll to
 			scrollTop: scroll_num
+
+			// duration of the animation in ms
 		}, 1200);
 	}	
 
@@ -129,7 +148,8 @@
 		});
 	}
 	
-	$(".sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
+
+	$(".sub_menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
 		var href = $(this).attr("href").replace(window.location.origin, "");
 		var url = href.substr(0, href.indexOf("#"));
 		var hash = href.substr(href.indexOf("#") + 1);
@@ -140,27 +160,65 @@
 			menu.removeClass('active');
 			page.removeClass('no_scroll');
 			menu_button.removeClass('active');
-			scrollTo(hash);
+
+			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			if (accAnchor.length) {
+				console.log("there's accAnchor")
+				 checkAccBlockHash(hash);
+			}
+			
+			else {
+				console.log("there's NO accAnchor")
+				scrollTo(hash);
+			}
+           
 		}
 	});
 	
-	$(".sub_menu a").click(function(e) {
+    // working good 
+    // when clicking, run
+	// this event listener is repetitive, and conflicting with the previous one, so I merged them
+	// $(".sub_menu a").click(function(e) {
+    //     // full link example: http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#lipo 
 
-		var href = $(this).attr("href").replace(window.location.origin, "");
-		var url = href.substr(0, href.indexOf("#"));
-		var hash = href.substr(href.indexOf("#") + 1);
-		$(".main_menu_bg").removeClass("active");
-		$('.menu-item-has-children').removeClass('hovered');
-		enableScroll();
+    //     // href: /sondermaschinen/#lipo
+	// 	var href = $(this).attr("href").replace(window.location.origin, "");
+
+    //     // url: /sondermaschinen/
+	// 	var url = href.substr(0, href.indexOf("#"));
+
+    //     // hash:  lipo
+	// 	var hash = href.substr(href.indexOf("#") + 1);
+
+    //     // it's called "jQuery selector -> $ stands for jQuery" and it's expensive to run
+    //     // main_menu_bg: the red background
+	// 	$(".main_menu_bg").removeClass("active");
+
+    //     // menu-item-has-children: has sub-menu
+	// 	$('.menu-item-has-children').removeClass('hovered');
+
+    //     // enabeling scrolling, details there
+	// 	enableScroll();
 		
-		if (url == "" || url == window.location.pathname) {
-			menu.removeClass('active');
-			page.removeClass('no_scroll');
-			menu_button.removeClass('active');
-			checkAccBlockHash(hash);
-		}
 
-	});
+    //     // window.location.pathname: /sondermaschinen/
+	// 	if (url == "" || url == window.location.pathname) {
+
+    //         // var menu = $('.main_menu');
+	// 		menu.removeClass('active');
+
+    //         // var page = $('html, body');
+	// 		page.removeClass('no_scroll');
+
+    //         // var menu_button = $('.menu_button');
+	// 		menu_button.removeClass('active');
+
+	// 		// specifically for $(`.acc_block .list [data-anchor="${hash}"]`);
+	// 		// scroll to them AND open them
+	// 		checkAccBlockHash(hash);
+	// 	}
+
+	// });
 	
 	$('[data-svg]').each(function() {
 		svgImage(this, $(this).attr('data-svg'));
@@ -171,13 +229,21 @@
 		page.addClass('no_scroll');
 
         $(window).on('scroll.scrolldisabler',function ( event ) {
-        $(window).scrollTop( window.oldScrollPos );
-        event.preventDefault();
+            $(window).scrollTop( window.oldScrollPos );
+            event.preventDefault();
         });
 	};
 
 	function enableScroll() {
+
+        // selecting "window" object
+        // .off() JQuery method to remove an event listener 
+        // scroll: event type
+        // scrolldisabler: like a label for the event "for this specific scroll event"
+        // line summariy: stop listening to this specific scroll event 
 		$(window).off('scroll.scrolldisabler');
+
+        // var page = $('html, body');
 		page.removeClass('no_scroll');
 	};
 	
@@ -369,59 +435,39 @@
 			cont.stop().slideDown(300);
 			$('.image[data-id="'+id+'"]').stop().slideDown(300);
 		}
-		
-		// const acc_cont = acc.find(".acc_cont");
-		
-		// if (acc_cont.length) {
-			// var scrollTarget = acc_cont.offset().top - $("body > header .sub_menu").innerHeight();
-			// var scrollBuffer = 20; // added
-			// var maxScroll = $(document).height() - $(window).height();
-			// page.animate({
-				// scrollTop: Math.min(scrollTarget - scrollBuffer, maxScroll)
-			// }, 300);
-		// }
+
 	});
 	
-	// function checkAccBlockHash(hash) {
-		// if (hash.length) {
-			// const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
-			// if (accAnchor.length) {
-				// accAnchor.find(".toggle").click();
-				// setTimeout(function() {
-					// var scrollTarget = accAnchor.offset().top - $("body > header .sub_menu").innerHeight();
-					// var scrollBuffer = 20; 
-					// var maxScroll = $(document).height() - $(window).height();
-					// $('html, body').animate({
-						// scrollTop: Math.min(scrollTarget - scrollBuffer, maxScroll)
-					// }, 300);
-				// }, 300); 
-			// }
-		// }
-	// }
 	
+
 	function checkAccBlockHash(hash) {
-		if(hash.length) {
-			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
-			const accToggle = accAnchor.find(".toggle");
-			const firstItem = $('.acc_block .list [data-id="1"]').attr('data-anchor');
+		if (!hash.length) return;
 		
-            // // test
-            // const targetElement = document.querySelector('[data-anchor="kontaktformular"]');
-            // const rect = targetElement.getBoundingClientRect();
-            // const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
-            // console.log('Is element truly visible on screen?', isVisible);
+		// example
+		// http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#mpv
+		
+		// hash: mpv
 
-            
-			if (accAnchor.length) {
-				// setTimeout(function() {
-				scrollTo(firstItem);
-				// }, 350);
-				if(accAnchor.hasClass('active')) return;
-				accToggle.click();
-			}
+		const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
 
+		// a child of accAnchor with a class "toggle"
+		const accToggle = accAnchor.find(".toggle");
+
+		// item has the attribute "data-anchor"
+		// first item because: to see the full list
+		const firstItem = $('.acc_block .list [data-id="1"]').attr('data-anchor');
+	
+		// accAnchor exist AND it is not active (should be closed)
+		if (accAnchor.length && !accAnchor.hasClass('active')) {
+
+			// scroll to a specific target in a specific duration
+			scrollTo(firstItem);
+
+			// Simulate a click to activate
+			accToggle.click();
 		}
 	}
+	
     
       
 

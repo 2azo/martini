@@ -129,7 +129,7 @@
 		});
 	}
 	
-	$(".sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {  
+	$(".sub_menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
 		var href = $(this).attr("href").replace(window.location.origin, "");
 		var url = href.substr(0, href.indexOf("#"));
 		var hash = href.substr(href.indexOf("#") + 1);
@@ -140,27 +140,37 @@
 			menu.removeClass('active');
 			page.removeClass('no_scroll');
 			menu_button.removeClass('active');
-			scrollTo(hash);
+
+			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			if (accAnchor.length) {
+				 checkAccBlockHash(hash);
+			}
+			
+			else {
+				scrollTo(hash);
+			}
+           
 		}
 	});
 	
-	$(".sub_menu a").click(function(e) {
+	// repetitive, and conflicting
+	// $(".sub_menu a").click(function(e) {
+	// 	var href = $(this).attr("href").replace(window.location.origin, "");
+	// 	var url = href.substr(0, href.indexOf("#"));
+	// 	var hash = href.substr(href.indexOf("#") + 1);
+	// 	$(".main_menu_bg").removeClass("active");
+	// 	$('.menu-item-has-children').removeClass('hovered');
+	// 	enableScroll();
 
-		var href = $(this).attr("href").replace(window.location.origin, "");
-		var url = href.substr(0, href.indexOf("#"));
-		var hash = href.substr(href.indexOf("#") + 1);
-		$(".main_menu_bg").removeClass("active");
-		$('.menu-item-has-children').removeClass('hovered');
-		enableScroll();
-		
-		if (url == "" || url == window.location.pathname) {
-			menu.removeClass('active');
-			page.removeClass('no_scroll');
-			menu_button.removeClass('active');
-			checkAccBlockHash(hash);
-		}
 
-	});
+	// 	if (url == "" || url == window.location.pathname) {
+	// 		menu.removeClass('active');
+	// 		page.removeClass('no_scroll');
+	// 		menu_button.removeClass('active');
+	// 		checkAccBlockHash(hash);
+	// 	}
+
+	// });
 	
 	$('[data-svg]').each(function() {
 		svgImage(this, $(this).attr('data-svg'));
@@ -337,6 +347,7 @@
 	
 	// right
 	$('#menu-main-menu > li > span').click(function() {
+		console.log("did you just click me?")
 		var self = $(this);
 		var parent = self.parent();
 		var menu = parent.find('.sub-menu');
@@ -399,27 +410,17 @@
 		// }
 	// }
 	
+
 	function checkAccBlockHash(hash) {
-		if(hash.length) {
-			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
-			const accToggle = accAnchor.find(".toggle");
-			const firstItem = $('.acc_block .list [data-id="1"]').attr('data-anchor');
-		
-            // // test
-            // const targetElement = document.querySelector('[data-anchor="kontaktformular"]');
-            // const rect = targetElement.getBoundingClientRect();
-            // const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
-            // console.log('Is element truly visible on screen?', isVisible);
-
-            
-			if (accAnchor.length) {
-				// setTimeout(function() {
-				scrollTo(firstItem);
-				// }, 350);
-				if(accAnchor.hasClass('active')) return;
-				accToggle.click();
-			}
-
+		if (!hash.length) return;
+	
+		const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+		const accToggle = accAnchor.find(".toggle");
+		const firstItem = $('.acc_block .list [data-id="1"]').attr('data-anchor');
+	
+		if (accAnchor.length && !accAnchor.hasClass('active')) {
+			scrollTo(firstItem);
+			accToggle.click();
 		}
 	}
     
