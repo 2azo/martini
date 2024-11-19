@@ -244,7 +244,7 @@
 		var value = Math.min(25, (st * 25 / wh));
 		
 		if (ww >= 960) {
-			console.log(ww);
+			// console.log(ww);
 			$('#visual > .inside').css('transform', 'translate(0, ' + value + '%)');
 			$('#visual_container .headline').css('transform', 'translate(0, ' + (st * 0.125) + 'px)');
 		} else {
@@ -273,4 +273,22 @@
 		$('.hp_cont').fadeOut(250);
 		window.sessionStorage.setItem("krh_popup", true);
 	});
+
+
+    // test
+    // $('.toggler').click(function() {
+    //     // console.log("you clicked .toggler class");
+    //     $(this).find('.accordion').slideToggle(300);
+    // });
+
+    // test
+    $('.toggler').click(function() {
+        var targetId = $(this).data('target');
+        $('#' + targetId).slideToggle(100);
+        $(this).attr('aria-expanded', function(index, attr) {
+            return attr === 'false' ? 'true' : 'false';
+        });
+    });
+    
+    
 })(jQuery);
