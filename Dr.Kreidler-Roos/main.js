@@ -282,13 +282,32 @@
     // });
 
     // test
+    // $('.toggler').click(function() {
+    //     var targetId = $(this).data('target');
+    //     $('#' + targetId).slideToggle(100);
+    //     $(this).attr('aria-expanded', function(index, attr) {
+    //         return attr === 'false' ? 'true' : 'false';
+    //     });
+    // });
+
+    // test 2
     $('.toggler').click(function() {
-        var targetId = $(this).data('target');
-        $('#' + targetId).slideToggle(100);
+        var targetContent = $(this).next('.content'); // Get the related content
+    
+        // Close all other contents
+        $('.content').not(targetContent).slideUp(100); // Close all except the current
+        $('.toggler').not(this).attr('aria-expanded', 'false'); // Set aria-expanded to false for others
+    
+        // Toggle the current content
+        targetContent.slideToggle(100); // Toggle visibility of the target content
         $(this).attr('aria-expanded', function(index, attr) {
-            return attr === 'false' ? 'true' : 'false';
+            return attr === 'true' ? 'false' : 'true'; // Toggle aria-expanded for the current toggler
         });
+        
     });
+    
+    
+    
     
     
 })(jQuery);
