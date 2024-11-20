@@ -624,16 +624,28 @@
 				</section>
 			<?php endif; ?>
 			
+		
+
+		<!-- test -->
 		<?php elseif (get_row_layout() == 'news_block'): 			
-				$posts = [];
-				$count = 0;
-				$num = get_sub_field('num');
-				$cat = get_sub_field('category');
-				$slugs = array_map(function($el){
-					return $el->slug;
-				}, $cat);
-				$title = get_sub_field('title');
+			$posts = [];
+			$count = 0;
+			$num = get_sub_field('num');
+			$cat = get_sub_field('category'); // Likely returns a single WP_Term or an array of WP_Term objects
+
+			// Ensure $cat is always an array before using array_map
+			if ($cat && !is_array($cat)) {
+				$cat = [$cat]; // Convert single WP_Term object to an array
+			}
+
+			// Safely extract slugs
+			$slugs = array_map(function($el) {
+				return $el->slug;
+			}, $cat);
+
+			$title = get_sub_field('title');
 		?>
+
 		
 				<section class="career_block content_block--wide reveal" data-anchor="<?=get_sub_field('anchor');?>">
 					<?php if($title): ?><div class="career_main_title"><?=$title;?></div><?php endif; ?>

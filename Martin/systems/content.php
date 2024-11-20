@@ -157,7 +157,7 @@
 			$cats = get_terms(array('taxonomy' => 'category','orderby' => 'meta_value_num', 'meta_key' => 'cat_order', 'order' => 'ASC'));
 		?>
 			<section class="news_block content_block--wide">
-				<div class="news_wrap">
+				<div class="news_wrap" data-anchor="<?=get_sub_field('anchor');?>">
 				
 					<ul>
 						<?php 
@@ -730,7 +730,7 @@
 		
 		
 		<?php elseif (get_row_layout() == 'linkedin_feed'): ?>
-			<div class="linkedin_feed reveal">
+			<div class="linkedin_feed reveal" data-anchor="<?=get_sub_field('anchor');?>">
 				<div class="lf_title"><?=get_sub_field('title'); ?></div>
 				<div class="lf_content">
 					<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
