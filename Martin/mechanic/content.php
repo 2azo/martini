@@ -16,7 +16,7 @@
 			$image = get_sub_field('image');
 			$tsize = get_sub_field('text_size');
 		?>
-			<section class="text_block <?=$align;?> <?=$tsize;?> content_block<?=($tsize!=="text_biggest")?"--med":"--wide";?> reveal" data-anchor="<?=get_sub_field('anchor');?>">
+			<section class="text_block <?=$align;?> <?=$tsize;?> content_block--med reveal" data-anchor="<?=get_sub_field('anchor');?>">
 				<div class="text_wrap">
 					<?=get_sub_field('text');?>
 					<?php if($image): ?>
@@ -31,7 +31,7 @@
 			<section class="image_block content_block reveal">
 				<img src="<?=get_sub_field('img');?>" alt="" />
 			</section>
-
+		
 		<?php elseif (get_row_layout() == 'contact_info'): ?>
 			<section class="contact_form reveal" data-anchor="kontaktformular">
 				<form id="contact_form" method="POST">
@@ -76,12 +76,7 @@
 				   </div>
     			</form>
 			</section>
-		<?php elseif (get_row_layout() == 'video'): ?>
-			<section class="video_block reveal" data-anchor="<?= get_sub_field('anchor'); ?>">
-				<video controls poster="<?= get_sub_field('poster') ? get_sub_field('poster')['url'] : ""; ?>">
-					<source src="<?= get_sub_field('video_file')['url']; ?>" type="video/mp4">
-				</video>
-			</section>
+		
 		<?php elseif (get_row_layout() == 'slider'): ?>
 				<div class="background">
 					<div class="bg intro">
@@ -130,12 +125,17 @@
 			</div>
 			<div class="fbg_block">
 				<?php if (have_rows("items")): ?>
-					<?php while(have_rows("items")): the_row(); $file = get_sub_field('download_file'); ?>
+					<?php while(have_rows("items")): the_row(); $file = get_sub_field('download_file'); $link = get_sub_field('projects_link'); ?>
 						<div class="fbg_item">
 							<img src="<?= get_sub_field("image")["url"]; ?>" alt="" />
 							<div class="text">
 								<div class="text_wrap"><?= get_sub_field("text"); ?></div>
-								<?php if($file):?><a class="dl_button" href="<?=$file;?>" target="_blank"><?=get_sub_field('download_text');?></a><?php endif; ?>
+								<?php if ($file): ?>
+									<a class="dl_button" href="<?=$file;?>" target="_blank"><?=get_sub_field('download_text');?></a>
+								<?php endif; ?>
+								<?php if ($link): ?>
+									<a class="pj_button" href="<?=$link;?>" target="_blank">Echte Anwendungen</a>
+								<?php endif; ?>
 							</div>
 						</div>
 					<?php endwhile; ?>
@@ -153,21 +153,36 @@
 			$num = get_sub_field('number_of_articles');
 			$dates = get_sub_field('show_dates');
 			$title = get_sub_field('title');
+			
 			// $cats = get_categories();
 			$cats = get_terms(array('taxonomy' => 'category','orderby' => 'meta_value_num', 'meta_key' => 'cat_order', 'order' => 'ASC'));
 		?>
 			<section class="news_block content_block--wide">
-				<div class="news_wrap">
+				<div class="news_wrap" data-anchor="<?=get_sub_field('anchor');?>">
 				
 					<ul>
 						<?php 
 							foreach($cats as $cat) {
-								$query = new WP_Query( array( 'tax_query' => array(array('taxonomy' => 'category','field' => 'slug','terms' => $cat->slug,),), 'ignore_sticky_posts' => 1, 'posts_per_page' => 1, 'no_found_rows' => true, 'update_post_term_cache' => false, 'update_post_meta_cache' => false ) );
+								$query = new WP_Query(array(
+									'tax_query' => array(
+										array(
+											'taxonomy' => 'category',
+											'field' => 'slug',
+											'terms' => $cat->slug,
+											'orderby' => 'field',
+											'order' => 'desc',
+										),
+									),
+									'ignore_sticky_posts' => 1,
+									'posts_per_page' => 1,
+									'no_found_rows' => true,
+									'update_post_term_cache' => false,
+									'update_post_meta_cache' => false,
+								));
 
 								if ($query->have_posts()):
 									while ($query->have_posts()): $query->the_post();?>
-										
-										<li><a href="<?= get_permalink(179); ?>?newsId=<?= $post->ID; ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li>
+										<li><a href="<?= get_permalink(155); ?>?newsId=<?= $post->ID; ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li>
 									<?php endwhile;
 								endif;
 								wp_reset_postdata();
@@ -175,8 +190,9 @@
 						?>
 					</ul>
 					<div class="title"><?=$title;?></div>
-				</div>
+				</div>	
 			</section>
+
 		<?php elseif (get_row_layout() == 'nav_sections'): ?>
 		<div class="nav_sections">
 			<?php if(have_rows('section')): ?>
@@ -184,46 +200,56 @@
 					the_row();
 					$switch = get_sub_field('switch');
 				?>
-					<section class="nav_section">
+					<section class="nav_section" data-anchor="<?=get_sub_field('anchor');?>">
 						<div class="image" style="background-image: url('<?=get_sub_field('image');?>');">
 							<div class="title mob"><?php the_sub_field('title');?></div>
 						</div>
 						<div class="text">
-							<ul>
-								<?php if($switch):
-									$page = get_sub_field('link');
-									$menu_name = 'top';
-									if (($locations = get_nav_menu_locations()) && isset($locations[$menu_name])) {
-										$menu = wp_get_nav_menu_object($locations[$menu_name]);
-										$menu_items = wp_get_nav_menu_items($menu->term_id);
-										$parent_item = wp_filter_object_list( $menu_items, array('url' => $page));
-										$value = array_shift($parent_item);
-										$parent_item_id = $value->ID;
-										$items = array();
+							<?php if(get_sub_field('tl_toggle')):
+								$page_link = get_sub_field('page_link');
+							?>
+								<div class="side_text">
+									<div class="text_content"><?php the_sub_field('text');?></div>
+									<?php if($page_link):?><a class="page_link" href="<?=$page_link['url'];?>" target="<?=$page_link['target'];?>"><span data-svg="<?=get_template_directory_uri();?>/img/arrow_link.svg"></span>mehr erfahren</a><?php endif; ?>
+								</div>
 
-										foreach($menu_items as $item) {
-											if($item->menu_item_parent == $parent_item_id) {
-												array_push($items,$item);
+							<?php else: ?>
+								<ul>
+									<?php if($switch):
+										$page = get_sub_field('link');
+										$menu_name = 'top';
+										if (($locations = get_nav_menu_locations()) && isset($locations[$menu_name])) {
+											$menu = wp_get_nav_menu_object($locations[$menu_name]);
+											$menu_items = wp_get_nav_menu_items($menu->term_id);
+											$parent_item = wp_filter_object_list( $menu_items, array('url' => $page));
+											$value = array_shift($parent_item);
+											$parent_item_id = $value->ID;
+											$items = array();
+
+											foreach($menu_items as $item) {
+												if($item->menu_item_parent == $parent_item_id) {
+													array_push($items,$item);
+												}
+											}
+
+											$num = count($items);
+											if($num > 0) {
+												for($x = 0; $x < $num; $x++) {
+													echo '<li><a href="'.$items[$x]->url.'">'.$items[$x]->title.'</a></li>';
+												}
 											}
 										}
-
-										$num = count($items);
-										if($num > 0) {
-											for($x = 0; $x < $num; $x++) {
-												echo '<li><a href="'.$items[$x]->url.'">'.$items[$x]->title.'</a></li>';
-											}
-										}
-									}
-								?>
-								<?php else: ?>
-									
-										<?php while(have_rows('links')): the_row();
-											$link = get_sub_field('link');
-										?>
-											<li><a href="<?=$link['url'];?>" target="<?=$link['target'];?>"><?=$link['title'];?></a></li>
-										<?php endwhile; ?>
-								<?php endif; ?>
-							</ul>
+									?>
+									<?php else: ?>
+											<?php while(have_rows('links')): the_row();
+												$link = get_sub_field('link');
+											?>
+												<li><a href="<?=$link['url'];?>" target="<?=$link['target'];?>"><?=$link['title'];?></a></li>
+											<?php endwhile; ?>
+									<?php endif; ?>
+								</ul>					
+							<?php endif; ?>
+							
 							<div class="title"><?php the_sub_field('title');?></div>
 						</div>
 					</section>
@@ -234,7 +260,7 @@
 		<?php elseif (get_row_layout() == 'map'): ?>
 			<?php if(get_sub_field('show_map')): ?>
 				<section class="map_block reveal" data-anchor="anfahrt">
-					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1359.6449229205625!2d8.754562158426983!3d48.53558962794215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797506b2b6d989b%3A0xd9b584a917557efa!2sMartinMechanic%20Friedrich%20Martin%20GmbH%20%26%20Co%20KG!5e0!3m2!1sen!2sge!4v1687344208920!5m2!1sen!2sge" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2641.9154766244583!2d8.753847677475047!3d48.53485152341921!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4797508f22fa61a5%3A0x7e57e8e5c3a64e3c!2sWerner-von-Siemens-Stra%C3%9Fe%2011%2C%2072202%20Nagold%2C%20Germany!5e0!3m2!1sen!2sge!4v1690198957106!5m2!1sen!2sge" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 				</section>
 			<?php endif; ?>
 		
@@ -255,6 +281,149 @@
 				</nav>
 			<?php endif; ?>
 			
+		<?php elseif (get_row_layout() == 'accordion_block_news'):
+			$count1 = 1;
+			$count2 = 1;
+			$title_size = get_sub_field('title_size');
+			
+			$posts = [];
+			$num = get_sub_field('num');
+			$cat = get_sub_field('category');
+			$slugs = array_map(function($el){
+				return $el->slug;
+			}, $cat);
+			
+		?>
+			<div class="acc_block acc_block_news reveal" data-anchor="<?=get_sub_field('anchor');?>">
+				<div class="acc_image">
+					<div class="slider_block acc_slider">
+						<div class="slider_wrap">
+							<?php $gallery = get_sub_field('picture'); 
+							if($gallery): ?>
+								<?php foreach($gallery as $image):?>
+									<div class="slide">
+										<div class="img" style="background-image: url('<?=$image['url'];?>');"></div>
+									</div>
+								<?php endforeach; ?>
+							<?php endif;?>
+						</div>
+						<div class="slide_controls"></div>
+					</div>
+				</div>
+				<div class="acc_cont <?=$title_size;?>">
+					<?php
+									$args = array(
+										'post_type' => 'post',
+										'posts_per_page' => $num,
+										'tax_query' => array(
+											array(
+												'taxonomy' => 'category',
+												'field'    => 'slug',
+												'terms'    => $slugs,
+											),
+										)
+									);
+									$the_query = new WP_Query($args);
+									if ($the_query->have_posts()) {
+										while ($the_query->have_posts()) {
+											$the_query->the_post();
+											$pid = get_the_ID();
+											$date = get_the_date('d.m.Y');
+											$mtitle = get_the_title();
+											array_push($posts, [$mtitle, $pid, $date]);
+										}
+										
+										wp_reset_postdata();
+									}
+								?>
+					<?php if(count($posts) > 0): ?>
+						<div class="list">						
+							<?php foreach($posts as $key => [$title, $pid, $date]): ?>								
+								<div class="item <?= ($key === array_key_first($posts)) ? "active" : ""; ?>" data-id="<?=$count2;?>">
+									<div class="title">
+										<span><?= $title; ?></span>
+										<div aria-role="button" aria-label="Tab öffnen" class="toggle">
+											<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+												<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6" />
+											</svg>
+										</div>
+									</div>
+									<div class="cont empty"></div>
+								</div>								
+							<?php $count2++; endforeach; ?>							
+						</div>
+					<?php endif; ?>
+					<div class="title">
+						<h1 class="<?=$title_size;?>">
+							<div class="line_wrap">
+								<span class="line line-t"><?php the_sub_field('title');?></span>
+								<?php if (get_sub_field("title_2")): ?>
+									<span class="line line-b"><?php the_sub_field("title_2"); ?></span>
+								<?php endif; ?>
+							</div>
+						</h1>
+						<div class="images">
+							<?php if (count($posts) > 0): ?>
+								<?php foreach ($posts as $key => [$mtitle, $pid, $date]): ?>
+											<div class="news_mob_title"><?=$mtitle;?></div>
+											<div class="image" data-id="<?=$count1;?>" <?=($count1 === 1)?'style="display:block;"':"";?>>
+												<div class="news_date"><?=$date;?></div>
+												<div class="news_title"><?=$mtitle;?></div>
+												<div class="news_text"><?=get_post_field('post_content', $pid);?></div>
+											</div>
+											<?php
+												$count1++;
+											
+										endforeach;
+									else:
+										_e('Sorry, no posts matched your criteria.');
+									endif;
+								?>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<?php elseif (get_row_layout() == 'infoshop'):
+				$num = get_sub_field('num');
+				$gallery = get_sub_field('picture');			
+			?>
+
+				<div class="infoshop_block">
+					
+					<div class="infoshop_content">
+						<?php
+							$args = array(
+								'post_type' => 'products',
+								'posts_per_page' => $num,								
+							);
+							
+							$the_query = new WP_Query($args);							
+							if ($the_query->have_posts()) {
+								while ($the_query->have_posts()):
+									$the_query->the_post();
+									$pid = get_the_ID();
+									$date = get_the_date('d.m.Y');
+									$thumbnail = get_the_post_thumbnail($pid, 'large');
+								?>
+									<div class="infoshop_product">
+										<div class="infoshop_product_left"><?=$thumbnail;?></div>
+										<div class="infoshop_product_right">
+											<div class="infoshop_product--title"><?=get_the_title();?></div>
+											<div class="infoshop_product--desc"><?=get_the_content();?></div>
+<!-- 											<div class="infoshop_product--footer">Preis auf Anfrage</div> -->
+										</div>
+									</div>
+								<?php 
+								endwhile;
+								
+								wp_reset_postdata();
+							}
+						?>
+					</div>
+					
+				</div>
+		
 		<?php elseif (get_row_layout() == 'accordion_block'):
 			$count1 = 1;
 			$count2 = 1;
@@ -460,12 +629,16 @@
 				$count = 0;
 				$num = get_sub_field('num');
 				$cat = get_sub_field('category');
+				$slugs = array_map(function($el){
+					return $el->slug;
+				}, $cat);
 				$title = get_sub_field('title');
 		?>
+		
 				<section class="career_block content_block--wide reveal" data-anchor="<?=get_sub_field('anchor');?>">
 					<?php if($title): ?><div class="career_main_title"><?=$title;?></div><?php endif; ?>
 					<div class="career_block_cont">
-						<div class="career_content_wrap cat-<?= $cat->slug; ?>">
+						<div class="career_content_wrap cat-<?= $slugs[0]; ?>">
 								<?php
 									$args = array(
 										'post_type' => 'post',
@@ -474,7 +647,7 @@
 											array(
 												'taxonomy' => 'category',
 												'field'    => 'slug',
-												'terms'    => $cat->slug,
+												'terms'    => $slugs,
 											),
 										)
 									);
@@ -487,9 +660,9 @@
 											$mtitle = get_the_title();
 											array_push($posts, [$mtitle, $pid]);
 												?>
-											<div class="career_content_title<?=($count === 0)?' active':"";?>"><?= $mtitle; ?></div>
+											<div class="career_content_title<?=($count === 0)?' active':"";?>"><?=$mtitle;?></div>
 											<div class="career_content" <?=($count === 0)?'style="display:block;"':"";?>>
-												<?php if ($cat->slug != "presseberichte"): ?>
+												<?php if ($slugs[0] != "presseberichte"): ?>
 													<div class="career_date"><?=$date;?></div>
 												<?php endif; ?>
 												<div class="career_title"><?=$mtitle;?></div>
@@ -526,7 +699,24 @@
 							</ul>
 						</div>
 					</div>
+					
 				</section>
+		<?php elseif (get_row_layout() == 'newsletter'): ?>
+			<div class="newsletter_block" >
+				<div class="newsletter_title_2">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
+				<div class="newsletter_form">
+					<?= do_shortcode("[newsletter_form]"); ?>
+				</div>
+			</div>
+		
+		<?php elseif (get_row_layout() == 'image_fade_scroll'): 
+			$image1 = get_sub_field('image1');
+			$image2 = get_sub_field('image2');
+		?>
+			<div class="image_fade_scroll reveal">
+				<div class="img img2" style="background-image: url(<?=$image2['url'];?>);"></div>
+				<div class="img img1" style="background-image: url(<?=$image1['url'];?>);"></div>
+			</div>
 		
 		<?php elseif (get_row_layout() == 'partner_area'): ?>
 			<?php if(have_rows('logos')): ?>
@@ -541,29 +731,66 @@
 				</div>
 			<?php endif; ?>
 		
+		
+		<?php elseif (get_row_layout() == 'linkedin_feed'): ?>
+			<div class="linkedin_feed reveal" data-anchor="<?=get_sub_field('anchor');?>" >
+				<div class="lf_title"><?=get_sub_field('title'); ?></div>
+				<div class="lf_content">
+					<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
+					<div class="elfsight-app-07dd6383-5987-4d17-a3ab-874c172e2760" data-elfsight-app-lazy></div>
+				</div>
+				<div class="news_newsletter_block" >
+					<div class="newsletter_title">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
+					<div class="newsletter_form">
+						<?= do_shortcode("[newsletter_form]"); ?>
+					</div>
+				</div>
+			</div>
+		
+		
 		<?php elseif (get_row_layout() == 'scroll_sections'):
 			$section1 = get_sub_field('section_one');
 			$section2 = get_sub_field('section_two');
 			$section3 = get_sub_field('section_three');
+			$section4 = get_sub_field('section_four');
+			$section5 = get_sub_field('section_five');
 		?>
 			<section class="scroll_sections">
 				<div class="scroll_sections_wrap scroll_section_desktop">
 					<div class="picture_cont">
 						<div class="picture one">
 							<div class="img" style="background-image: url('<?=$section1["picture"]["picture"];?>');"></div>
-							<div class="title"><?=$section1["picture"]["picture_title"];?></div>
-							<div class="progress"></div>
+							<?php if($section1["picture"]["picture_title"]): ?>
+								<div class="title_cont">
+									<div class="title"><?=$section1["picture"]["picture_title"];?></div>
+									<div class="subtitle" data-svg="<?=get_template_directory_uri();?>/img/DURCHSTARTEN_MIT_ROBOCUBE.svg"></div>
+								</div>
+							<?php endif; ?>
+							<div class="layer">
+								<img src="<?=get_template_directory_uri();?>/img/parallax-RoboCube-Huerde_solo-RGB.png" alt="" />
+							</div>
+							<div class="progress show"></div>
 						</div>
 						<div class="picture two">
 							<div class="img" style="background-image: url('<?=$section2["picture"]["picture"];?>');"></div>
-							<div class="title"><?=$section2["picture"]["picture_title"];?></div>
+							<?php if($section2["picture"]["picture_title"]): ?><div class="title"><?=$section2["picture"]["picture_title"];?></div><?php endif; ?>
 							<div class="progress"></div>
 						</div>
 						<div class="picture three">
 							<div class="img" style="background-image: url('<?=$section3["picture"]["picture"];?>');"></div>
-							<div class="title"><?=$section3["picture"]["picture_title"];?></div>
+							<?php if($section3["picture"]["picture_title"]): ?><div class="title"><?=$section3["picture"]["picture_title"];?></div><?php endif; ?>
 							<div class="progress"></div>
-						</div>					
+						</div>
+						<div class="picture four">
+							<div class="img" style="background-image: url('<?=$section4["picture"]["picture"];?>');"></div>
+							<?php if($section4["picture"]["picture_title"]): ?><div class="title"><?=$section4["picture"]["picture_title"];?></div><?php endif; ?>
+							<div class="progress"></div>
+						</div>
+						<div class="picture five">
+							<div class="img" style="background-image: url('<?=$section5["picture"]["picture"];?>');"></div>
+							<?php if($section5["picture"]["picture_title"]): ?><div class="title"><?=$section5["picture"]["picture_title"];?></div><?php endif; ?>
+							<div class="progress"></div>
+						</div>			
 					</div>
 					<div class="content_wrap">
 						<div class="content_wrap--scroll">
@@ -573,9 +800,9 @@
 									<div class="picture">
 										<img src="<?=$section1["content"]["picture"];?>" alt="" />
 									</div>
+									<div class="text_small"><?=$section1["content"]["small_text"];?></div>
 									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section1["content"]["text"];?></div>
 								</div>
-								<div class="text_small"><?=$section1["content"]["small_text"];?></div>
 							</div>
 							<div class="content two">
 								<h1><?=$section2["content"]["title"];?></h1>
@@ -583,9 +810,9 @@
 									<div class="picture">
 										<img src="<?=$section2["content"]["picture"];?>" alt="" />
 									</div>
+									<div class="text_small"><?=$section2["content"]["small_text"];?></div>
 									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section2["content"]["text"];?></div>
 								</div>
-								<div class="text_small"><?=$section2["content"]["small_text"];?></div>
 							</div>
 							<div class="content three">
 								<h1><?=$section3["content"]["title"];?></h1>
@@ -593,9 +820,29 @@
 									<div class="picture">
 										<img src="<?=$section3["content"]["picture"];?>" alt="" />
 									</div>
+									<div class="text_small"><?=$section3["content"]["small_text"];?></div>
 									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section3["content"]["text"];?></div>
 								</div>
-								<div class="text_small"><?=$section3["content"]["small_text"];?></div>
+							</div>
+							<div class="content four">
+								<h1><?=$section4["content"]["title"];?></h1>
+								<div class="text_cont">
+									<div class="picture">
+										<img src="<?=$section4["content"]["picture"];?>" alt="" />
+									</div>
+									<div class="text_small"><?=$section4["content"]["small_text"];?></div>
+									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section4["content"]["text"];?></div>
+								</div>
+							</div>
+							<div class="content five">
+								<h1><?=$section5["content"]["title"];?></h1>
+								<div class="text_cont">
+									<div class="picture">
+										<img src="<?=$section5["content"]["picture"];?>" alt="" />
+									</div>
+									<div class="text_small"><?=$section5["content"]["small_text"];?></div>
+									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section5["content"]["text"];?></div>
+								</div>
 							</div>
 						</div>
 					</div>
@@ -605,7 +852,10 @@
 						<div class="content_wrap--scroll">
 							<div class="picture one">
 								<div class="img" style="background-image: url('<?=$section1["picture"]["picture"];?>');"></div>
-								<div class="title"><?=$section1["picture"]["picture_title"];?></div>
+								<div class="layer">
+									<img src="<?=get_template_directory_uri();?>/img/parallax-RoboCube-Huerde_solo-RGB.png" alt="" />
+								</div>
+								<!--<?php if($section1["picture"]["picture_title"]): ?><div class="title"><?=$section1["picture"]["picture_title"];?></div><?php endif; ?>-->
 							</div>
 							<div class="content one">
 								<h1><?=$section1["content"]["title"];?></h1>
@@ -613,13 +863,13 @@
 									<div class="picture">
 										<img src="<?=$section1["content"]["picture"];?>" alt="" />
 									</div>
+									<div class="text_small"><?=$section1["content"]["small_text"];?></div>
 									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section1["content"]["text"];?></div>
 								</div>
-								<div class="text_small"><?=$section1["content"]["small_text"];?></div>
 							</div>
 							<div class="picture two">
 								<div class="img" style="background-image: url('<?=$section2["picture"]["picture"];?>');"></div>
-								<div class="title"><?=$section2["picture"]["picture_title"];?></div>
+								<?php if($section2["picture"]["picture_title"]): ?><div class="title"><?=$section2["picture"]["picture_title"];?></div><?php endif; ?>
 							</div>
 							<div class="content two">
 								<h1><?=$section2["content"]["title"];?></h1>
@@ -627,13 +877,13 @@
 									<div class="picture">
 										<img src="<?=$section2["content"]["picture"];?>" alt="" />
 									</div>
+									<div class="text_small"><?=$section2["content"]["small_text"];?></div>
 									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section2["content"]["text"];?></div>
 								</div>
-								<div class="text_small"><?=$section2["content"]["small_text"];?></div>
 							</div>
 							<div class="picture three">
 								<div class="img" style="background-image: url('<?=$section3["picture"]["picture"];?>');"></div>
-								<div class="title"><?=$section3["picture"]["picture_title"];?></div>
+								<?php if($section3["picture"]["picture_title"]): ?><div class="title"><?=$section3["picture"]["picture_title"];?></div><?php endif; ?>
 							</div>
 							<div class="content three">
 								<h1><?=$section3["content"]["title"];?></h1>
@@ -641,28 +891,42 @@
 									<div class="picture">
 										<img src="<?=$section3["content"]["picture"];?>" alt="" />
 									</div>
+									<div class="text_small"><?=$section3["content"]["small_text"];?></div>
 									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section3["content"]["text"];?></div>
 								</div>
-								<div class="text_small"><?=$section3["content"]["small_text"];?></div>
+							</div>
+							<div class="picture four">
+								<div class="img" style="background-image: url('<?=$section4["picture"]["picture"];?>');"></div>
+								<?php if($section4["picture"]["picture_title"]): ?><div class="title"><?=$section4["picture"]["picture_title"];?></div><?php endif; ?>
+							</div>
+							<div class="content four">
+								<h1><?=$section4["content"]["title"];?></h1>
+								<div class="text_cont">
+									<div class="picture">
+										<img src="<?=$section4["content"]["picture"];?>" alt="" />
+									</div>
+									<div class="text_small"><?=$section4["content"]["small_text"];?></div>
+									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section4["content"]["text"];?></div>
+								</div>
+							</div>
+								<div class="picture five">
+								<div class="img" style="background-image: url('<?=$section5["picture"]["picture"];?>');"></div>
+								<?php if($section5["picture"]["picture_title"]): ?><div class="title"><?=$section5["picture"]["picture_title"];?></div><?php endif; ?>
+							</div>
+							<div class="content five">
+								<h1><?=$section5["content"]["title"];?></h1>
+								<div class="text_cont">
+									<div class="picture">
+										<img src="<?=$section5["content"]["picture"];?>" alt="" />
+									</div>
+									<div class="text_small"><?=$section5["content"]["small_text"];?></div>
+									<div class="text"><span data-svg="<?=get_template_directory_uri();?>/img/quote-right.svg"></span><?=$section5["content"]["text"];?></div>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-		<?php elseif (get_row_layout() == 'linkedin_feed'): ?>
-			<div class="linkedin_feed reveal">
-				<div class="lf_title"><?=get_sub_field('title'); ?></div>
-				<div class="lf_content">
-					<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
-					<div class="elfsight-app-1bcf3908-c13b-42cc-8b4d-e8cadb5b78c9" data-elfsight-app-lazy></div>
-				</div>
-				<div class="news_newsletter_block" >
-					<div class="newsletter_title">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
-					<div class="newsletter_form">
-						<?= do_shortcode("[newsletter_form]"); ?>
-					</div>
-				</div>
-			</div>
 		
 		<?php endif; ?>
 	<?php endwhile; ?>
