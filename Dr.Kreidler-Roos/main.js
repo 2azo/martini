@@ -291,19 +291,30 @@
     // });
 
     // test 2
+    // $('.toggler').click(function() {
+    //     var targetContent = $(this).next('.content');
+    //     $('.content').not(targetContent).slideUp(100);
+    //     $('.toggler').not(this).attr('aria-expanded', 'false');
+    //     targetContent.slideToggle(100);
+    //     $(this).attr('aria-expanded', function(index, attr) {
+    //         return attr === 'true' ? 'false' : 'true';
+    //     });
+    // });
+
+    // test 3
     $('.toggler').click(function() {
-        var targetContent = $(this).next('.content'); // Get the related content
-    
-        // Close all other contents
-        $('.content').not(targetContent).slideUp(100); // Close all except the current
-        $('.toggler').not(this).attr('aria-expanded', 'false'); // Set aria-expanded to false for others
-    
-        // Toggle the current content
-        targetContent.slideToggle(100); // Toggle visibility of the target content
+        var targetContent = $(this).next('.content');
+        $('.content').not(targetContent).slideUp(100);
+        $('.toggler').not(this).attr('aria-expanded', 'false');
+        targetContent.slideToggle(100);
         $(this).attr('aria-expanded', function(index, attr) {
-            return attr === 'true' ? 'false' : 'true'; // Toggle aria-expanded for the current toggler
+            return attr === 'true' ? 'false' : 'true';
         });
-        
+    
+        // Smooth scroll to the clicked toggler
+        $('html, body').animate({
+            scrollTop: $(this).offset().top - 20  // 20px padding from top
+        }, 300);  // 300ms animation duration
     });
     
     
