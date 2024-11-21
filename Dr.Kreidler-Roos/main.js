@@ -320,19 +320,25 @@
 	// test 4
 	$('.toggler').click(function() {
 		var targetContent = $(this).next('.content'); // Get the content related to the toggler
-		var firstChild = $('.ce_text first block reveal reveal_visible').children(':first')
-		// var firstChild = targetContent.children(':first'); // Get the first child of the target content
-	
+		// var firstChild = targetContent.find('.ce_text.first.block.reveal.reveal_visible'); // Select the specific first child inside the content
+		// var firstChild = $('#karriere > div:nth-child(2)'); // Explicitly target the first child
+		var firstChild = $('#karriere > div:nth-child(2) > h2:nth-child(1)'); // Explicitly target the first child
+		
+		console.log("firstChild -> ", firstChild)
+
 		// Close all other content
 		$('.content').not(targetContent).slideUp(100);
 		$('.toggler').not(this).attr('aria-expanded', 'false');
 	
 		// Toggle the clicked content
 		targetContent.slideToggle(100, function() {
+			console.log("outside the animation")
 			// Ensure scroll happens only after the toggle animation completes
 			if ($(this).is(':visible') && firstChild.length) {
+				console.log("inside the animation")
+				const scrollPosition = firstChild.offset().top - 90; // Adjust 20px for any desired padding
 				$('html, body').animate({
-					scrollTop: firstChild.offset().top // Scroll to the first child
+					scrollTop: scrollPosition // Scroll to the first child
 				}, 300);
 			}
 		});
@@ -343,9 +349,5 @@
 		});
 	});
 	
-    
-    
-    
-    
     
 })(jQuery);

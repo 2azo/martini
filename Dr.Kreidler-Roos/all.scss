@@ -1620,8 +1620,15 @@ form input[type="submit"] {
     cursor: pointer; 
 }
 
-.toggler:hover {
+.small_toggler:hover {
     color: $accent_color;
+}
+
+.small_toggler {
+	font-size: 23px;
+    font-weight: normal;
+	font-style: italic;
+	letter-spacing: 0.1em;
 }
 
 .accordion {
