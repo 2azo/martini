@@ -175,8 +175,6 @@
 		}
 	});
 	
-    // working good 
-    // when clicking, run
 	// this event listener is repetitive, and conflicting with the previous one, so I merged them
 	// $(".sub_menu a").click(function(e) {
     //     // full link example: http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#lipo 

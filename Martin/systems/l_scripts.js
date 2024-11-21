@@ -93,7 +93,6 @@
 	}
 	
 	// function scrollTo(e, v) {
-	// 	// console.log("I'm inside scrollTO")
 	// 	v = v || 0;
 	// 	e = decodeURI(e);
 	// 	e = e.toLowerCase();
@@ -115,37 +114,55 @@
 	// 		scrollTop: scroll_num
 	// 	}, 1200);
 	// }
+    
+    function scrollTo(e, v) {
+		// console.log("I'm inside ScrollTo")
 
-	function scrollTo(e, v) {
+		// v is optional, provided value or zero
 		v = v || 0;
+
+		// normalizing e (e.g. if %20 -> space)
 		e = decodeURI(e);
+
+		// making it lowercase
 		e = e.toLowerCase();
-	
+
 		let trans = 0;
+
+		// looks for an element with data-anchor = "e"
 		const target = $('[data-anchor="' + e + '"]');
-	
+
 		if (target.length < 1) {
 			return;
 		}
-	
-		if (!target.hasClass('reveal_visible')) {
-			trans += 100;
-		}
+
+        // console.log("Has reveal_visible:", target.hasClass('reveal_visible'));
+
+		// // not sure -> seems that the problem is here -> no it's just a small adjustment
+		// if (!target.hasClass('reveal_visible')) {
+		// 	trans += 100;
+		// }
 		
-		const headerHeight = 96;
-		
-		// Use getBoundingClientRect() for more accurate positioning
-		const rect = target[0].getBoundingClientRect();
-		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-		console.log("scrollTop -> ", scrollTop)
-		const scroll_num = scrollTop + rect.top - trans - headerHeight + v;
-		console.log("rect.top -> ", rect.top)
-	
+		const headerHeight = 56;
+
+		// offse().top: offset of the element from the top of the screen
+		// trans: "adjustment for hidden elements"
+		// why subtracting the headerHeight?
+
+        // the bug is here!
+        // going upwards gives the worng target.offset().top value
+        console.log("target.offset().top -> ", target.offset().top)
+		const scroll_num = target.offset().top - trans + v - headerHeight;
+
+		// .animate is a JQuery animation method
 		page.animate({
+
+			// scroll to
 			scrollTop: scroll_num
+
+			// duration of the animation in ms
 		}, 1200);
-	}
-	
+	}	
 
 	function svgImage(element, src, callback) {
 		$.ajax({
@@ -162,42 +179,64 @@
 	}
 	
 	// $(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
+
+    // $ jquery selector (loop to find)
+    // <a> element that has "href" attribute with "#" in it
+    // *= is an attribute selector, meaning "contains"
 	$('a[href*="#"]')
+
+    // exclude (filters out) all <a> elements with href exactly "#" -> e.g <a href="#">Home</a>
+    // couldn't find any -> appearantly not needed
 	.not('[href="#"]')
+
+    // exclude (filters out) all <a> elements with href exactly "#" -> e.g <a href="#0">Skip Link</a>
+    // couldn't find any -> appearantly not needed
 	.not('[href="#0"]')
+
 	.click(function (e) {
+
+        // full link example: http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#lipo 
+
+        // href: /sondermaschinen/#lipo
 		var href = $(this).attr("href").replace(window.location.origin, "");
+
+        // url: /sondermaschinen/
 		var url = href.substr(0, href.indexOf("#"));
+
+        // hash:  lipo
 		var hash = href.substr(href.indexOf("#") + 1);
+
+        // it's called "jQuery selector -> $ stands for jQuery" and it's expensive to run
+        // main_menu_bg: the green background
 		$(".main_menu_bg").removeClass("active");
+
+        // menu-item-has-children: has sub-menu
 		$('.menu-item-has-children').removeClass('hovered');
+
+        // enabeling scrolling, details there
 		enableScroll();
 		
-		// test
-		// if (url == "" || url == window.location.pathname) {
-		// 	menu.removeClass('active');
-		// 	page.removeClass('no_scroll');
-		// 	menu_button.removeClass('active');
-		// 	checkAccBlockHash(hash);
-		// 	scrollTo(hash);
-		// }
-
+        // window.location.pathname: /sondermaschinen/
 		if (url == "" || url == window.location.pathname) {
+
+            // var menu = $('.main_menu');
 			menu.removeClass('active');
+
+            // var page = $('html, body');
 			page.removeClass('no_scroll');
+
+            // var menu_button = $('.menu_button');
 			menu_button.removeClass('active');
 
-			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
-			if (accAnchor.length) {
-				 checkAccBlockHash(hash);
-			}
-			
-			else {
-				scrollTo(hash);
-			}
-           
+            // specifically for $(`.acc_block .list [data-anchor="${hash}"]`);
+            // scroll to them AND open them
+			checkAccBlockHash(hash);
+
+            // why on earth both functions?
+			scrollTo(hash);
 		}
 	});
+
 	
 	$('[data-svg]').each(function() {
 		svgImage(this, $(this).attr('data-svg'));

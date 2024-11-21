@@ -6,10 +6,10 @@
 body {
 	font-family: var(--font);
 	background-color: var(--white);
-	&.no_scroll {
+	// &.no_scroll {
 		// overflow-y: hidden;
 		// padding-right: 17px;
-	}
+	// }
 }
 
 a {
@@ -49,17 +49,6 @@ a {
 				flex-shrink: 0;
 			}
 		}
-	}
-}
-
-.video_block {
-	margin-block: 8rem;
-	
-	video {
-		width: 100%;
-		height: auto;
-		aspect-ratio: 16 / 9;
-		vertical-align: top;
 	}
 }
 
@@ -158,16 +147,33 @@ hr {
 	border-width: 1px 0 0 0;
 }
 
+.newsletter_block {
+	display: flex;
+ 	flex-direction: column;
+  	align-items: center;
+	.newsletter_title_2 {
+		text-align: center;
+		font-size: 2.125rem;
+		font-weight: bold;
+		line-height: 1.3;
+		padding-top: 10rem;
+		padding-bottom: 4rem;
+	}
+	
+	.newsletter_form {
+		border: solid 12px;
+		width: 40%;
+		padding: 3rem 1rem;
+		border-color: var(--theme-sub);
+		.tnp-subscription {
+			.tnp-submit{
+				width: 40%;
+			}
+		}
+	}
+}
+
 .linkedin_feed {
-// 	.kmxkQI {
-// 			&:before {
-// 			content: "";
-// 			height: 1rem;
-// 			background-color: #b5dc17;
-// 			margin-bottom: 3rem;
-// 			display: block;
-// 			}
-// 		}
 	margin-top: 5rem;
 	.lf_title {
 		text-transform: uppercase;
@@ -218,6 +224,9 @@ hr {
 	}
 }
 
+
+
+
 @import 'components/header';
 @import 'components/footer';
 @import 'components/background';
@@ -235,6 +244,7 @@ hr {
 @import 'components/fbg_sections';
 @import 'components/partners';
 @import 'components/contact_form';
+@import 'components/infoshop';
 
 // macOS specific fixes (vertical font metrics)
 .mac .acc_block .acc_cont .title h1 .line-t {
@@ -271,6 +281,17 @@ hr {
 	}
 }
 
+@media (max-width: 499px) {
+	.firefox .acc_block.acc_block_news .acc_cont .title h1.small .line-t,
+	.firefox .acc_block.acc_block_news .acc_cont .title h1.big .line-t {
+		margin-top: -12.5vw;
+	}
+	.chrome .acc_block.acc_block_news .acc_cont .title h1.small .line-t,
+	.chrome .acc_block.acc_block_news .acc_cont .title h1.big .line-t {
+		margin-top: -10.5vw;
+	}
+}
+
 .mac header .menu_button_cont .menu_location .menu_location_cont a {
 	margin-top: 0.275em;
 }
@@ -304,14 +325,16 @@ hr {
 }
 
 .career_text {
-	table {
-	  tbody {
-		tr {
-		  td:first-child {
-			width: 4em; /* Apply width only to the first <td> in each <tr> */
-		  }
-		}
-	  }
-	}
+    table {
+      tbody {
+        tr {
+          td:first-child {
+            width: 4em; /* Apply width only to the first <td> in each <tr> */
+          }
+        }
+      }
+    }
   }
   
+  
+

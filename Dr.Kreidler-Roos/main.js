@@ -302,20 +302,47 @@
     // });
 
     // test 3
-    $('.toggler').click(function() {
-        var targetContent = $(this).next('.content');
-        $('.content').not(targetContent).slideUp(100);
-        $('.toggler').not(this).attr('aria-expanded', 'false');
-        targetContent.slideToggle(100);
-        $(this).attr('aria-expanded', function(index, attr) {
-            return attr === 'true' ? 'false' : 'true';
-        });
+    // $('.toggler').click(function() {
+	// 	console.log("in")
+    //     var targetContent = $(this).next('.content');
+    //     $('.content').not(targetContent).slideUp(100);
+    //     $('.toggler').not(this).attr('aria-expanded', 'false');
+    //     targetContent.slideToggle(100);
+    //     $(this).attr('aria-expanded', function(index, attr) {
+    //         return attr === 'true' ? 'false' : 'true';
+    //     });
     
-        // Smooth scroll to the clicked toggler
-        $('html, body').animate({
-            scrollTop: $(this).offset().top - 20  // 20px padding from top
-        }, 300);  // 300ms animation duration
-    });
+    //     $('html, body').animate({
+    //         scrollTop: $(this).offset().top
+    //     }, 300);
+    // });
+
+	// test 4
+	$('.toggler').click(function() {
+		var targetContent = $(this).next('.content'); // Get the content related to the toggler
+		var firstChild = $('.ce_text first block reveal reveal_visible').children(':first')
+		// var firstChild = targetContent.children(':first'); // Get the first child of the target content
+	
+		// Close all other content
+		$('.content').not(targetContent).slideUp(100);
+		$('.toggler').not(this).attr('aria-expanded', 'false');
+	
+		// Toggle the clicked content
+		targetContent.slideToggle(100, function() {
+			// Ensure scroll happens only after the toggle animation completes
+			if ($(this).is(':visible') && firstChild.length) {
+				$('html, body').animate({
+					scrollTop: firstChild.offset().top // Scroll to the first child
+				}, 300);
+			}
+		});
+	
+		// Update the aria-expanded attribute for the clicked toggler
+		$(this).attr('aria-expanded', function(index, attr) {
+			return attr === 'true' ? 'false' : 'true';
+		});
+	});
+	
     
     
     
