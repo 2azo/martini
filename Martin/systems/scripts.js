@@ -41,23 +41,32 @@
 	var pathname = window.location.pathname;
 	var chevron = '<svg class="mfp-prevent-close" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.4 12.09"><path class="mfp-prevent-close" d="M27.36 12.09h-1l5.67-5.67h-32v-.75h32L26.36 0h1l6 6z" fill="#231f20"/></svg>';
 	
-	$(window).on("load", function() {
-		// test
-		initializeSectionPositions();
-
-		if (window.location.hash) {
-			const v = 0;
-			scrollTo(window.location.hash.substring(1), v);
-		}
+	$(window).on("load", function() { 
+		if (!window.location.hash) { 
+			initializeSectionPositions(); 
+		} else { 
+			const initialHash = window.location.hash; 
+			
+			// Scroll to top and wait for animation to complete
+			$('html, body').animate({ scrollTop: 0 }, {
+				duration: 500, // Adjust duration as needed
+				complete: function() {
+					// Ensure page is fully at top before calculating positions
+					setTimeout(function() {
+						initializeSectionPositions(); 
+						
+						// Scroll to the section corresponding to the hash 
+						scrollTo(initialHash.substring(1)); 
+					}, 100); // Short delay to ensure rendering
+				}
+			}); 
+		} 
 		
-		// NProgress.done(false);
-		// $('.loading_screen').addClass('cls_ready');
-		// $('.loading_screen').delay(1000).fadeOut(500);
-		
-		if ($(this).data("mwa:slide")) {
-			$(this).data("mwa:slide").refresh();
-		}
-	});
+		if ($(this).data("mwa:slide")) { 
+			$(this).data("mwa:slide").refresh(); 
+		} 
+	 });
+	
 	
 	function scroll() {
 		var scrollTop = $(window).scrollTop();
@@ -145,7 +154,9 @@
 	}
 
 	// Scroll to section function
+	// v is the offset, we can edit it
 	function scrollTo(e, v = 0) {
+		console.log("e ->", e)
 		// new
 		e = decodeURI(e).toLowerCase();
 
@@ -185,12 +196,6 @@
 		});
 		
 	}
-
-
-	// 
-	// 
-
-	
 
 	function svgImage(element, src, callback) {
 		$.ajax({
