@@ -41,7 +41,10 @@
 	var pathname = window.location.pathname;
 	var chevron = '<svg class="mfp-prevent-close" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.4 12.09"><path class="mfp-prevent-close" d="M27.36 12.09h-1l5.67-5.67h-32v-.75h32L26.36 0h1l6 6z" fill="#231f20"/></svg>';
 	
-	$(window).on("load", function() {	
+	$(window).on("load", function() {
+		// test
+		initializeSectionPositions();
+
 		if (window.location.hash) {
 			const v = 0;
 			scrollTo(window.location.hash.substring(1), v);
@@ -92,8 +95,8 @@
 		}
 	}
 	
+
 	// function scrollTo(e, v) {
-	// 	// console.log("I'm inside scrollTO")
 	// 	v = v || 0;
 	// 	e = decodeURI(e);
 	// 	e = e.toLowerCase();
@@ -102,49 +105,91 @@
 	// 	const target = $('[data-anchor="' + e + '"]');
 
 	// 	if (target.length < 1) {
+	// 		console.log("Target not found for data-anchor:", e);
 	// 		return;
 	// 	}
-
+	
 	// 	if (!target.hasClass('reveal_visible')) {
 	// 		trans += 100;
 	// 	}
-		
+
 	// 	const headerHeight = 96;
-	// 	const scroll_num = $('[data-anchor="' + e + '"]').offset().top - trans + v - headerHeight;
+	// 	const scroll_num = target.offset().top - trans + v - headerHeight;
+	
 	// 	page.animate({
 	// 		scrollTop: scroll_num
 	// 	}, 1200);
 	// }
 
-	function scrollTo(e, v) {
-		v = v || 0;
-		e = decodeURI(e);
-		e = e.toLowerCase();
-	
-		let trans = 0;
-		const target = $('[data-anchor="' + e + '"]');
-	
-		if (target.length < 1) {
-			return;
-		}
-	
-		if (!target.hasClass('reveal_visible')) {
-			trans += 100;
-		}
+	// 
+	// 
+	// Store for section positions
+	const sectionPositions = {};
+
+	// Initialize position mapping
+	function initializeSectionPositions() {
+		const headerHeight = 96; // Your header height
+		const sections = $('.nav_sections > [data-anchor]');
 		
-		const headerHeight = 96;
+		// Clear existing positions
+		Object.keys(sectionPositions).forEach(key => delete sectionPositions[key]);
 		
-		// Use getBoundingClientRect() for more accurate positioning
-		const rect = target[0].getBoundingClientRect();
-		const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-		console.log("scrollTop -> ", scrollTop)
-		const scroll_num = scrollTop + rect.top - trans - headerHeight + v;
-		console.log("rect.top -> ", rect.top)
-	
-		page.animate({
-			scrollTop: scroll_num
-		}, 1200);
+		// Populate positions map
+		sections.each(function() {
+			const anchor = $(this).attr('data-anchor').toLowerCase();
+			const offsetTop = $(this).offset().top - headerHeight;
+			sectionPositions[anchor] = offsetTop;
+		});
+		
+		console.log('Section positions initialized:', sectionPositions);
 	}
+
+	// Scroll to section function
+	function scrollTo(e, v = 0) {
+		// new
+		e = decodeURI(e).toLowerCase();
+
+		// Check if we have the position stored
+		if (!(e in sectionPositions)) {
+				console.warn(`No position found for anchor: ${e}`);
+				let trans = 0;
+				const target = $('[data-anchor="' + e + '"]');
+
+				if (target.length < 1) {
+					console.log("Target not found for data-anchor:", e);
+					return;
+				}
+			
+				if (!target.hasClass('reveal_visible')) {
+					trans += 100;
+				}
+
+				const headerHeight = 96;
+				const scroll_num = target.offset().top - trans + v - headerHeight;
+			
+				page.animate({
+					scrollTop: scroll_num
+				}, 1200);;
+				return
+			}
+		
+		// Get stored position and add any additional offset
+		const scrollPosition = sectionPositions[e] + v;
+		
+		// Perform scroll
+		$('html, body').animate({
+			scrollTop: scrollPosition
+		}, {
+			duration: 800,  // Adjust duration as needed
+			// easing: 'easeInOutQuart'  // Adjust easing as needed
+		});
+		
+	}
+
+
+	// 
+	// 
+
 	
 
 	function svgImage(element, src, callback) {
