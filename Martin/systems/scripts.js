@@ -49,15 +49,14 @@
 			
 			// Scroll to top and wait for animation to complete
 			$('html, body').animate({ scrollTop: 0 }, {
-				duration: 500, // Adjust duration as needed
+				duration: 200,
 				complete: function() {
 					// Ensure page is fully at top before calculating positions
 					setTimeout(function() {
 						initializeSectionPositions(); 
-						
-						// Scroll to the section corresponding to the hash 
+					
 						scrollTo(initialHash.substring(1)); 
-					}, 100); // Short delay to ensure rendering
+					}, 100); // delay 
 				}
 			}); 
 		} 
@@ -65,7 +64,7 @@
 		if ($(this).data("mwa:slide")) { 
 			$(this).data("mwa:slide").refresh(); 
 		} 
-	 });
+	});
 	
 	
 	function scroll() {
