@@ -181,7 +181,8 @@
 
 								if ($query->have_posts()):
 									while ($query->have_posts()): $query->the_post();?>
-										<li><a href="<?= get_permalink(155); ?>?newsId=<?= $post->ID; ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li>
+										<!-- <li><a href="<?= get_permalink(155); ?>?newsId=<?= $post->ID; ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li> -->
+										<li><a href="<?php the_permalink(); ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li>
 									<?php endwhile;
 								endif;
 								wp_reset_postdata();
