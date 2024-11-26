@@ -149,52 +149,109 @@
 			sectionPositions[anchor] = offsetTop;
 		});
 		
-		console.log('Section positions initialized:', sectionPositions);
+		// console.log('Section positions initialized:', sectionPositions);
 	}
 
-	// Scroll to section function
-	// v is the offset, we can edit it
+	// // Scroll to section function
+	// // v is the offset, we can edit it
+	// function scrollTo(e, v = 0) {
+	// 	// console.log("e ->", e)
+	// 	// new
+	// 	e = decodeURI(e).toLowerCase();
+
+	// 	// Check if we have the position stored
+	// 	if (!(e in sectionPositions)) {
+	// 			v = -150
+	// 			// console.warn(`No position found for anchor: ${e}`);
+	// 			let trans = 0;
+	// 			const target = $('[data-anchor="' + e + '"]');
+
+	// 			if (target.length < 1) {
+	// 				// console.log("Target not found for data-anchor:", e);
+	// 				return;
+	// 			}
+			
+	// 			if (!target.hasClass('reveal_visible')) {
+	// 				trans += 100;
+	// 			}
+
+	// 			const headerHeight = 96;
+	// 			const scroll_num = target.offset().top - trans + v - headerHeight;
+			
+	// 			page.animate({
+	// 				scrollTop: scroll_num
+	// 			}, 500);;
+	// 			return
+	// 		}
+		
+	// 	// Get stored position
+	// 	const scrollPosition = sectionPositions[e] + v;
+		
+	// 	// Perform scroll
+	// 	$('html, body').animate({
+	// 		scrollTop: scrollPosition
+	// 	}, {
+	// 		duration: 800,  
+	// 	});
+		
+	// }
+
+	// Debounce utility function
+	function debounce(func, wait = 50) {
+		let timeout;
+		return function(...args) {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => func.apply(this, args), wait);
+		};
+	}
+
 	function scrollTo(e, v = 0) {
-		console.log("e ->", e)
-		// new
+		// Normalize and decode anchor
 		e = decodeURI(e).toLowerCase();
 
-		// Check if we have the position stored
-		if (!(e in sectionPositions)) {
-				console.warn(`No position found for anchor: ${e}`);
-				let trans = 0;
-				const target = $('[data-anchor="' + e + '"]');
+		// Memoize target element to prevent repeated DOM queries
+		const getTarget = (() => {
+			let cachedTarget = null;
+			return () => {
+				if (!cachedTarget) {
+					cachedTarget = $(`[data-anchor="${e}"]`);
+				}
+				return cachedTarget;
+			};
+		})();
 
-				if (target.length < 1) {
-					console.log("Target not found for data-anchor:", e);
-					return;
-				}
-			
-				if (!target.hasClass('reveal_visible')) {
-					trans += 100;
-				}
+		// Cached position lookup
+		const scrollPosition = sectionPositions[e] 
+			? sectionPositions[e] + v 
+			: (() => {
+				v = -150
+				const target = getTarget();
+				if (target.length < 1) return null;
 
 				const headerHeight = 96;
-				const scroll_num = target.offset().top - trans + v - headerHeight;
-			
-				page.animate({
-					scrollTop: scroll_num
-				}, 1200);;
-				return
-			}
-		
-		// Get stored position and add any additional offset
-		const scrollPosition = sectionPositions[e] + v;
-		
-		// Perform scroll
-		$('html, body').animate({
-			scrollTop: scrollPosition
-		}, {
-			duration: 800,  // Adjust duration as needed
-			// easing: 'easeInOutQuart'  // Adjust easing as needed
-		});
-		
+				const trans = target.hasClass('reveal_visible') ? 0 : 100;
+				return target.offset().top - trans + v - headerHeight;
+			})();
+
+		if (scrollPosition === null) return;
+
+		// Use requestAnimationFrame for smoother scrolling
+		const smoothScroll = () => {
+			window.requestAnimationFrame(() => {
+				window.scrollTo({
+					top: scrollPosition,
+					behavior: 'smooth'
+				});
+			});
+		};
+
+		// Debounce the scroll to prevent multiple rapid calls
+		const debouncedScroll = debounce(smoothScroll, 100);
+		debouncedScroll();
 	}
+
+	// 
+	// 
 
 	function svgImage(element, src, callback) {
 		$.ajax({
@@ -212,8 +269,8 @@
 	
 	// $(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
 	$('a[href*="#"]')
-	.not('[href="#"]')
-	.not('[href="#0"]')
+	// .not('[href="#"]')
+	// .not('[href="#0"]')
 	.click(function (e) {
 		var href = $(this).attr("href").replace(window.location.origin, "");
 		var url = href.substr(0, href.indexOf("#"));
@@ -237,11 +294,15 @@
 			menu_button.removeClass('active');
 
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			// const firstChild = accAnchor.children().first();
+
 			if (accAnchor.length) {
-				 checkAccBlockHash(hash);
+				// console.log("there's accAnchor")
+				checkAccBlockHash(hash);
 			}
 			
 			else {
+				// console.log("there's NO accAnchor")
 				scrollTo(hash);
 			}
            
@@ -471,7 +532,12 @@
 		if(hash.length) {
 			// const accAnchor = $(`.acc_block .list [data-id="${hash}"]`);
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			const firstChild = accAnchor.parent().children().first();
+			const firstChildAnchor = firstChild.attr('data-anchor');
+			// console.log("firstChildAnchor -> ", firstChildAnchor)
+
 			if (accAnchor.length) {
+				scrollTo(firstChildAnchor)
 				accAnchor.find(".toggle").click();
 			}
 		}
@@ -479,7 +545,7 @@
 	
 	const blueBlockBackgroundObserver = new IntersectionObserver((entries, observer) => {
 		entries.forEach(function(e) {
-			console.log(e);
+			// console.log(e);
 			if (e.isIntersecting && e.intersectionRatio >= 0.25) {	
 				$("body").addClass("inverted");
 			} else if (!e.isIntersection) {

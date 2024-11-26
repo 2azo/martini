@@ -149,7 +149,11 @@
 	}
 	
 
-	$(".sub_menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
+	// $(".sub_menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
+	$('a[href*="#"]')
+	// .not('[href="#"]')
+	// .not('[href="#0"]')
+	.click(function (e) {
 		var href = $(this).attr("href").replace(window.location.origin, "");
 		var url = href.substr(0, href.indexOf("#"));
 		var hash = href.substr(href.indexOf("#") + 1);
