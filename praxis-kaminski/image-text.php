@@ -1,6 +1,3 @@
-
-
-
 <?php $page_id = get_queried_object_id(); ?>
 
 <div class="image_block highlights">
