@@ -1101,7 +1101,7 @@ a.highlight:hover img {
 	z-index: 10;
 }
 #h_popup_wrap .h_popup {
-	width: 700px;
+	width: 900px;
 	/* height: 300px; */
 	background-color: #fff;
 	border-radius: 15px;
@@ -1192,6 +1192,24 @@ a.highlight:hover img {
 
 #h_popup_wrap .h_popup  .h_popup_cont .h_popup_text_close_button span:hover {
 	background-color: #7e7e7e;
+}
+
+.h_popup_text_info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.h_popup_text_info > div:first-child {
+    flex: 0 0 100px;
+}
+
+.h_popup_text_info > div:last-child {
+    flex: 1; 
+}
+
+#h_popup_wrap > div.h_popup > div > div.h_popup_text > div > div:nth-child(2) > strong {
+    letter-spacing: 1px;
 }
 
 

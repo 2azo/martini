@@ -1,9 +1,3 @@
-<!-- test, to be deleted -->
-<?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-?>
-
 <div class="office-hours">
   <h1 class="reveal">Sprechzeiten</h1>
   <div class="day reveal">
@@ -106,29 +100,13 @@ ini_set('display_errors', 1);
         // echo "<!-- Popup is being rendered -->";
 ?>
 
-<!-- <div id="h_popup_wrap">
-	<div class="h_popup_bg h_popup_close_button"></div>
-	<div class="h_popup">
-		<div class="h_popup_cont">
-			<div class="h_popup_header">Urlaub</div>
-			<div class="h_popup_text">
-				<div>Wir sind im Urlaub</div>
-				<div>vom <span><?=$from;?></span> bis <span><?=$until;?></span>.</div>
-				<div class="h_popup_text_info"><?=$text;?></div>
-			</div>
-			<div class="h_popup_text_close_button h_popup_close_button"><span>Schließen</span></div>
-		</div>
-	</div>
-</div>
-<?php endif;?> -->
-
 <div id="h_popup_wrap">
 	<div class="h_popup_bg h_popup_close_button"></div>
 	<div class="h_popup">
 		<div class="h_popup_cont">
 			<!-- <div class="h_popup_header">Für unsere gynäkologische Praxis suchen wir zum näschstmöglisch Zeitpunkt Unterstützung.</div> -->
 			<div class="h_popup_text">
-				<div>Für unsere gynäkologische Praxis suchen wir zum näschstmöglisch Zeitpunkt Unterstützung.</div>
+				<!-- <div>Für unsere gynäkologische Praxis suchen wir zum näschstmöglisch Zeitpunkt Unterstützung.</div> -->
 				<div class="h_popup_text_info"><?=$text;?></div>
 			</div>
 			<div class="h_popup_text_close_button h_popup_close_button"><span>Schließen</span></div>
