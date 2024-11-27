@@ -5,11 +5,12 @@
 		$("body").addClass("mac");
 	}
 	
-	switch (navigator.appName) {
-		case "Netscape": {
-			$("body").addClass("firefox");
-			break;
-		}
+	if (navigator.userAgent.includes("Firefox")) {
+		$("body").addClass("firefox");
+	} else if (navigator.userAgent.includes("Safari")) {
+		$("body").addClass("safari");
+	} else if (navigator.userAgent.includes("Chrome")) {
+		$("body").addClass("chrome");
 	}
 	
 	var rafId = null;
@@ -40,20 +41,31 @@
 	var pathname = window.location.pathname;
 	var chevron = '<svg class="mfp-prevent-close" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.4 12.09"><path class="mfp-prevent-close" d="M27.36 12.09h-1l5.67-5.67h-32v-.75h32L26.36 0h1l6 6z" fill="#231f20"/></svg>';
 	
-	$(window).on("load", function() {	
-		if (window.location.hash) {
-			const v = 0;
-			scrollTo(window.location.hash.substring(1), v);
-		}
+	$(window).on("load", function() { 
+		if (!window.location.hash) { 
+			initializeSectionPositions(); 
+		} else { 
+			const initialHash = window.location.hash; 
+			
+			// Scroll to top and wait for animation to complete
+			$('html, body').animate({ scrollTop: 0 }, {
+				duration: 200,
+				complete: function() {
+					// Ensure page is fully at top before calculating positions
+					setTimeout(function() {
+						initializeSectionPositions(); 
+					
+						scrollTo(initialHash.substring(1)); 
+					}, 100); // delay 
+				}
+			}); 
+		} 
 		
-		// NProgress.done(false);
-		// $('.loading_screen').addClass('cls_ready');
-		// $('.loading_screen').delay(1000).fadeOut(500);
-		
-		if ($(this).data("mwa:slide")) {
-			$(this).data("mwa:slide").refresh();
-		}
+		if ($(this).data("mwa:slide")) { 
+			$(this).data("mwa:slide").refresh(); 
+		} 
 	});
+	
 	
 	function scroll() {
 		var scrollTop = $(window).scrollTop();
@@ -91,48 +103,175 @@
 		}
 	}
 	
-	function scrollTo(e, v) {
-		// console.log("I'm inside ScrollTo")
 
-		// v is optional, provided value or zero
-		v = v || 0;
+	// function scrollTo(e, v) {
+	// 	v = v || 0;
+	// 	e = decodeURI(e);
+	// 	e = e.toLowerCase();
 
-		// normalizing e (e.g. if %20 -> space)
-		e = decodeURI(e);
+	// 	let trans = 0;
+	// 	const target = $('[data-anchor="' + e + '"]');
 
-		// making it lowercase
-		e = e.toLowerCase();
+	// 	if (target.length < 1) {
+	// 		console.log("Target not found for data-anchor:", e);
+	// 		return;
+	// 	}
+	
+	// 	if (!target.hasClass('reveal_visible')) {
+	// 		trans += 100;
+	// 	}
 
-		let trans = 0;
+	// 	const headerHeight = 96;
+	// 	const scroll_num = target.offset().top - trans + v - headerHeight;
+	
+	// 	page.animate({
+	// 		scrollTop: scroll_num
+	// 	}, 1200);
+	// }
 
-		// looks for an element with data-anchor = "e"
-		const target = $('[data-anchor="' + e + '"]');
+	// 
+	// 
+	// Store for section positions
+	const sectionPositions = {};
 
-		if (target.length < 1) {
-			return;
-		}
-
-		// not sure
-		if (!target.hasClass('reveal_visible')) {
-			trans += 100;
-		}
+	// Initialize position mapping
+	function initializeSectionPositions() {
+		const headerHeight = 96; // Your header height
+		const sections = $('.nav_sections > [data-anchor]');
 		
-		const headerHeight = 56;
+		// Clear existing positions
+		Object.keys(sectionPositions).forEach(key => delete sectionPositions[key]);
+		
+		// Populate positions map
+		sections.each(function() {
+			const anchor = $(this).attr('data-anchor').toLowerCase();
+			const offsetTop = $(this).offset().top - headerHeight;
+			sectionPositions[anchor] = offsetTop;
+		});
+		
+		// console.log('Section positions initialized:', sectionPositions);
+	}
 
-		// offse().top: offset of the element from the top of the screen
-		// trans: "adjustment for hidder elements"
-		// why subtracting the headerHeight?
-		const scroll_num = target.offset().top - trans + v - headerHeight;
+	// // Scroll to section function
+	// // v is the offset, we can edit it
+	// function scrollTo(e, v = 0) {
+	// 	// console.log("e ->", e)
+	// 	// new
+	// 	e = decodeURI(e).toLowerCase();
 
-		// .animate is a JQuery animation method
-		page.animate({
+	// 	// Check if we have the position stored
+	// 	if (!(e in sectionPositions)) {
+	// 			v = -150
+	// 			// console.warn(`No position found for anchor: ${e}`);
+	// 			let trans = 0;
+	// 			const target = $('[data-anchor="' + e + '"]');
 
-			// scroll to
-			scrollTop: scroll_num
+	// 			if (target.length < 1) {
+	// 				// console.log("Target not found for data-anchor:", e);
+	// 				return;
+	// 			}
+			
+	// 			if (!target.hasClass('reveal_visible')) {
+	// 				trans += 100;
+	// 			}
 
-			// duration of the animation in ms
-		}, 1200);
-	}	
+	// 			const headerHeight = 96;
+	// 			const scroll_num = target.offset().top - trans + v - headerHeight;
+			
+	// 			page.animate({
+	// 				scrollTop: scroll_num
+	// 			}, 500);;
+	// 			return
+	// 		}
+		
+	// 	// Get stored position
+	// 	const scrollPosition = sectionPositions[e] + v;
+		
+	// 	// Perform scroll
+	// 	$('html, body').animate({
+	// 		scrollTop: scrollPosition
+	// 	}, {
+	// 		duration: 800,  
+	// 	});
+		
+	// }
+
+	// Debounce: a technique used to prevent an event from being triggered too frequently
+	// e.g. to avoid the user spamming a button or sending an excessive number of requests to a server.
+	// ensuring the function re-runs after a delay, in other words: delaying the execution 
+	// parameters: function + variable (wait)
+	function debounce(func, wait = 50) {
+		
+		// setting the timeout "delay" 
+		let timeout;
+
+		// a function returns a function :D
+		// returns (calls) the original function
+		return function(...args) {
+
+			// clearTimeout: a method of an interface (window)
+			// cancels the existing timer (set by setTimeout)
+			clearTimeout(timeout);
+
+			// setTimeout: a method of an interface (window)
+			// sets a timer, before running a function (the function won't run till the timer clears out)
+			// calling the original function, with a timer (wait)
+			// the function will only run if no event happened during the (wait)
+			timeout = setTimeout(() => func.apply(this, args), wait);
+		};
+	}
+
+	function scrollTo(e, v = 0) {
+		// Normalize and decode anchor
+		e = decodeURI(e).toLowerCase();
+
+		// Memoize target element to prevent repeated DOM queries
+		// IIFE (Immediately Invoked Function Expression): (() => { ... })();
+		// good for a single use case: when the same element called repeatedly
+		// could be improved to cache each unique data-anchor, by setting a list or object to store them all, once called
+		const getTarget = (() => {
+			let cachedTarget = null;
+			return () => {
+				if (!cachedTarget) {
+					cachedTarget = $(`[data-anchor="${e}"]`);
+				}
+				return cachedTarget;
+			};
+		})();
+
+		// Cached position lookup
+		const scrollPosition = sectionPositions[e] 
+			? sectionPositions[e] + v 
+			: (() => {
+				v = -150
+				const target = getTarget();
+				if (target.length < 1) return null;
+
+				const headerHeight = 96;
+				const trans = target.hasClass('reveal_visible') ? 0 : 100;
+				return target.offset().top - trans + v - headerHeight;
+			})();
+
+		if (scrollPosition === null) return;
+
+		// Use requestAnimationFrame for smoother scrolling
+		const smoothScroll = () => {
+			window.requestAnimationFrame(() => {
+				window.scrollTo({
+					top: scrollPosition,
+					behavior: 'smooth'
+				});
+			});
+		};
+
+		// Debounce the scroll to prevent multiple rapid calls
+		// no idea how does that work in js
+		const debouncedScroll = debounce(smoothScroll, 100);
+		debouncedScroll();
+	}
+
+	// 
+	// 
 
 	function svgImage(element, src, callback) {
 		$.ajax({
@@ -148,8 +287,7 @@
 		});
 	}
 	
-
-	// $(".sub_menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
+	// $(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
 	$('a[href*="#"]')
 	// .not('[href="#"]')
 	// .not('[href="#0"]')
@@ -160,67 +298,36 @@
 		$(".main_menu_bg").removeClass("active");
 		$('.menu-item-has-children').removeClass('hovered');
 		enableScroll();
+		
+		// test
+		// if (url == "" || url == window.location.pathname) {
+		// 	menu.removeClass('active');
+		// 	page.removeClass('no_scroll');
+		// 	menu_button.removeClass('active');
+		// 	checkAccBlockHash(hash);
+		// 	scrollTo(hash);
+		// }
+
 		if (url == "" || url == window.location.pathname) {
 			menu.removeClass('active');
 			page.removeClass('no_scroll');
 			menu_button.removeClass('active');
 
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			// const firstChild = accAnchor.children().first();
+
 			if (accAnchor.length) {
-				console.log("there's accAnchor")
-				 checkAccBlockHash(hash);
+				// console.log("there's accAnchor")
+				checkAccBlockHash(hash);
 			}
 			
 			else {
-				console.log("there's NO accAnchor")
+				// console.log("there's NO accAnchor")
 				scrollTo(hash);
 			}
            
 		}
 	});
-	
-	// this event listener is repetitive, and conflicting with the previous one, so I merged them
-	// $(".sub_menu a").click(function(e) {
-    //     // full link example: http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#lipo 
-
-    //     // href: /sondermaschinen/#lipo
-	// 	var href = $(this).attr("href").replace(window.location.origin, "");
-
-    //     // url: /sondermaschinen/
-	// 	var url = href.substr(0, href.indexOf("#"));
-
-    //     // hash:  lipo
-	// 	var hash = href.substr(href.indexOf("#") + 1);
-
-    //     // it's called "jQuery selector -> $ stands for jQuery" and it's expensive to run
-    //     // main_menu_bg: the red background
-	// 	$(".main_menu_bg").removeClass("active");
-
-    //     // menu-item-has-children: has sub-menu
-	// 	$('.menu-item-has-children').removeClass('hovered');
-
-    //     // enabeling scrolling, details there
-	// 	enableScroll();
-		
-
-    //     // window.location.pathname: /sondermaschinen/
-	// 	if (url == "" || url == window.location.pathname) {
-
-    //         // var menu = $('.main_menu');
-	// 		menu.removeClass('active');
-
-    //         // var page = $('html, body');
-	// 		page.removeClass('no_scroll');
-
-    //         // var menu_button = $('.menu_button');
-	// 		menu_button.removeClass('active');
-
-	// 		// specifically for $(`.acc_block .list [data-anchor="${hash}"]`);
-	// 		// scroll to them AND open them
-	// 		checkAccBlockHash(hash);
-	// 	}
-
-	// });
 	
 	$('[data-svg]').each(function() {
 		svgImage(this, $(this).attr('data-svg'));
@@ -230,22 +337,13 @@
     window.oldScrollPos = $(window).scrollTop();
 		page.addClass('no_scroll');
 
-        $(window).on('scroll.scrolldisabler',function ( event ) {
-            $(window).scrollTop( window.oldScrollPos );
-            event.preventDefault();
-        });
+    $(window).on('scroll.scrolldisabler',function ( event ) {
+       $(window).scrollTop( window.oldScrollPos );
+       event.preventDefault();
+    });
 	};
-
 	function enableScroll() {
-
-        // selecting "window" object
-        // .off() JQuery method to remove an event listener 
-        // scroll: event type
-        // scrolldisabler: like a label for the event "for this specific scroll event"
-        // line summariy: stop listening to this specific scroll event 
 		$(window).off('scroll.scrolldisabler');
-
-        // var page = $('html, body');
 		page.removeClass('no_scroll');
 	};
 	
@@ -304,6 +402,10 @@
 					var viewportOffset = $(this)[0].getBoundingClientRect();
 					$(this).children('img').css('transform', 'translate(0, ' + Math.round((viewportOffset.top) * -.15) + 'px)');
 				});
+				// $('.scroll_sections').each(function(e) {
+					// var viewportOffset = $(this)[0].getBoundingClientRect();					
+					// $(this).find('.picture_cont').css('transform', 'translate(0, ' + Math.round((viewportOffset.top + (wh/-1)) * .1) + 'px)');
+				// });
 			} else {
 				$('.nav_section').each(function(e) {
 					$(this).css('position','relative');
@@ -312,24 +414,26 @@
 					});
 				});
 				$('.acc_image').each(function(e) {
-					$(this).children('img').css('transform', 'translate(0, 0');
+					$(this).children('img').css('transform', 'translate(0, 0)');
 				});
+				// $('.scroll_sections').each(function(e) {			
+					// $(this).find('.picture_cont').css('transform', 'translate(0, 0)');
+				// });
 			}
-			
 			if (st >= 50) {
 				if(st > scrollTop) {
 					if(!header.hasClass('always_show')) {
 						header.addClass('hide');
 					} else {
- 						header.removeClass('always_show');
+						header.removeClass('hide');
 					}
 					header.addClass('hide');
- 					header.addClass('shrink');
-					menu.addClass('shrink');
+					header.addClass('shrink');
+					menu.addClass('shrink')
 					sub_menu.addClass('show');
 				} else {
-                //	header.removeClass('hide');					
-                //	sub_menu.removeClass('show');
+					// header.removeClass('hide');			
+					// sub_menu.removeClass('show');
 				}
 			} else {
 				header.removeClass('hide');
@@ -339,6 +443,7 @@
 			}
 				
 			scrollTop = st;
+			
 		}
 		
 		scroll();
@@ -403,7 +508,6 @@
 		});
 	}
 	
-	// right
 	$('#menu-main-menu > li > span').click(function() {
 		var self = $(this);
 		var parent = self.parent();
@@ -425,60 +529,43 @@
 		var acc = el.closest('.acc_block');
 		var cont = el.find('.cont');
 		var id = el.data('id');
+		var acc_cont = self.closest(".acc_cont");
+		var image = acc_cont.find('.image[data-id="'+id+'"]');
+		var images = acc_cont.find('.images');
+		var items = acc_cont.find('.item');
+		var active_cont = acc_cont.find('.item.active .cont');
 		if(el.hasClass('active')) {
 			el.removeClass('active');
 			cont.stop().slideUp(300);
-			$('.image[data-id="'+id+'"]').slideUp(300);
+			image.slideUp(300);
 		} else {
-			$('.item.active .cont').stop().slideUp(300);
-			$('.images .image').stop().slideUp(300);
-			$('.item').removeClass('active');
+			active_cont.stop().slideUp(300);
+			images.find('.image').stop().slideUp(300);
+			items.removeClass('active');
 			el.addClass('active');
 			cont.stop().slideDown(300);
-			$('.image[data-id="'+id+'"]').stop().slideDown(300);
+			image.stop().slideDown(300);
 		}
-
 	});
 	
-	
-
 	function checkAccBlockHash(hash) {
-		if (!hash.length) return;
-		
-		// example
-		// http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#mpv
-		
-		// hash: mpv
+		if(hash.length) {
+			// const accAnchor = $(`.acc_block .list [data-id="${hash}"]`);
+			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			const firstChild = accAnchor.parent().children().first();
+			const firstChildAnchor = firstChild.attr('data-anchor');
+			// console.log("firstChildAnchor -> ", firstChildAnchor)
 
-		const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
-
-		// a child of accAnchor with a class "toggle"
-		const accToggle = accAnchor.find(".toggle");
-
-		// item has the attribute "data-anchor"
-		// first item because: to see the full list
-		const firstItem = $('.acc_block .list [data-id="1"]').attr('data-anchor');
-	
-		// accAnchor exist AND it is not active (should be closed)
-		if (accAnchor.length && !accAnchor.hasClass('active')) {
-
-			// scroll to a specific target in a specific duration
-			scrollTo(firstItem);
-
-			// Simulate a click to activate
-			accToggle.click();
+			if (accAnchor.length) {
+				scrollTo(firstChildAnchor)
+				accAnchor.find(".toggle").click();
+			}
 		}
 	}
 	
-    
-      
-
-    
-      
-
 	const blueBlockBackgroundObserver = new IntersectionObserver((entries, observer) => {
 		entries.forEach(function(e) {
-			console.log(e);
+			// console.log(e);
 			if (e.isIntersecting && e.intersectionRatio >= 0.25) {	
 				$("body").addClass("inverted");
 			} else if (!e.isIntersection) {
@@ -509,79 +596,122 @@
 				}, 1200);
 			}
 		}
-	});	
+		
+		
+		// New Version (Fade)
+		$(".content").each(function(idx) {
+			new ScrollMagic.Scene({
+				triggerElement: this,
+				duration: $(this).outerHeight()
+			})
+				// .on('update', (e) => console.log(e.target.progress()))
+				.on("enter", () => $(".progress").eq(idx).addClass("show"))
+				.on("leave", (evt) => {
+					const element = $(".progress").eq(idx);
+					// if (!element.parent().hasClass("one") || evt.state == "AFTER") {
+					if (!element.parent().hasClass("one") || evt.state == "AFTER") {
+						element.removeClass("show");
+					}
+				})
+				.addTo(controller);
+		});
+	});
 	
 	// Unternehmen animation
 	let controller = null;
 	
-	if ($(window).innerWidth() >= 960) {
+	if ($(window).innerWidth() >= 1199) {
 		controller = createScrollMagic();
 	}
 	
 	function createScrollMagic() {
 		const controller = new ScrollMagic.Controller();
+		const timeline = new TimelineMax();
 	
-		var shrink = TweenMax.to(
+		var shrink = TweenMax.fromTo(
 			".scroll_section_desktop .picture.one", 1, {
-				css: {
+					width: "100vw",
+					height: "100vh",
+					//height: "100%"
+				},
+				{
 					width: "100%",
-					height: "33.3333%"
+					height: "33.33vh",
+					// height: "33.33%"
 				}
-			});
-
-		var move = TweenMax.to(
-			".scroll_section_desktop .content_wrap--scroll", 1, {
+			);
+			
+			
+		var scale_down_text = TweenMax.to(
+			".scroll_section_desktop .title_cont .title", 0.35, {
 				css: {
-					transform: "translateX(0)",
-					opacity: "1"
+					opacity: "0"
 				}
-			});
-
-		var opacity = new TimelineMax()
-		.to(".scroll_section_desktop .picture.one .title", 1, {
-			css: {
-				opacity: "1"
-			},
-			delay: 0.5,
-		});
-
+			}
+		);
+		
+		var marquee = TweenMax.fromTo(
+			".scroll_section_desktop .title_cont .subtitle", 1, {
+				transform: "translate(30vw)"
+			}, {				
+				transform: "translate(-100vw)"
+			}
+		);
+		var marquee_opacity = TweenMax.to(
+			".scroll_section_desktop .title_cont .subtitle", 0.5, {
+				css: {
+					opacity: 0
+				}
+			}
+		);
+		
+		
+		
+		timeline.add(marquee).add([shrink, scale_down_text, marquee_opacity]);
+		
+		
+		var layer = $('.scroll_section_desktop .picture .layer');
 		var scene2 = new ScrollMagic.Scene({
 			triggerElement: ".scroll_sections",
-			duration: "80%",
+			duration: 4000,
 			triggerHook: 0,
 			reverse: true
-		}).setTween(shrink).addTo(controller);	
-
-		var scene3 = new ScrollMagic.Scene({
-			triggerElement: ".scroll_sections",
-			duration: "80%",
-			triggerHook: 0,
-			reverse: true
-		}).setTween(move).addTo(controller);
-
+		})
+		.setPin('.scroll_section_desktop')
+		.setTween(timeline)
+		.on('update', function(e) {
+			var progress = e.target.progress();
+			var progress_calc = (progress * 85);
+			var height = $('.picture.one').innerHeight()*1.3;
+			var scroll_area = $('.scroll_section_desktop .content_wrap');
+			
+			$('.picture.one .img').css('background-position', '50% '+progress_calc+'%');
+			
+			if(progress > 0.85) {
+				var val = (1 - progress)/0.15;
+				scroll_area.css('padding-top', height*val);
+			} else {
+				scroll_area.css('padding-top', height);
+			}
+		})
+		.addTo(controller);
+		
 		var scene4 = new ScrollMagic.Scene({
-			triggerElement: ".scroll_sections",
+			triggerElement: ".scroll_section_desktop .content_wrap--scroll",
 			duration: "100%",
 			triggerHook: 0,
 			reverse: true
-		}).setTween(opacity).addTo(controller);
-
-/*
-		var bgOpacityEnter = new TimelineMax()
-		.to(".ba_bg", 1, {
-			className: "ba_bg show"
 		})
-		.to(".ba_bg", 1, {
-			className: "ba_bg"
-		});
-
-		var blueArea = new ScrollMagic.Scene({
-			triggerElement: ".blue_block",
-			duration: "200%",
-			triggerHook: "-50%",
-			reverse: true
-		}).setTween(bgOpacityEnter).addTo(controller);
-*/
+		.setPin('.picture_cont')
+		.on('start', function() {
+			var heignt = $(".scroll_section_desktop .content_wrap--scroll").height()*0.85;
+			this.duration(heignt);
+		})
+		.on('progress', function(e) {
+			$('.picture_cont').css('transform', 'translateY(-' + e.progress*100*0.65 + '%)');
+		})
+		.addTo(controller);
+		
 
 		var historyBGOpacity = new TimelineMax()
 		.to(".history_bg", 1, {
@@ -599,17 +729,6 @@
 			var self = $(this);
 			var text = self.find('.text');
 			var icon = self.find('.icon');
-
-			/*
-			new ScrollMagic.Scene({
-				triggerElement: this,
-				duration: self.outerHeight() - text.outerHeight()*2,
-				triggerHook: "0",
-				reverse: true
-			})
-				.setPin(text[0])
-				.addTo(controller);
-			*/
 
 			new ScrollMagic.Scene({
 				triggerElement: this,
@@ -633,31 +752,16 @@
 		
 		windowWidth = $(window).innerWidth();
 		
-		if (windowWidth < 960 && controller) {
+		if (windowWidth < 1199 && controller) {
 			controller.destroy(true);
 			controller = null;
-		} else if (windowWidth >= 960 && !controller) {
+		} else if (windowWidth >= 1199 && !controller) {
 			controller = createScrollMagic();
 		}
 	});
 	
-	$(".picture.one .progress").addClass("show");
+	// $(".picture.one .progress").addClass("show");
 	
-	// New Version (Fade)
-	$(".content").each(function(idx) {		
-		new ScrollMagic.Scene({
-			triggerElement: this,
-			duration: $(this).outerHeight()
-		})
-			.on("enter", () => $(".progress").eq(idx).addClass("show"))
-			.on("leave", (evt) => {
-				const element = $(".progress").eq(idx);
-				if (!element.parent().hasClass("one") || evt.state == "AFTER") {
-					element.removeClass("show");
-				}
-			})
-			.addTo(controller);
-	});
 	
 	$('.career_list li').click(function() {
 		var self = $(this);
@@ -674,12 +778,12 @@
 		}
 	});
 	
-	$(".career_content_title").click(function() {
+	$(".career_content_title, .news_mob_title").click(function() {
 		var self = $(this);
 		var parent = self.parent();
 		if(self.hasClass("active")) return;
-		parent.find('.career_content_title.active').removeClass('active');
-		parent.find('.career_content').stop().slideUp(500);		
+		parent.find('.career_content_title.active, .news_mob_title.active').removeClass('active');
+		parent.find('.career_content, .image').stop().slideUp(500);		
 		self.addClass('active').next().stop().slideDown(500);
 	});
 	
@@ -727,30 +831,26 @@
 						});
 					} else {
 						message.text('Error!');
-						console.error(msg);
+						console.log("Error: " + msg);
 					}
 				}, 
 				error: function(msg){
 					message.text("Error: " + msg);
-					console.error(msg);
+					console.log("Error: " + msg);
 				}
 			});
 			
 			overlay.fadeOut(300);
 		}
 	});
-	
 	$("#nav_menu .menu-item-has-children").on("mouseenter", function(){
 		$(".main_menu_bg").addClass("active");
 		$(this).addClass('hovered');
-		disableScroll(); 
+		disableScroll();
 	});
 	$("#nav_menu .menu-item-has-children").on("mouseleave", function(){
 		$(".main_menu_bg").removeClass("active");
 		$(this).removeClass('hovered');
-		enableScroll(); 
+		enableScroll();
 	});
-      
-
-      
 })(jQuery);

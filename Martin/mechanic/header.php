@@ -179,11 +179,14 @@
 				<div class="logo_main" data-svg="<?=get_template_directory_uri();?>/img/logo.svg"></div>
 			</a>
 		</div>
+		
 		<div class="logo_cont_mobile">
 			<a class="logo" href="<?= esc_url(home_url("/")); ?>">
 				<div class="logo_main" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div>
 			</a>
 		</div>
+
+
 	</header>
 	<div class="main_menu_bg"></div>
 	<nav class="main_menu">

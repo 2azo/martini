@@ -206,6 +206,7 @@
 	}
 
 	function scrollTo(e, v = 0) {
+		// console.log("start v = ", v)
 		// Normalize and decode anchor
 		e = decodeURI(e).toLowerCase();
 
@@ -221,10 +222,11 @@
 		})();
 
 		// Cached position lookup
+		// sectionPositions
 		const scrollPosition = sectionPositions[e] 
 			? sectionPositions[e] + v 
 			: (() => {
-				v = -150
+				// v = -150
 				const target = getTarget();
 				if (target.length < 1) return null;
 
@@ -235,7 +237,8 @@
 
 		if (scrollPosition === null) return;
 
-		// Use requestAnimationFrame for smoother scrolling
+		// for smoother scrolling
+		// console.log("final v = ", v)
 		const smoothScroll = () => {
 			window.requestAnimationFrame(() => {
 				window.scrollTo({
@@ -245,7 +248,7 @@
 			});
 		};
 
-		// Debounce the scroll to prevent multiple rapid calls
+		// Debounce the scroll
 		const debouncedScroll = debounce(smoothScroll, 100);
 		debouncedScroll();
 	}
@@ -303,7 +306,7 @@
 			
 			else {
 				// console.log("there's NO accAnchor")
-				scrollTo(hash);
+				scrollTo(hash, 30);
 			}
            
 		}
@@ -537,8 +540,15 @@
 			// console.log("firstChildAnchor -> ", firstChildAnchor)
 
 			if (accAnchor.length) {
-				scrollTo(firstChildAnchor)
+				// console.log("here")
 				accAnchor.find(".toggle").click();
+				scrollTo(firstChildAnchor, -150);
+				
+			}
+
+			else {
+				// console.log("there")
+				scrollTo(hash, 30)
 			}
 		}
 	}
