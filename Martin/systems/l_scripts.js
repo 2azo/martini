@@ -24,6 +24,7 @@
 	var menu_button = $('.menu_button');
 	var menu = $('.main_menu');
 	var sub_menu = $('.sub_menu');
+	var offest = 0;
 	
 	var windowWidth = $(window).innerWidth();
 	
@@ -41,20 +42,31 @@
 	var pathname = window.location.pathname;
 	var chevron = '<svg class="mfp-prevent-close" data-name="Ebene 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 33.4 12.09"><path class="mfp-prevent-close" d="M27.36 12.09h-1l5.67-5.67h-32v-.75h32L26.36 0h1l6 6z" fill="#231f20"/></svg>';
 	
-	$(window).on("load", function() {	
-		if (window.location.hash) {
-			const v = 0;
-			scrollTo(window.location.hash.substring(1), v);
-		}
+	$(window).on("load", function() { 
+		if (!window.location.hash) { 
+			initializeSectionPositions(); 
+		} else { 
+			const initialHash = window.location.hash; 
+			
+			// Scroll to top and wait for animation to complete
+			$('html, body').animate({ scrollTop: 0 }, {
+				duration: 200,
+				complete: function() {
+					// Ensure page is fully at top before calculating positions
+					setTimeout(function() {
+						initializeSectionPositions(); 
+					
+						scrollTo(initialHash.substring(1)); 
+					}, 100); // delay 
+				}
+			}); 
+		} 
 		
-		// NProgress.done(false);
-		// $('.loading_screen').addClass('cls_ready');
-		// $('.loading_screen').delay(1000).fadeOut(500);
-		
-		if ($(this).data("mwa:slide")) {
-			$(this).data("mwa:slide").refresh();
-		}
+		if ($(this).data("mwa:slide")) { 
+			$(this).data("mwa:slide").refresh(); 
+		} 
 	});
+	
 	
 	function scroll() {
 		var scrollTop = $(window).scrollTop();
@@ -92,6 +104,7 @@
 		}
 	}
 	
+
 	// function scrollTo(e, v) {
 	// 	v = v || 0;
 	// 	e = decodeURI(e);
@@ -101,68 +114,138 @@
 	// 	const target = $('[data-anchor="' + e + '"]');
 
 	// 	if (target.length < 1) {
+	// 		console.log("Target not found for data-anchor:", e);
 	// 		return;
 	// 	}
-
+	
 	// 	if (!target.hasClass('reveal_visible')) {
 	// 		trans += 100;
 	// 	}
-		
+
 	// 	const headerHeight = 96;
-	// 	const scroll_num = $('[data-anchor="' + e + '"]').offset().top - trans + v - headerHeight;
+	// 	const scroll_num = target.offset().top - trans + v - headerHeight;
+	
 	// 	page.animate({
 	// 		scrollTop: scroll_num
 	// 	}, 1200);
 	// }
-    
-    function scrollTo(e, v) {
-		// console.log("I'm inside ScrollTo")
 
-		// v is optional, provided value or zero
-		v = v || 0;
+	// 
+	// 
+	// Store for section positions
+	const sectionPositions = {};
 
-		// normalizing e (e.g. if %20 -> space)
-		e = decodeURI(e);
-
-		// making it lowercase
-		e = e.toLowerCase();
-
-		let trans = 0;
-
-		// looks for an element with data-anchor = "e"
-		const target = $('[data-anchor="' + e + '"]');
-
-		if (target.length < 1) {
-			return;
-		}
-
-        // console.log("Has reveal_visible:", target.hasClass('reveal_visible'));
-
-		// // not sure -> seems that the problem is here -> no it's just a small adjustment
-		// if (!target.hasClass('reveal_visible')) {
-		// 	trans += 100;
-		// }
+	// Initialize position mapping
+	function initializeSectionPositions() {
+		const headerHeight = 96; // Your header height
+		const sections = $('.nav_sections > [data-anchor]');
 		
-		const headerHeight = 56;
+		// Clear existing positions
+		Object.keys(sectionPositions).forEach(key => delete sectionPositions[key]);
+		
+		// Populate positions map
+		sections.each(function() {
+			const anchor = $(this).attr('data-anchor').toLowerCase();
+			const offsetTop = $(this).offset().top - headerHeight;
+			sectionPositions[anchor] = offsetTop;
+		});
+		
+		// console.log('Section positions initialized:', sectionPositions);
+	}
 
-		// offse().top: offset of the element from the top of the screen
-		// trans: "adjustment for hidden elements"
-		// why subtracting the headerHeight?
 
-        // the bug is here!
-        // going upwards gives the worng target.offset().top value
-        console.log("target.offset().top -> ", target.offset().top)
-		const scroll_num = target.offset().top - trans + v - headerHeight;
+	function debounce(func, wait = 50) {
+		let timeout;
+		return function(...args) {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => func.apply(this, args), wait);
+		};
+	}
 
-		// .animate is a JQuery animation method
-		page.animate({
+	function scrollTo(e, v) {
+		v = 100
+		console.log("v start -> ", v)
+		e = decodeURI(e).toLowerCase();
+	
+		// -ve up
+		// +ve down
+		const hashOffsetMap = {
+			'kontakt': -200,
+			'produkte': 200,   
+			'referenzen': 60,
+			'aktuelles': -150,
+			'unternehmen': 75,
+			'karriere': 55,
+			'infoshop': 75
+		};
+	
+		const getTarget = (() => {
+			let cachedTarget = null;
+			return () => {
+				if (!cachedTarget) {
+					cachedTarget = $(`[data-anchor="${e}"]`);
+				}
+				return cachedTarget;
+			};
+		})();
+	
+		const target = getTarget();
+		if (target.length < 1) return null;
+		
+		const targetLink = target.length > 0 ? target[0].baseURI : null;
+	
+		let hashPart = null;
+		if (targetLink) {
+			try {
+				const url = new URL(targetLink);
+				hashPart = url.pathname.split('/').filter(Boolean);
+			} catch (error) {
+				console.error('Invalid URL:', targetLink);
+			}
+		}
+	
+		hashPart = hashPart[0];
+		console.log("v before -> ", v)
+		
+		// Determine the vertical offset based on the hash part
+		const verticalOffset = hashPart 
+			? (hashOffsetMap[hashPart]) 
+			: v;
+		
+		console.log("v after -> ", v)
+		console.log("verticalOffset -> ", verticalOffset)
+		
+		// Use getBoundingClientRect() for viewport-relative positioning
+		const rect = target[0].getBoundingClientRect();
+		// console.log("rect.top -> ", rect.top)
 
-			// scroll to
-			scrollTop: scroll_num
+		const scrollPosition = sectionPositions[e] 
+			? sectionPositions[e]
+			: (() => {
 
-			// duration of the animation in ms
-		}, 1200);
-	}	
+				// window.scrollY: from top of document to top of window (view port)
+				// rect.top: element top to view port top
+				// together: from top of the document to the element
+				return window.scrollY + rect.top;
+			})();
+	
+		if (scrollPosition === null) return;
+	
+		const smoothScroll = () => {
+			window.requestAnimationFrame(() => {
+				window.scrollTo({
+					top: scrollPosition + verticalOffset ,
+					behavior: 'smooth'
+				});
+			});
+		};
+	
+		const debouncedScroll = debounce(smoothScroll, 100);
+		debouncedScroll();
+	}
+
+	// 
+	// 
 
 	function svgImage(element, src, callback) {
 		$.ajax({
@@ -179,64 +262,46 @@
 	}
 	
 	// $(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
-
-    // $ jquery selector (loop to find)
-    // <a> element that has "href" attribute with "#" in it
-    // *= is an attribute selector, meaning "contains"
 	$('a[href*="#"]')
-
-    // exclude (filters out) all <a> elements with href exactly "#" -> e.g <a href="#">Home</a>
-    // couldn't find any -> appearantly not needed
-	.not('[href="#"]')
-
-    // exclude (filters out) all <a> elements with href exactly "#" -> e.g <a href="#0">Skip Link</a>
-    // couldn't find any -> appearantly not needed
-	.not('[href="#0"]')
-
+	// .not('[href="#"]')
+	// .not('[href="#0"]')
 	.click(function (e) {
-
-        // full link example: http://martinmechanic.neptune.martiniwerbeagentur.de/sondermaschinen/#lipo 
-
-        // href: /sondermaschinen/#lipo
 		var href = $(this).attr("href").replace(window.location.origin, "");
-
-        // url: /sondermaschinen/
 		var url = href.substr(0, href.indexOf("#"));
-
-        // hash:  lipo
 		var hash = href.substr(href.indexOf("#") + 1);
-
-        // it's called "jQuery selector -> $ stands for jQuery" and it's expensive to run
-        // main_menu_bg: the green background
 		$(".main_menu_bg").removeClass("active");
-
-        // menu-item-has-children: has sub-menu
 		$('.menu-item-has-children').removeClass('hovered');
-
-        // enabeling scrolling, details there
 		enableScroll();
 		
-        // window.location.pathname: /sondermaschinen/
+		// test
+		// if (url == "" || url == window.location.pathname) {
+		// 	menu.removeClass('active');
+		// 	page.removeClass('no_scroll');
+		// 	menu_button.removeClass('active');
+		// 	checkAccBlockHash(hash);
+		// 	scrollTo(hash);
+		// }
+
 		if (url == "" || url == window.location.pathname) {
-
-            // var menu = $('.main_menu');
 			menu.removeClass('active');
-
-            // var page = $('html, body');
 			page.removeClass('no_scroll');
-
-            // var menu_button = $('.menu_button');
 			menu_button.removeClass('active');
 
-            // specifically for $(`.acc_block .list [data-anchor="${hash}"]`);
-            // scroll to them AND open them
-			checkAccBlockHash(hash);
+			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			// const firstChild = accAnchor.children().first();
 
-            // why on earth both functions?
-			scrollTo(hash);
+			if (accAnchor.length) {
+				// console.log("there's accAnchor")
+				checkAccBlockHash(hash);
+			}
+			
+			else {
+				// console.log("there's NO accAnchor")
+				scrollTo(hash, offest);
+			}
+           
 		}
 	});
-
 	
 	$('[data-svg]').each(function() {
 		svgImage(this, $(this).attr('data-svg'));
@@ -461,15 +526,27 @@
 		if(hash.length) {
 			// const accAnchor = $(`.acc_block .list [data-id="${hash}"]`);
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			const firstChild = accAnchor.parent().children().first();
+			const firstChildAnchor = firstChild.attr('data-anchor');
+			// console.log("firstChildAnchor -> ", firstChildAnchor)
+
 			if (accAnchor.length) {
+				// console.log("here")
 				accAnchor.find(".toggle").click();
+				scrollTo(firstChildAnchor, -160);
+				
+			}
+
+			else {
+				// console.log("there")
+				scrollTo(hash, offest)
 			}
 		}
 	}
 	
 	const blueBlockBackgroundObserver = new IntersectionObserver((entries, observer) => {
 		entries.forEach(function(e) {
-			console.log(e);
+			// console.log(e);
 			if (e.isIntersecting && e.intersectionRatio >= 0.25) {	
 				$("body").addClass("inverted");
 			} else if (!e.isIntersection) {
@@ -486,6 +563,9 @@
 		const body = document.querySelector("body");
 		body.style.setProperty("--scrollbar-size", `${window.innerWidth - body.clientWidth}px`);
 		checkAccBlockHash(window.location.hash.substring(1));
+
+		// test
+		// console.log(document.defaultView);
 		
 		const params = new URLSearchParams(window.location.search);
 		

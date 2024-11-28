@@ -542,7 +542,7 @@
 			if (accAnchor.length) {
 				// console.log("here")
 				accAnchor.find(".toggle").click();
-				scrollTo(firstChildAnchor, -150);
+				scrollTo(firstChildAnchor, -160);
 				
 			}
 

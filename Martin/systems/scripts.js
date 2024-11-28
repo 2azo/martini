@@ -24,6 +24,7 @@
 	var menu_button = $('.menu_button');
 	var menu = $('.main_menu');
 	var sub_menu = $('.sub_menu');
+	var offest = 0;
 	
 	var windowWidth = $(window).innerWidth();
 	
@@ -149,52 +150,102 @@
 			sectionPositions[anchor] = offsetTop;
 		});
 		
-		console.log('Section positions initialized:', sectionPositions);
+		// console.log('Section positions initialized:', sectionPositions);
 	}
 
-	// Scroll to section function
-	// v is the offset, we can edit it
-	function scrollTo(e, v = 0) {
-		console.log("e ->", e)
-		// new
+
+	function debounce(func, wait = 50) {
+		let timeout;
+		return function(...args) {
+			clearTimeout(timeout);
+			timeout = setTimeout(() => func.apply(this, args), wait);
+		};
+	}
+
+	function scrollTo(e, v) {
+		v = 100
+		console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
-
-		// Check if we have the position stored
-		if (!(e in sectionPositions)) {
-				console.warn(`No position found for anchor: ${e}`);
-				let trans = 0;
-				const target = $('[data-anchor="' + e + '"]');
-
-				if (target.length < 1) {
-					console.log("Target not found for data-anchor:", e);
-					return;
+	
+		// -ve up
+		// +ve down
+		const hashOffsetMap = {
+			'kontakt': -200,
+			'produkte': 200,   
+			'referenzen': 60,
+			'aktuelles': -150,
+			'unternehmen': 75,
+			'karriere': 55,
+			'infoshop': 75
+		};
+	
+		const getTarget = (() => {
+			let cachedTarget = null;
+			return () => {
+				if (!cachedTarget) {
+					cachedTarget = $(`[data-anchor="${e}"]`);
 				}
-			
-				if (!target.hasClass('reveal_visible')) {
-					trans += 100;
-				}
-
-				const headerHeight = 96;
-				const scroll_num = target.offset().top - trans + v - headerHeight;
-			
-				page.animate({
-					scrollTop: scroll_num
-				}, 1200);;
-				return
+				return cachedTarget;
+			};
+		})();
+	
+		const target = getTarget();
+		if (target.length < 1) return null;
+		
+		const targetLink = target.length > 0 ? target[0].baseURI : null;
+	
+		let hashPart = null;
+		if (targetLink) {
+			try {
+				const url = new URL(targetLink);
+				hashPart = url.pathname.split('/').filter(Boolean);
+			} catch (error) {
+				console.error('Invalid URL:', targetLink);
 			}
+		}
+	
+		hashPart = hashPart[0];
+		console.log("v before -> ", v)
 		
-		// Get stored position and add any additional offset
-		const scrollPosition = sectionPositions[e] + v;
+		// Determine the vertical offset based on the hash part
+		const verticalOffset = hashPart 
+			? (hashOffsetMap[hashPart]) 
+			: v;
 		
-		// Perform scroll
-		$('html, body').animate({
-			scrollTop: scrollPosition
-		}, {
-			duration: 800,  // Adjust duration as needed
-			// easing: 'easeInOutQuart'  // Adjust easing as needed
-		});
+		console.log("v after -> ", v)
+		console.log("verticalOffset -> ", verticalOffset)
 		
+		// Use getBoundingClientRect() for viewport-relative positioning
+		const rect = target[0].getBoundingClientRect();
+		// console.log("rect.top -> ", rect.top)
+
+		const scrollPosition = sectionPositions[e] 
+			? sectionPositions[e]
+			: (() => {
+
+				// window.scrollY: from top of document to top of window (view port)
+				// rect.top: element top to view port top
+				// together: from top of the document to the element
+				return window.scrollY + rect.top;
+			})();
+	
+		if (scrollPosition === null) return;
+	
+		const smoothScroll = () => {
+			window.requestAnimationFrame(() => {
+				window.scrollTo({
+					top: scrollPosition + verticalOffset ,
+					behavior: 'smooth'
+				});
+			});
+		};
+	
+		const debouncedScroll = debounce(smoothScroll, 100);
+		debouncedScroll();
 	}
+
+	// 
+	// 
 
 	function svgImage(element, src, callback) {
 		$.ajax({
@@ -212,8 +263,8 @@
 	
 	// $(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
 	$('a[href*="#"]')
-	.not('[href="#"]')
-	.not('[href="#0"]')
+	// .not('[href="#"]')
+	// .not('[href="#0"]')
 	.click(function (e) {
 		var href = $(this).attr("href").replace(window.location.origin, "");
 		var url = href.substr(0, href.indexOf("#"));
@@ -237,12 +288,16 @@
 			menu_button.removeClass('active');
 
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			// const firstChild = accAnchor.children().first();
+
 			if (accAnchor.length) {
-				 checkAccBlockHash(hash);
+				// console.log("there's accAnchor")
+				checkAccBlockHash(hash);
 			}
 			
 			else {
-				scrollTo(hash);
+				// console.log("there's NO accAnchor")
+				scrollTo(hash, offest);
 			}
            
 		}
@@ -471,15 +526,27 @@
 		if(hash.length) {
 			// const accAnchor = $(`.acc_block .list [data-id="${hash}"]`);
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			const firstChild = accAnchor.parent().children().first();
+			const firstChildAnchor = firstChild.attr('data-anchor');
+			// console.log("firstChildAnchor -> ", firstChildAnchor)
+
 			if (accAnchor.length) {
+				// console.log("here")
 				accAnchor.find(".toggle").click();
+				scrollTo(firstChildAnchor, -160);
+				
+			}
+
+			else {
+				// console.log("there")
+				scrollTo(hash, offest)
 			}
 		}
 	}
 	
 	const blueBlockBackgroundObserver = new IntersectionObserver((entries, observer) => {
 		entries.forEach(function(e) {
-			console.log(e);
+			// console.log(e);
 			if (e.isIntersecting && e.intersectionRatio >= 0.25) {	
 				$("body").addClass("inverted");
 			} else if (!e.isIntersection) {
@@ -496,6 +563,9 @@
 		const body = document.querySelector("body");
 		body.style.setProperty("--scrollbar-size", `${window.innerWidth - body.clientWidth}px`);
 		checkAccBlockHash(window.location.hash.substring(1));
+
+		// test
+		// console.log(document.defaultView);
 		
 		const params = new URLSearchParams(window.location.search);
 		
