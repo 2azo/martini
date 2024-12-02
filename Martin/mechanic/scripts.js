@@ -24,6 +24,7 @@
 	var menu_button = $('.menu_button');
 	var menu = $('.main_menu');
 	var sub_menu = $('.sub_menu');
+	var offest = 0;
 	
 	var windowWidth = $(window).innerWidth();
 	
@@ -152,51 +153,7 @@
 		// console.log('Section positions initialized:', sectionPositions);
 	}
 
-	// // Scroll to section function
-	// // v is the offset, we can edit it
-	// function scrollTo(e, v = 0) {
-	// 	// console.log("e ->", e)
-	// 	// new
-	// 	e = decodeURI(e).toLowerCase();
 
-	// 	// Check if we have the position stored
-	// 	if (!(e in sectionPositions)) {
-	// 			v = -150
-	// 			// console.warn(`No position found for anchor: ${e}`);
-	// 			let trans = 0;
-	// 			const target = $('[data-anchor="' + e + '"]');
-
-	// 			if (target.length < 1) {
-	// 				// console.log("Target not found for data-anchor:", e);
-	// 				return;
-	// 			}
-			
-	// 			if (!target.hasClass('reveal_visible')) {
-	// 				trans += 100;
-	// 			}
-
-	// 			const headerHeight = 96;
-	// 			const scroll_num = target.offset().top - trans + v - headerHeight;
-			
-	// 			page.animate({
-	// 				scrollTop: scroll_num
-	// 			}, 500);;
-	// 			return
-	// 		}
-		
-	// 	// Get stored position
-	// 	const scrollPosition = sectionPositions[e] + v;
-		
-	// 	// Perform scroll
-	// 	$('html, body').animate({
-	// 		scrollTop: scrollPosition
-	// 	}, {
-	// 		duration: 800,  
-	// 	});
-		
-	// }
-
-	// Debounce utility function
 	function debounce(func, wait = 50) {
 		let timeout;
 		return function(...args) {
@@ -205,12 +162,21 @@
 		};
 	}
 
-	function scrollTo(e, v = 0) {
-		// console.log("start v = ", v)
-		// Normalize and decode anchor
+	function scrollTo(e, v) {
+		v = 100
+		console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
 
-		// Memoize target element to prevent repeated DOM queries
+		const hashOffsetMap = {
+			'kontakt': -280,
+			'sondermaschinen': -420,   
+			'referenzen': 0,
+			'lösungen': 0,
+			'aktuelles': -100,
+			'unternehmen': -50,
+			'karriere': 75
+		};
+	
 		const getTarget = (() => {
 			let cachedTarget = null;
 			return () => {
@@ -220,35 +186,54 @@
 				return cachedTarget;
 			};
 		})();
+	
+		const target = getTarget();
+		if (target.length < 1) return null;
+		
+		const targetLink = target.length > 0 ? target[0].baseURI : null;
+	
+		let hashPart = null;
+		if (targetLink) {
+			try {
+				const url = new URL(targetLink);
+				hashPart = url.pathname.split('/').filter(Boolean);
+			} catch (error) {
+				console.error('Invalid URL:', targetLink);
+			}
+		}
+	
+		hashPart = hashPart[0];
+		console.log("v before -> ", v)
+		
+		// Determine the vertical offset based on the hash part
+		const verticalOffset = hashPart 
+			? (hashOffsetMap[hashPart]) 
+			: v;
+		
+		console.log("v after -> ", v)
+		console.log("verticalOffset -> ", verticalOffset)
+		
+		// Use getBoundingClientRect() for viewport-relative positioning
+		const rect = target[0].getBoundingClientRect();
+		// console.log("rect.top -> ", rect.top)
 
-		// Cached position lookup
-		// sectionPositions
 		const scrollPosition = sectionPositions[e] 
-			? sectionPositions[e] + v 
+			? sectionPositions[e]
 			: (() => {
-				// v = -150
-				const target = getTarget();
-				if (target.length < 1) return null;
-
-				const headerHeight = 96;
-				const trans = target.hasClass('reveal_visible') ? 0 : 100;
-				return target.offset().top - trans + v - headerHeight;
+				return window.scrollY + rect.top;
 			})();
-
+	
 		if (scrollPosition === null) return;
-
-		// for smoother scrolling
-		// console.log("final v = ", v)
+	
 		const smoothScroll = () => {
 			window.requestAnimationFrame(() => {
 				window.scrollTo({
-					top: scrollPosition,
+					top: scrollPosition + verticalOffset ,
 					behavior: 'smooth'
 				});
 			});
 		};
-
-		// Debounce the scroll
+	
 		const debouncedScroll = debounce(smoothScroll, 100);
 		debouncedScroll();
 	}
@@ -306,7 +291,7 @@
 			
 			else {
 				// console.log("there's NO accAnchor")
-				scrollTo(hash, 30);
+				scrollTo(hash, offest);
 			}
            
 		}
@@ -548,7 +533,7 @@
 
 			else {
 				// console.log("there")
-				scrollTo(hash, 30)
+				scrollTo(hash, offest)
 			}
 		}
 	}
@@ -572,7 +557,7 @@
 		const body = document.querySelector("body");
 		body.style.setProperty("--scrollbar-size", `${window.innerWidth - body.clientWidth}px`);
 		checkAccBlockHash(window.location.hash.substring(1));
-		
+
 		const params = new URLSearchParams(window.location.search);
 		
 		if (params.has('newsId')) {
@@ -586,6 +571,18 @@
 				}, 1200);
 			}
 		}
+
+		// // Add logic to check pathname segments and dynamically add CSS
+		// const url = new URL(window.location.href);
+		// const segments = url.pathname.split('/').filter(Boolean); 
+		// // console.log("segments[0]", segments[0]) 
+
+		// if (segments[0]==="unternehmen") {
+		// 	console.log("inside") 
+		// 	// document.body.classList.add(`path-${segments[0]}`); // Add class
+		// 	$('.background .bg.intro .fill').addClass(`path-${segments[0]}`);
+		// 	$('#text_cont').addClass(`path-${segments[0]}`);
+		// }
 		
 		
 		// New Version (Fade)

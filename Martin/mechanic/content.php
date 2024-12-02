@@ -488,8 +488,8 @@
 		<?php elseif (get_row_layout() == 'history'): ?>
 			<?php if(have_rows('item')): $prev = date("Y")+1;?>
 			<div class="history_bg">
-				<!-- <span data-svg="<?=get_template_directory_uri();?>/img/logo_sign.svg"></span> -->
-				<span data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></span>
+				<span data-svg="<?=get_template_directory_uri();?>/img/logo_sign.svg"></span>
+				<!-- <span data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></span> -->
 			</div>
 			<div class="history_block content_block--wide" data-anchor="historie">
 				<div class="pre_text">
@@ -548,8 +548,8 @@
 						<?php if(!$hide_logo): ?>
 							<div class="placeholder">
 								<div class="line"></div>
-								<!-- <div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div> -->
-								<div class="logo" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></div>
+								<div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div>
+								<!-- <div class="logo" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></div> -->
 							</div>
 						<?php endif; ?>
 					<?php endif; ?>
@@ -619,8 +619,8 @@
 							</ul>
 							<div class="career_contact">
 								<?php the_sub_field('contact_text'); ?>
-								<!-- <div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div> -->
-								<div class="logo" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></div>
+								<div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div>
+								<!-- <div class="logo" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></div> -->
 							</div>
 						</div>
 					</div>
