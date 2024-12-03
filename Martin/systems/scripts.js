@@ -166,17 +166,15 @@
 		v = 100
 		console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
-	
-		// -ve up
-		// +ve down
+
 		const hashOffsetMap = {
-			'kontakt': -200,
-			'produkte': 200,   
-			'referenzen': 60,
-			'aktuelles': -150,
-			'unternehmen': 75,
-			'karriere': 55,
-			'infoshop': 75
+			'kontakt': -280,
+			'sondermaschinen': -420,   
+			'referenzen': 0,
+			'lösungen': 0,
+			'aktuelles': -100,
+			'unternehmen': -50,
+			'karriere': 75
 		};
 	
 		const getTarget = (() => {
@@ -222,10 +220,6 @@
 		const scrollPosition = sectionPositions[e] 
 			? sectionPositions[e]
 			: (() => {
-
-				// window.scrollY: from top of document to top of window (view port)
-				// rect.top: element top to view port top
-				// together: from top of the document to the element
 				return window.scrollY + rect.top;
 			})();
 	
@@ -426,6 +420,7 @@
 	}
 	
 	$('.to_top').click(function() {
+		// page.preventDefault();
 		page.animate({
 			scrollTop: 0
 		}, 1200);
@@ -564,9 +559,6 @@
 		body.style.setProperty("--scrollbar-size", `${window.innerWidth - body.clientWidth}px`);
 		checkAccBlockHash(window.location.hash.substring(1));
 
-		// test
-		// console.log(document.defaultView);
-		
 		const params = new URLSearchParams(window.location.search);
 		
 		if (params.has('newsId')) {
@@ -580,6 +572,18 @@
 				}, 1200);
 			}
 		}
+
+		// // Add logic to check pathname segments and dynamically add CSS
+		// const url = new URL(window.location.href);
+		// const segments = url.pathname.split('/').filter(Boolean); 
+		// // console.log("segments[0]", segments[0]) 
+
+		// if (segments[0]==="unternehmen") {
+		// 	console.log("inside") 
+		// 	// document.body.classList.add(`path-${segments[0]}`); // Add class
+		// 	$('.background .bg.intro .fill').addClass(`path-${segments[0]}`);
+		// 	$('#text_cont').addClass(`path-${segments[0]}`);
+		// }
 		
 		
 		// New Version (Fade)

@@ -212,7 +212,7 @@
                 position: relative;
                 width: 100% !important;
                 height: 0;
-                padding-bottom: 85%;
+                padding-bottom: 62%;
                 border: 0;
             }
         }
@@ -500,7 +500,7 @@
 					display:none;
 				}
 				.logo_main {
-					height: 85%;
+					height: 60%;
 				}
 			}
 		}
@@ -1541,33 +1541,8 @@
 }
 
 @media all and (max-width: 499px) {
-
-    .responsive-image {
-        content: url('http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/12/1690539516964-responsive.jpg');
-        width: 337px;
-    }
-
-    
-
-    body > div.content-wrapper > section.text_block.align_center.text_bigger.content_block--med.reveal.reveal_visible > div::before{
-        top: 2.2rem;
-    }
-
-
-
-    body > div.content-wrapper > section.career_block.content_block--wide.reveal.reveal_visible > div.career_main_title::after {
-        width: 12vw;
-        height: 0.375rem;
-    }
-    
-    
-
-    body.sondermaschinen > div.content-wrapper > div.background > div > div.fill {
-        padding-bottom: 75%;
-    }
-
-    body.loesungen > div.content-wrapper > div.background > div > div.fill {
-        padding-bottom: 64%;
+    body.unternehmen > div.content-wrapper > div.background > div > div.fill {
+        padding-bottom: 85%;
     }
 
     footer {
@@ -1742,9 +1717,7 @@
 	}
 	header {
 		padding: 0 1rem;
-        height: 8.0rem;
 		.menu_button_cont {
-            margin-top: 1.4rem;
 			.menu_location {
 				.menu_location_cont {
 					a {

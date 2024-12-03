@@ -84,8 +84,7 @@
 							<div class="slider_wrap">
 								<?php if(get_sub_field('video')): ?>
 									<div class="slide">
-										<!-- added playinline for mobile browsers -->
-										<video autoplay muted loop playsinline> 
+										<video autoplay muted loop>
 											<source src="<?=get_sub_field('video');?>" type="video/mp4">
 										</video>
 									</div>
@@ -154,7 +153,6 @@
 			$num = get_sub_field('number_of_articles');
 			$dates = get_sub_field('show_dates');
 			$title = get_sub_field('title');
-			
 			// $cats = get_categories();
 			$cats = get_terms(array('taxonomy' => 'category','orderby' => 'meta_value_num', 'meta_key' => 'cat_order', 'order' => 'ASC'));
 		?>
@@ -183,7 +181,8 @@
 
 								if ($query->have_posts()):
 									while ($query->have_posts()): $query->the_post();?>
-										<li><a href="<?= get_permalink(155); ?>?newsId=<?= $post->ID; ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li>
+										<!-- <li><a href="<?= get_permalink(155); ?>?newsId=<?= $post->ID; ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li> -->
+										<li><a href="<?php the_permalink(); ?>"><?=($dates)?"<span>[".get_the_date('d.m.Y')."]</span>":"";?><?php the_title(); ?></a></li>
 									<?php endwhile;
 								endif;
 								wp_reset_postdata();
@@ -193,7 +192,6 @@
 					<div class="title"><?=$title;?></div>
 				</div>	
 			</section>
-
 		<?php elseif (get_row_layout() == 'nav_sections'): ?>
 		<div class="nav_sections">
 			<?php if(have_rows('section')): ?>
@@ -213,7 +211,6 @@
 									<div class="text_content"><?php the_sub_field('text');?></div>
 									<?php if($page_link):?><a class="page_link" href="<?=$page_link['url'];?>" target="<?=$page_link['target'];?>"><span data-svg="<?=get_template_directory_uri();?>/img/arrow_link.svg"></span>mehr erfahren</a><?php endif; ?>
 								</div>
-
 							<?php else: ?>
 								<ul>
 									<?php if($switch):
@@ -490,7 +487,6 @@
 			<?php if(have_rows('item')): $prev = date("Y")+1;?>
 			<div class="history_bg">
 				<span data-svg="<?=get_template_directory_uri();?>/img/logo_sign.svg"></span>
-				<!-- <span data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></span> -->
 			</div>
 			<div class="history_block content_block--wide" data-anchor="historie">
 				<div class="pre_text">
@@ -550,7 +546,6 @@
 							<div class="placeholder">
 								<div class="line"></div>
 								<div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div>
-								<!-- <div class="logo" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></div> -->
 							</div>
 						<?php endif; ?>
 					<?php endif; ?>
@@ -621,35 +616,22 @@
 							<div class="career_contact">
 								<?php the_sub_field('contact_text'); ?>
 								<div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign_colored.svg"></div>
-								<!-- <div class="logo" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm.svg"></div> -->
 							</div>
 						</div>
 					</div>
 				</section>
 			<?php endif; ?>
 			
-		
-
-		<!-- test -->
 		<?php elseif (get_row_layout() == 'news_block'): 			
-			$posts = [];
-			$count = 0;
-			$num = get_sub_field('num');
-			$cat = get_sub_field('category'); // Likely returns a single WP_Term or an array of WP_Term objects
-
-			// Ensure $cat is always an array before using array_map
-			if ($cat && !is_array($cat)) {
-				$cat = [$cat]; // Convert single WP_Term object to an array
-			}
-
-			// Safely extract slugs
-			$slugs = array_map(function($el) {
-				return $el->slug;
-			}, $cat);
-
-			$title = get_sub_field('title');
+				$posts = [];
+				$count = 0;
+				$num = get_sub_field('num');
+				$cat = get_sub_field('category');
+				$slugs = array_map(function($el){
+					return $el->slug;
+				}, $cat);
+				$title = get_sub_field('title');
 		?>
-
 		
 				<section class="career_block content_block--wide reveal" data-anchor="<?=get_sub_field('anchor');?>">
 					<?php if($title): ?><div class="career_main_title"><?=$title;?></div><?php endif; ?>
@@ -749,7 +731,7 @@
 		
 		
 		<?php elseif (get_row_layout() == 'linkedin_feed'): ?>
-			<div class="linkedin_feed reveal" data-anchor="<?=get_sub_field('anchor');?>" >
+			<div class="linkedin_feed reveal" data-anchor="<?=get_sub_field('anchor');?>">
 				<div class="lf_title"><?=get_sub_field('title'); ?></div>
 				<div class="lf_content">
 					<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>

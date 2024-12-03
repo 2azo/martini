@@ -174,7 +174,9 @@
 		?>
 		
 		<div class="logo_cont">
-			<div class="logo_text">Erfolg durch eine produktive Zukunft</div>
+			<!-- <div class="logo_text">Erfolg durch eine produktive Zukunft</div> -->
+			<div class="logo_text"></div>
+
 			<a class="logo" href="<?= esc_url(home_url("/")); ?>">
 				<!-- <div class="logo_main" data-svg="http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/11/mm-SVG.svg"></div> -->
 				<div class="logo_main" data-svg="<?=get_template_directory_uri();?>/img/logo.svg"></div>

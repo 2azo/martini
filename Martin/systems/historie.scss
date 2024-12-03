@@ -1,0 +1,134 @@
+.history_bg {
+	@include position(0,0,0,0,fixed);
+	@include transition(opacity .6s);
+	opacity: 0;
+	z-index: -1;
+	display: flex;
+  align-items: center;
+  justify-content: center;
+	span {
+	  display: block;
+		width: 42%;
+		opacity: 0.05;
+		svg {
+			width: 100%;
+			height: auto;
+		}
+	}
+	&.show {
+		opacity: 1;
+	}
+}
+.history_block {
+	display: flex;
+  flex-direction: column;
+	margin-top: 15rem;
+	margin-bottom: 10rem;
+	position: relative;
+	
+	&:before {
+		content: "Historie";
+		text-transform: uppercase;
+		color: var(--white);
+		text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+		font-weight: 700;
+		@include position(2.5rem,null,null,null);
+		writing-mode: vertical-rl;
+		@include transform(rotate(-180deg));
+		align-self: center;
+		font-size: 3rem;
+	}
+	.pre_text {
+		font-size: 3rem;
+		font-weight: 600;
+		line-height: 1;
+		align-self: flex-end;
+		&:before {
+			content: "";
+			width: 7px;
+			height: 4rem;
+			background-color: var(--black);
+			display: block;
+			margin: 0 0 1.25rem 0.25rem;
+		}
+	}
+	.history_wrap {
+		display: flex;
+		flex-direction: column;		
+		.history_item {
+			position: relative;
+			&:nth-of-type(2n+2) {
+				.history_text {
+					left: 0;
+					bottom: -7.25rem;
+				}
+				&:after {
+					left: unset;
+					right: calc(50% - 1.125rem);
+					width: 40%;
+				}
+			}
+			&:nth-of-type(4n+3) {
+				.history_text {
+					left: 70%;
+				}
+				&:after {
+					width: 23%;
+				}
+			}
+			&:nth-of-type(4n+4) {
+				.history_text {
+					left: 10%;
+				}
+				&:after {
+					width: 30%;
+				}
+			}
+			&:first-of-type {
+				margin-top: 3rem;
+			}
+			
+			&:after {
+				content: "";
+				width: 14%;
+				height: 1px;
+				background-color: var(--black);
+				position: absolute;
+				bottom: 0;
+				left: calc(50% - 1.125rem);
+			}
+		
+			.history_timeline {
+				// width: 3rem;
+				width: 2.25rem;
+				margin: 0 auto;
+				span {
+					display: block;
+					margin-top: 1.75rem;
+					border-bottom: 1px solid var(--theme);
+					width: 100%;
+				}
+			}
+			.history_text {
+				@include position(null,null,-5rem,60%);
+				.year {
+					color: var(--theme);
+					font-size: 3rem;
+					font-weight: 600;
+				}
+				.text {
+					color: var(--black);
+					font-size: 1.25rem;
+					margin-left: 2.5rem;
+					min-height: 6rem;
+					// background-color: var(--white);
+				}
+			}
+			&.placeholder {
+				&:after {
+					display: none;
+				}
+			}
+		}
+	}
+}
