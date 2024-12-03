@@ -825,6 +825,8 @@
 			margin-bottom: 1rem;
 			&:after {
 				margin-bottom: 0;
+				width: 12vw;
+				height: 0.375rem;
 			}
 		}
 		.career_block_cont {
@@ -1324,10 +1326,12 @@
 			&:before {
 				right: calc(100% + 1.25rem);
 				height: 2rem;
+				top: 0.1rem;
 			}
 			h2 {
 				font-size: 2rem;
-				margin-top: 2rem;
+				// margin-top: 2rem;
+				margin-top: 0rem;
 			}
 		}	
 	}
@@ -1541,6 +1545,9 @@
 }
 
 @media all and (max-width: 499px) {
+
+
+
     body.unternehmen > div.content-wrapper > div.background > div > div.fill {
         padding-bottom: 85%;
     }

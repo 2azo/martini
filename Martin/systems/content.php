@@ -542,7 +542,9 @@
 							the_row();
 							$link = get_sub_field('link');
 						?>
-							<li><a href="<?=$link['url'];?>" target="<?=$link['target'];?>"><?=$link['title'];?></a></li>
+							<li>
+								<a href="<?=$link['url'];?>" target="<?=$link['target'];?>"><?=$link['title'];?></a>
+							</li>
 						<?php endwhile; ?>
 					</ul>
 					<?php else: ?>
@@ -718,11 +720,22 @@
 					
 				</section>
 		<?php elseif (get_row_layout() == 'newsletter'): ?>
-			<div class="newsletter_block" >
-				<div class="newsletter_title_2">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
-				<div class="newsletter_form">
-					<?= do_shortcode("[newsletter_form]"); ?>
+			<div class="linkedin_feed reveal" >
+				
+				<!-- <div class="lf_title"></div> -->
+
+				<div class="lf_content">
+					<!-- <script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script> -->
+					<!-- <div class="elfsight-app-07dd6383-5987-4d17-a3ab-874c172e2760" data-elfsight-app-lazy></div> -->
 				</div>
+
+				<div class="news_newsletter_block" >
+					<div class="newsletter_title">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
+					<div class="newsletter_form">
+						<?= do_shortcode("[newsletter_form]"); ?>
+					</div>
+				</div>
+
 			</div>
 		
 		<?php elseif (get_row_layout() == 'image_fade_scroll'): 
@@ -750,17 +763,21 @@
 		
 		<?php elseif (get_row_layout() == 'linkedin_feed'): ?>
 			<div class="linkedin_feed reveal" data-anchor="<?=get_sub_field('anchor');?>" >
+
 				<div class="lf_title"><?=get_sub_field('title'); ?></div>
+
 				<div class="lf_content">
 					<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 					<div class="elfsight-app-07dd6383-5987-4d17-a3ab-874c172e2760" data-elfsight-app-lazy></div>
 				</div>
+
 				<div class="news_newsletter_block" >
 					<div class="newsletter_title">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
 					<div class="newsletter_form">
 						<?= do_shortcode("[newsletter_form]"); ?>
 					</div>
 				</div>
+
 			</div>
 		
 		

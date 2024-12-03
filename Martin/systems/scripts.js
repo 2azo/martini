@@ -167,15 +167,26 @@
 		console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
 
-		const hashOffsetMap = {
-			'kontakt': -280,
-			'sondermaschinen': -420,   
-			'referenzen': 0,
-			'lösungen': 0,
-			'aktuelles': -100,
-			'unternehmen': -50,
-			'karriere': 75
-		};
+		// const hashOffsetMap = {
+		// 	'kontakt': -200,
+		// 	'produkte': 200,   
+		// 	'referenzen': 60,
+		// 	'aktuelles': -150,
+		// 	'unternehmen': 75,
+		// 	'karriere': 55,
+		// 	'infoshop': 75
+		// };
+
+		// counting for responsive design
+		const hashOffsetMap = { 
+			'kontakt': window.innerWidth < 768 ? -50 : -200, 
+			'produkte': window.innerWidth < 768 ? 50 : 200,    
+			'referenzen': window.innerWidth < 768 ? 30 : 60, 
+			'aktuelles': window.innerWidth < 768 ? -75 : -150, 
+			'unternehmen': window.innerWidth < 768 ? 35 : 75, 
+			'karriere': window.innerWidth < 768 ? 25 : 55, 
+			'infoshop': window.innerWidth < 768 ? 35 : 75 
+		}; 
 	
 		const getTarget = (() => {
 			let cachedTarget = null;
@@ -255,47 +266,47 @@
 		});
 	}
 	
-	// $(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon").click(function(evt) {
-	$('a[href*="#"]')
+	$(".sub_menu a, .sub-menu a, .project-jump-links a, .menu a, .news_wrap a, .fbg_block .icon") 
+	// $('a[href*="#"]')
 	// .not('[href="#"]')
 	// .not('[href="#0"]')
-	.click(function (e) {
-		var href = $(this).attr("href").replace(window.location.origin, "");
-		var url = href.substr(0, href.indexOf("#"));
-		var hash = href.substr(href.indexOf("#") + 1);
-		$(".main_menu_bg").removeClass("active");
-		$('.menu-item-has-children').removeClass('hovered');
-		enableScroll();
-		
-		// test
-		// if (url == "" || url == window.location.pathname) {
-		// 	menu.removeClass('active');
-		// 	page.removeClass('no_scroll');
-		// 	menu_button.removeClass('active');
-		// 	checkAccBlockHash(hash);
-		// 	scrollTo(hash);
-		// }
-
-		if (url == "" || url == window.location.pathname) {
-			menu.removeClass('active');
-			page.removeClass('no_scroll');
-			menu_button.removeClass('active');
-
-			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
-			// const firstChild = accAnchor.children().first();
-
-			if (accAnchor.length) {
-				// console.log("there's accAnchor")
-				checkAccBlockHash(hash);
-			}
+		.click(function (e) {
+			var href = $(this).attr("href").replace(window.location.origin, "");
+			var url = href.substr(0, href.indexOf("#"));
+			var hash = href.substr(href.indexOf("#") + 1);
+			$(".main_menu_bg").removeClass("active");
+			$('.menu-item-has-children').removeClass('hovered');
+			enableScroll();
 			
-			else {
-				// console.log("there's NO accAnchor")
-				scrollTo(hash, offest);
+			// test
+			// if (url == "" || url == window.location.pathname) {
+			// 	menu.removeClass('active');
+			// 	page.removeClass('no_scroll');
+			// 	menu_button.removeClass('active');
+			// 	checkAccBlockHash(hash);
+			// 	scrollTo(hash);
+			// }
+
+			if (url == "" || url == window.location.pathname) {
+				menu.removeClass('active');
+				page.removeClass('no_scroll');
+				menu_button.removeClass('active');
+
+				const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+				// const firstChild = accAnchor.children().first();
+
+				if (accAnchor.length) {
+					// console.log("there's accAnchor")
+					checkAccBlockHash(hash);
+				}
+				
+				else {
+					// console.log("there's NO accAnchor")
+					scrollTo(hash, offest);
+				}
+			
 			}
-           
-		}
-	});
+		});
 	
 	$('[data-svg]').each(function() {
 		svgImage(this, $(this).attr('data-svg'));
@@ -761,9 +772,9 @@
 		self.addClass('active');
 		parent.find('.career_content').stop().slideUp(500);
 		parent.find('.career_content').eq(index).stop().slideDown(500);
-		if (rawSelf.dataset.id) {
-			window.history.replaceState(null, "", `${window.location.pathname}?newsId=${rawSelf.dataset.id}`);
-		}
+		// if (rawSelf.dataset.id) {
+		// 	window.history.replaceState(null, "", `${window.location.pathname}?newsId=${rawSelf.dataset.id}`);
+		// }
 	});
 	
 	$(".career_content_title, .news_mob_title").click(function() {
