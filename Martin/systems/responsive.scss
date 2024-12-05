@@ -1546,7 +1546,9 @@
 
 @media all and (max-width: 499px) {
 
-
+	.acc_block+.text_block {
+		margin-top: 5rem;
+	}
 
     body.unternehmen > div.content-wrapper > div.background > div > div.fill {
         padding-bottom: 85%;

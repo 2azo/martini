@@ -164,18 +164,29 @@
 
 	function scrollTo(e, v) {
 		v = 100
-		console.log("v start -> ", v)
+		// console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
+		// console.log("e -> ", e)
+		// const hashOffsetMap = {
+		// 	'kontakt': -280,
+		// 	'sondermaschinen': -420,   
+		// 	'referenzen': 0,
+		// 	'lösungen': 0,
+		// 	'aktuelles': -100,
+		// 	'unternehmen': -50,
+		// 	'karriere': 75
+		// };
 
-		const hashOffsetMap = {
-			'kontakt': -280,
-			'sondermaschinen': -420,   
-			'referenzen': 0,
-			'lösungen': 0,
-			'aktuelles': -100,
-			'unternehmen': -50,
-			'karriere': 75
-		};
+		const hashOffsetMap = { 
+			'kontakt': window.innerWidth < 768 ? -50 : -280, 
+			'sondermaschinen': window.innerWidth < 768 ? -100 : -420,    
+			'referenzen': window.innerWidth < 768 ? 0 : 0, 
+			'loesungen': window.innerWidth < 768 ? -100 : 0, 
+			'aktuelles': window.innerWidth < 768 ? -20 : -100, 
+			'unternehmen': window.innerWidth < 768 ? -10 : -50, 
+			'karriere': window.innerWidth < 768 ? 35 : 75 
+		}; 
+
 	
 		const getTarget = (() => {
 			let cachedTarget = null;
@@ -191,7 +202,8 @@
 		if (target.length < 1) return null;
 		
 		const targetLink = target.length > 0 ? target[0].baseURI : null;
-	
+		
+
 		let hashPart = null;
 		if (targetLink) {
 			try {
@@ -203,15 +215,15 @@
 		}
 	
 		hashPart = hashPart[0];
-		console.log("v before -> ", v)
+		// console.log("v before -> ", v)
 		
 		// Determine the vertical offset based on the hash part
-		const verticalOffset = hashPart 
+		const verticalOffset = hashPart && hashOffsetMap[hashPart] !== undefined 
 			? (hashOffsetMap[hashPart]) 
 			: v;
 		
-		console.log("v after -> ", v)
-		console.log("verticalOffset -> ", verticalOffset)
+		// console.log("v after -> ", v)
+		// console.log("verticalOffset -> ", verticalOffset)
 		
 		// Use getBoundingClientRect() for viewport-relative positioning
 		const rect = target[0].getBoundingClientRect();
@@ -518,6 +530,7 @@
 	});
 	
 	function checkAccBlockHash(hash) {
+		// console.log("called checkAccBlockHash")
 		if(hash.length) {
 			// const accAnchor = $(`.acc_block .list [data-id="${hash}"]`);
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
@@ -526,14 +539,14 @@
 			// console.log("firstChildAnchor -> ", firstChildAnchor)
 
 			if (accAnchor.length) {
-				// console.log("here")
+				// console.log("accAnchor.length")
 				accAnchor.find(".toggle").click();
 				scrollTo(firstChildAnchor, -160);
 				
 			}
 
 			else {
-				// console.log("there")
+				// console.log("!accAnchor.length")
 				scrollTo(hash, offest)
 			}
 		}

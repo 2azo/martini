@@ -1024,7 +1024,7 @@
 		
 		.history_wrap {			
 			.history_item {
-				display: flex;
+				// display: flex;
 				margin-top: 1rem;
 				
 				&::after {
@@ -1048,7 +1048,8 @@
 
 				.history_text {
 					position: static;
-					margin-left: 2rem;
+					margin-left: 0rem;
+					margin-top: 3rem;
 					
 					.year {
 						font-size: 2rem;
@@ -1327,7 +1328,7 @@
 			}
 			h2 {
 				font-size: 2rem;
-				margin-top: 2rem;
+				margin-top: 0rem;
 			}
 		}	
 	}
@@ -1542,15 +1543,20 @@
 
 @media all and (max-width: 499px) {
 
-    .responsive-image {
-        content: url('http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/12/1690539516964-responsive.jpg');
-        width: 337px;
+    .acc_block+.text_block {
+		margin-top: 5rem;
+	}
+
+	.responsive-image {
+        content: url('http://martinmechanic.neptune.martiniwerbeagentur.de/wp-content/uploads/2024/12/great-holiday_klein.jpg');
+        width: 100%;
+		height: auto;
     }
 
     
 
     body > div.content-wrapper > section.text_block.align_center.text_bigger.content_block--med.reveal.reveal_visible > div::before{
-        top: 2.2rem;
+        top: 0.2rem;
     }
 
 
