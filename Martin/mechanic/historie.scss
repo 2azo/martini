@@ -38,6 +38,19 @@
 		align-self: center;
 		font-size: 3rem;
 	}
+
+	// &:after {
+	// 	content: "Historie";
+	// 	text-transform: uppercase;
+	// 	color: var(--white);
+	// 	text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+	// 	font-weight: 700;
+	// 	@include position(2.5rem,null,null,null);
+	// 	writing-mode: vertical-rl;
+	// 	@include transform(rotate(-180deg));
+	// 	align-self: center;
+	// 	font-size: 3rem;
+	// }
 	.pre_text {
 		font-size: 3rem;
 		font-weight: 600;
@@ -48,6 +61,14 @@
 			width: 7px;
 			height: 4rem;
 			background-color: var(--black);
+			display: block;
+			margin: 0 0 1.25rem 0.25rem;
+		}
+		&:after {
+			content: "history";
+			width: 7px;
+			height: 4rem;
+			// background-color: var(--black);
 			display: block;
 			margin: 0 0 1.25rem 0.25rem;
 		}

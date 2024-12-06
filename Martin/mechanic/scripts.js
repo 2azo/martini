@@ -386,7 +386,8 @@
 					// var viewportOffset = $(this)[0].getBoundingClientRect();					
 					// $(this).find('.picture_cont').css('transform', 'translate(0, ' + Math.round((viewportOffset.top + (wh/-1)) * .1) + 'px)');
 				// });
-			} else {
+			} 
+			else {
 				$('.nav_section').each(function(e) {
 					$(this).css('position','relative');
 					$(this).children('.text').css({
@@ -399,7 +400,33 @@
 				// $('.scroll_sections').each(function(e) {			
 					// $(this).find('.picture_cont').css('transform', 'translate(0, 0)');
 				// });
+
+				// test
+				if (st >= 50) {
+					if (st > scrollTop) {
+						// Scrolling down
+						if (!header.hasClass('always_show')) {
+							header.addClass('hide');
+						}
+						header.addClass('shrink');
+						menu.addClass('shrink');
+						sub_menu.addClass('show');
+					} else {
+						// Scrolling up
+						header.removeClass('hide');
+						header.removeClass('shrink');
+						menu.removeClass('shrink');
+						sub_menu.removeClass('show');
+					}
+				} else {
+					header.removeClass('hide');
+					header.removeClass('shrink');
+					menu.removeClass('shrink');
+					sub_menu.removeClass('show');
+				}
+				// test done
 			}
+
 			if (st >= 50) {
 				if(st > scrollTop) {
 					if(!header.hasClass('always_show')) {
@@ -427,9 +454,28 @@
 		}
 		
 		scroll();
+
+		// snippet for responsive history background
+		if (window.innerWidth < 499) {
+			const targetElement = document.querySelector("div.history_block.content_block--wide > div.pre_text");
+			const historyBgElement = document.querySelector("div.history_bg");
+	
+			if (targetElement && historyBgElement) {
+				const targetRect = targetElement.getBoundingClientRect();
+	
+				// Check if the target element is scrolled past
+				if (targetRect.top < 0) {
+					historyBgElement.classList.add("show");
+				} else {
+					historyBgElement.classList.remove("show");
+				}
+			}
+		}
 		
 		window.requestAnimationFrame(onAnimationFrame);
 	}
+
+	
 	
 	$('.to_top').click(function() {
 		// page.preventDefault();
@@ -715,6 +761,7 @@
 		
 
 		var historyBGOpacity = new TimelineMax()
+
 		.to(".history_bg", 1, {
 			className: "history_bg show"
 		});

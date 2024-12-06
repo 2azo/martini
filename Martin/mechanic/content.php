@@ -498,33 +498,67 @@
 					FÜR AUFGABEN<br/>
 					VON MORGEN.
 				</div>
-				<div class="history_wrap">
-					<?php while(have_rows('item')):
-						the_row();
-						$from = get_sub_field('year_from');
-						$to = get_sub_field('year_to');
-						$num = $prev-$from;
-					?>
-						<div class="history_item">
-							<div class="history_timeline">
-								<?php
-									for($i=0;$i<$num*2;$i++) {
-										echo '<span></span>';
-									};?>
-							</div>
-							<div class="history_text">
-								<div class="year"><?=$from;?><?=($to)?"-".$to:"";?></div>
-								<div class="text"><?php the_sub_field('text');?></div>
-							</div>
+				
+
+				
+
+
+				<!-- test start -->
+
+				<div class="history_wrap <?php echo (wp_is_mobile()) ? 'mobile-timeline' : 'desktop-timeline'; ?>"> 
+				<?php 
+				$is_mobile = wp_is_mobile();
+				while(have_rows('item')): 
+					the_row(); 
+					$from = get_sub_field('year_from'); 
+					$to = get_sub_field('year_to'); 
+					$num = $prev-$from; 
+				?> 
+					
+					<div class="history_item"> 
+						
+						<!-- desktob -->
+						<?php if (!$is_mobile): ?>
+						<div class="history_timeline"> 
+							<?php 
+								for($i=0;$i<$num*2;$i++) { 
+									echo '<span></span>'; 
+								}; 
+							?> 
 						</div>
-					<?php $prev=$from; endwhile; ?>
-					<div class="history_item placeholder">
-						<div class="history_timeline">
-							<span></span>
-							<span></span>
+						<?php endif; ?>
+
+						<div class="history_text"> 
+							<span class="red_line"></span>
+							<span class="black_line"></span>
+							<div class="year"><?=$from;?><?=($to)?"-".$to:"";?></div> 
+							<div class="text"><?php the_sub_field('text');?></div> 
 						</div>
-					</div>
-				</div>
+
+						<!-- mobile -->
+						<?php if ($is_mobile): ?>
+						<div class="history_timeline"> 
+							<span></span>
+							<!-- <span></span> -->
+						</div>
+						<?php endif; ?>
+
+
+					</div> 
+					
+				<?php $prev=$from; endwhile; ?> 
+				
+				<div class="history_item placeholder"> 
+					<div class="history_timeline"> 
+						<!-- <span></span>  -->
+						<!-- <span></span>  -->
+					</div> 
+				</div> 
+			</div>
+
+				<!-- test end -->
+
+
 			</div>
 			<?php endif; ?>
 		
