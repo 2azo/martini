@@ -1542,6 +1542,19 @@
 
 @media all and (max-width: 499px) {
 
+	body > div.content-wrapper > section.text_block.align_center.text_biggest.content_block--med.reveal.reveal_visible{
+        margin-top: 5rem;
+        margin-bottom: 5rem;
+		font-size: 7.5vw;
+		text-align: center;
+		color: #bcbdc0;
+		color: #d4d5d9;
+		line-height: 1;
+		width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+	}
+
 	body > div.content-wrapper > div.history_block.content_block--wide::before{
 		display: none;
 	}
