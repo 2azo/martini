@@ -74,6 +74,8 @@
 			var v = 0;
 			scrollTo(window.location.hash.substring(1),v);
 		}
+
+		  
 		
 		NProgress.done(false);
 		$('.loading_screen').addClass('cls_ready');
@@ -430,7 +432,6 @@
 			menu.stop().slideDown(300);
 		}
 	});
-
 	
 	
 })(jQuery);

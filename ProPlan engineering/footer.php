@@ -1,6 +1,6 @@
 	
 	<div class="footer_phone reveal">
-		<span>Ihr direkter Kontakt zu Pro-Plan Engineering GmbH</span><a href="tel:07452837000">0 74 52 / 8 37 00-12</a>
+		<span>Ihr direkter Kontakt zu <span class="break"> </break> </span> Pro-Plan Engineering GmbH</span><a href="tel:07452837000">0 74 52 / 8 37 00-12</a>
 	</div>
 	
 	<div class="to_top reveal">
