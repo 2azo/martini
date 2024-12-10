@@ -326,27 +326,17 @@ body > div.content-wrapper > div.linkedin_feed.reveal.reveal_visible > div.news_
     }
 }
 
-// dotted line
-// body > div.content-wrapper > section.scroll_sections > div.scrollmagic-pin-spacer > div > div.content_wrap > div > div.content > div > div.text {
-//     position: relative; // Ensure pseudo-elements are positioned relative to this element
 
-//     &::before,
-//     &::after {
-//         content: ""; // Required for pseudo-elements
-//         position: absolute;
-//         left: 0;
-//         width: 100%; // Full width of the parent element
-//         border-top: 1px dotted var(--black); // Dotted border line
-//     }
-
-//     &::before {
-//         top: -1em; // Position above the element
-//     }
-
-//     &::after {
-//         bottom: -1em; // Position below the element
-//     }
-// }
+body > div.content-wrapper > div.simple_vid{
+	display: block;
+    justify-content: space-around;
+    width: 100%;
+    margin: 4% 0%;
+}   
 
 
-  
+
+body > div.content-wrapper > div.simple_vid > Video{
+	width: 100%;
+}
+    

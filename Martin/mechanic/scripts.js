@@ -901,4 +901,11 @@
 		$(this).removeClass('hovered');
 		enableScroll();
 	});
+
+		document.addEventListener('DOMContentLoaded', function () {
+		const videoElement = document.querySelector('#video-6-1_html5');
+		if (videoElement) {
+            videoElement.controls = false; // Disable video controls programmatically
+        }
+	});
 })(jQuery);

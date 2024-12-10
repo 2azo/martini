@@ -76,6 +76,22 @@
 				   </div>
     			</form>
 			</section>
+
+			<!-- video field -->
+			<?php 
+			elseif (get_row_layout() == 'video'): 
+				$video_file = get_sub_field('video_file'); // Retrieve the file array
+				$video_url = is_array($video_file) ? $video_file['url'] : $video_file; // Get the URL if it's an array
+			?>
+				<div class="simple_vid">
+					<!-- added playinline for mobile browsers -->
+					<video autoplay muted loop playsinline>
+						<source src="<?= esc_url($video_url); ?>" type="video/mp4">
+					</video>
+				</div>
+				
+
+	
 		
 		<?php elseif (get_row_layout() == 'slider'): ?>
 				<div class="background">
