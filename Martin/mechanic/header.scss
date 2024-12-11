@@ -387,7 +387,7 @@ header {
 	.logo_cont_mobile {
 		opacity: 0;
 		visibility: hidden;
-		@include position(50%,0,null,null);
+		@include position(50%,6%,null,null);
 		@include transform(translate(100%,-50%));
 		width: 4rem;
 		height: 3rem;

@@ -163,7 +163,7 @@
 	}
 
 	function scrollTo(e, v) {
-		v = 100
+		v = 60
 		// console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
 		// console.log("e -> ", e)
@@ -181,7 +181,7 @@
 			'kontakt': window.innerWidth < 768 ? -50 : -280, 
 			'sondermaschinen': window.innerWidth < 768 ? -100 : -420,    
 			'referenzen': window.innerWidth < 768 ? 0 : 0, 
-			'loesungen': window.innerWidth < 768 ? -100 : 0, 
+			'loesungen': window.innerWidth < 768 ? -100 : -500, 
 			'aktuelles': window.innerWidth < 768 ? -20 : -100, 
 			'unternehmen': window.innerWidth < 768 ? -10 : -50, 
 			'karriere': window.innerWidth < 768 ? 35 : 75 
@@ -414,7 +414,7 @@
 					} else {
 						// Scrolling up
 						header.removeClass('hide');
-						header.removeClass('shrink');
+						// header.removeClass('shrink');
 						menu.removeClass('shrink');
 						sub_menu.removeClass('show');
 					}

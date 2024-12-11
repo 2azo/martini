@@ -9,6 +9,10 @@ html {
     border: 1px solid black;
   }
   
-  li {
-    margin-left: 20px;
+  p {
+    margin-left: 80px;
+    pad
+    /* background-image:url('C:/Users/Mouaz/Downloads/out-of-stock-t.png');  */
+    background: transparent url(C:/Users/Mouaz/Downloads/out-of-stock-t.png) left center no-repeat;
+    
   }
