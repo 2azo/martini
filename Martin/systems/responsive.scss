@@ -376,6 +376,7 @@
 	.main_menu {
 	  //top: 7.5rem;
 	  top: 7.25rem;
+		// top: 6%;
 		&.shrink {
 			top: 3.75rem;
 			height: calc(100% - 3.75rem);
@@ -1560,6 +1561,13 @@
 }
 
 @media all and (max-width: 499px) {
+
+	header.shrink:not(.hide) {
+		~ nav {
+		  top: 3.75rem;
+		}
+	  }
+	  
 
 	body.karriere > div.content-wrapper > section:nth-child(6) > div > p > a{
 		font-size: 1.1rem;

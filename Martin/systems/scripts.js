@@ -413,7 +413,7 @@
 					} else {
 						// Scrolling up
 						header.removeClass('hide');
-						header.removeClass('shrink');
+						// header.removeClass('shrink');
 						menu.removeClass('shrink');
 						sub_menu.removeClass('show');
 					}

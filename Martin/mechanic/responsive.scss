@@ -1542,6 +1542,12 @@
 
 @media all and (max-width: 499px) {
 
+	header.shrink:not(.hide) {
+		~ nav {
+		  top: 3.75rem;
+		}
+	  }
+
 	body > div.content-wrapper > section.text_block.align_center.text_biggest.content_block--med.reveal.reveal_visible{
         margin-top: 5rem;
         margin-bottom: 5rem;
