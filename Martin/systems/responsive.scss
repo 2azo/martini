@@ -286,8 +286,12 @@
 }
 
 @media all and (max-width: 1199px) {
+	// body > div.to_top.reveal.reveal_visible{
+	// 	margin: 0%;
+	// }
 	:root {
 		--width-wide: 90%;
+		// --width-wide: 50%;
 		--width-med: 90%;
 		--width: 90%;
 	}
@@ -854,7 +858,8 @@
 					height: 0.5rem;
 				}
 				.career_content_title {
-					font-size: 1.375rem;
+					// font-size: 1.375rem;
+					font-size: 1.2rem;
 					display: flex;
 					font-weight: 700;
 					align-items: center;
@@ -1261,30 +1266,40 @@
 }
 
 @media all and (max-width: 599px) {
+
+	// body.karriere > div.content-wrapper > div.acc_block.reveal.reveal_visible{
+	// 	width: 85%;
+	// 	margin-left: auto;
+	// 	margin-right: auto;
+	// }
+
+	// body.karriere > div.content-wrapper > section.news_block.links_block.standard.content_block--wide.reveal.reveal_visible > div > div{
+	// 	font-size: 18vw !important;
+	// }
 	.infoshop_block {
-	.infoshop_content{
-		.infoshop_product {
-			padding: 3rem 0.5rem;
-			flex-direction: column-reverse;
-			.infoshop_product_left {
-				img {
-					width: 100%;
-					height: 100%;
-					object-fit: cover;
-					aspect-ratio: 3/2;
+		.infoshop_content{
+			.infoshop_product {
+				padding: 3rem 0.5rem;
+				flex-direction: column-reverse;
+				.infoshop_product_left {
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						aspect-ratio: 3/2;
+					}
 				}
-			}
-			.infoshop_product_right {
-				.infoshop_product--title {
-				}
-				.infoshop_product--footer {
-				}
-				.infoshop_product--footer:hover {
+				.infoshop_product_right {
+					.infoshop_product--title {
+					}
+					.infoshop_product--footer {
+					}
+					.infoshop_product--footer:hover {
+					}
 				}
 			}
 		}
 	}
-}
 	.map_block {
 		padding-bottom: 130vw;
 	}
@@ -1546,6 +1561,18 @@
 
 @media all and (max-width: 499px) {
 
+	body.karriere > div.content-wrapper > section:nth-child(6) > div > p > a{
+		font-size: 1.1rem;
+	}
+
+	body.karriere > div.content-wrapper > section:nth-child(4) > div > div.career_content_wrap > div:nth-child(2) > div.career_text > p:nth-child(11) > a{
+		font-size: 1.1rem;
+	}
+
+	body > footer > div > div.footer_block.menu2{
+		width: 90%;
+	}
+
 	.acc_block+.text_block {
 		margin-top: 5rem;
 	}
@@ -1648,7 +1675,7 @@
 	}
 	}
 	.text_block {
-		width: 80%;
+		width: 75%;
 		font-size: 1.4rem;
 		.text_wrap {
 			.tnp-subscription {

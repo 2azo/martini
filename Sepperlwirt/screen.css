@@ -1,0 +1,1896 @@
+html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, abbr, address, cite, code, del, dfn, em, img, ins, kbd, q, samp, small, strong, sub, sup, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary, time, mark, audio, video, a {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+    background: transparent;
+	text-rendering: optimizeLegibility;
+	-ms-text-size-adjust: none;
+	-webkit-text-size-adjust: none;
+	text-size-adjust: none;
+}
+
+article, aside, canvas, footer, header, menu, nav, section {
+	/* because some people still use old IE or Firefox 3.6 -.- */
+	display: block;	
+}
+
+html {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	width: 100%;
+	min-height: 100%;
+	position: relative;
+	color: black;
+	background-color: white;
+}
+
+h1 {
+	font-size: 2em;	
+}
+
+h2 {
+	font-size: 1.8em;	
+}
+
+h3 {
+	font-size: 1.6em;	
+}
+
+h4 {
+	font-size: 1.4em;	
+}
+
+h5 {
+	font-size: 1.2em;	
+}
+
+h6 {
+	font-size: 1em;	
+}
+
+p {
+	margin: 1em 0 1em;	
+}
+
+blockquote, q {
+    quotes: none;
+}
+
+blockquote:before, blockquote:after, q:before, q:after {
+    content: '';
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+	margin: 1em 0;
+}
+
+th {
+	text-align: left;
+	font-weight: bold;	
+	vertical-align: top;
+}
+
+td {
+	vertical-align: top;	
+}
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+	background-color: black;
+    margin: 1em 0;
+    padding: 0;
+}
+
+ul, ol {
+	padding-left: 2.5em;	
+}
+
+img {
+	max-width: 100%;
+	height:auto;
+	vertical-align:bottom;	
+}
+
+input, select {
+    vertical-align: middle;
+}
+
+sup {
+	font-size:75%;
+	vertical-align:top;	
+}
+
+sub {
+	font-size:75%;
+	vertical-align:bottom;	
+}
+
+small {
+	font-size:80%;	
+}
+
+.invisible {
+	display: none;	
+}
+
+.clear {
+	clear: both;
+}
+
+.hr {
+	display: block;
+    height: 1px;
+    border: 0;
+	background-color: black;
+    margin: 1em 0;
+    padding: 0;	
+}
+
+.hr hr {
+	display: none;	
+}
+
+/*
+	font-family:'DIN Next W01';
+	font-family:'Chaparral W01';
+*/
+
+body, input, textarea, button {
+	font:normal 120% 'Chaparral W01', sans-serif;	
+}
+
+body {
+	color:#575756;
+	letter-spacing:1px;
+	background:#ccc url('../images/background_large.png') left top;
+}
+
+p, table {
+	line-height:1.5;	
+}
+
+p {
+	font-size:1.2em;	
+}
+
+h1 {
+	color:#b71311;
+	font-family:'DIN Next W01';
+	font-size:3em;
+	margin-top:0;
+	margin-bottom:0.75em;
+	border-top:1px solid rgba(0,0,0,.6);
+	padding-top:0.75em;
+	line-height: 1;
+}
+
+#hcWidgetHeadline {
+	border:0;
+}
+
+h2, .headline {
+	font-size:1.125em;
+	font-family:'DIN Next W01';
+	font-weight: bold;
+}
+
+h2 {
+	margin-top:3em;
+	margin-bottom:1em;
+}
+
+h3, h4, h5, h6 {
+	font-size:1em;
+	margin-top:3em;	
+}
+
+ul, ol {
+	margin:0.5em 0;	
+}
+
+a {
+	text-decoration:none;
+	color:#b71311;
+}
+
+a:hover {
+	color:#575756;	
+}
+
+table {
+	border-spacing:0;
+	border-collapse:separate;	
+	width:100%;
+	border:solid #b71311;
+	border-width:4px 0;
+	padding:1em 0;
+	font-family:'DIN Next W01';
+}
+
+td, th {
+	padding:0.3em 1em 0.1em;
+	background-color:#fff;
+}
+
+td, th {
+	border-bottom:1px solid #ccc;	
+}
+
+tr:first-child td {
+	border-top:1px solid #ccc;	
+}
+
+tr:nth-child(odd) td {
+	background-color:#fafafa;	
+}
+
+#shadow {
+	position:absolute;
+	top:0;
+	right:0;
+	bottom:0;
+	left:0;
+	z-index:-1;
+	display:none;
+}
+
+#shadow .inside {
+	width:96%;
+	max-width:1440px;
+	height:100%;
+	margin:0 auto;
+	box-shadow:#555 0 0 10px;
+	background-color:#fff;
+}
+
+#header {
+	font-family:'DIN Next W01';
+	background-color:#fff;
+}
+
+#header .inside {
+	padding:1em 4em;
+	overflow:hidden;
+}
+
+#logo {
+	width:100%;
+	max-width:360px;
+	float:left;
+}
+
+#navi_top {
+	/*width:calc(100% - 360px - 4em);*/
+	float:right;
+	overflow:hidden;
+	padding-top:28px;	
+}
+
+#navi_top ul {
+	float:right;
+	overflow:hidden;
+	list-style:none;
+	padding:0;
+	margin:0;	
+}
+
+#navi_top li {
+	float:left;
+	margin-left:1em;	
+}
+
+#navi_top li:first-child {
+	margin-left:0;
+}
+
+#navi_top li a {
+	display:block;
+	padding:0.2em 1em 0;
+	background-color:#878787;
+	color:#fff;
+	min-width:5em;
+	text-align:center;
+}
+
+#navi_top li.active > a, #navi_top li a:hover, #navi_top li.trail > a {
+	background-color:#b71311;
+}
+
+#navi_main {
+	position:absolute;
+	left:0;
+	top:120px;
+	top:calc(77px + 2em + 4em);
+	z-index:100;
+}
+
+#navi_main ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+#navi_main > ul > li {
+	overflow:hidden;
+	clear:both;
+}
+
+#navi_main > ul > li > a {
+	background-color:#fff;
+	display:inline-block;
+	padding:0.4em 0.5em 0.2em 4em;
+	padding-left:4rem;
+	margin-bottom:0.2em;
+	color:#575756;
+	font-size:1.2em;
+	vertical-align:top;
+}
+
+.navi_dark #navi_main > ul > li > a {
+	background-color:#575756;
+	color:#fff;
+}
+
+#navi_main > ul > li > a:hover, #navi_main > ul > li.active > a, #navi_main > ul > li.trail > a {
+	color:#b71311;
+}
+
+@media all and (min-width: 801px) {
+	#navi_main > ul > li > a:hover, #navi_main > ul > li.active > a, #navi_main > ul > li.trail > a {
+		background-color:#b71311;
+		color:#fff;
+	}
+}
+
+#navi_main ul div {
+	background-color:#fff;
+	background-color:rgba(255, 255, 255, 0.8);
+	padding:1em 1em 0.8em 4em;
+	padding-left:4rem;
+	overflow:hidden;
+	/*height:0;
+	transition:height, padding .25s linear;
+	opacity:0;
+	*/
+	float:left;
+	margin-bottom:0.2em;
+	display:inline-block;
+	vertical-align:top;
+}
+
+.navi_dark #navi_main ul div {
+	background-color:rgba(87, 87, 86, 0.8);
+}
+
+/*
+#navi_main ul li:hover div {
+	height:auto;
+	padding-top:1em;
+	padding-bottom:0.8em;
+	opacity:1;
+	margin-bottom:0.2em;
+}
+*/
+
+#navi_main ul ul {
+	float:left;
+	margin-left:2em;
+	font-size:1.2em;
+}
+
+#navi_main ul ul:first-child {
+	margin-left:0;	
+}
+
+#navi_main ul ul a {
+	color:#000;
+}
+
+.navi_dark #navi_main ul ul a {
+	color:#fff;
+}
+
+@media all and (max-width: 800px) {
+	#navi_main > ul {
+		background: #fff url('../images/bg-resp-navi.png') left top;
+	}
+	
+	#navi_main ul div {
+		background: none;
+	}
+	
+	#navi_main > ul > li:not(.close) {
+		margin: 0 4em;
+		position: relative;
+		z-index: 2;
+	}
+	
+	#navi_main > ul > li.submenu {
+		padding-bottom: .25em;
+	}
+	
+	#navi_main > ul > li + li:not(.close) {
+		border-top: 1px solid #b71311;
+	}
+	
+	#navi_main > ul > li > a {
+		padding: .5em 0;
+		background: none;
+	}
+	
+	#navi_main > ul > li > a.submenu {
+		padding-bottom: 0;
+	}
+	
+	#navi_main > ul ul > li {
+		margin:.25em 0 .25em 2em;
+	}
+}
+
+#navi_main ul ul a:hover, #navi_main ul ul .active > a, #navi_main ul ul .trail > a {
+	color:#b71311;
+}
+
+#container {
+	width:96%;
+	max-width:1440px;
+	margin:0 auto;
+	background-color:#fff;
+	position:relative;
+}
+
+video {
+	vertical-align:top;
+}
+
+#visual {
+	position:relative;	
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	/*padding:0 2em;*/
+}
+
+#visual .inside {
+	box-shadow:#555 0 0 10px;	
+}
+
+#visual canvas {
+	position:absolute;
+	left:0;
+	top:0;
+	z-index:15;
+	vertical-align:top;
+}
+
+#visual .image {
+	/*padding:1em;*/
+	background-color:#fff;
+}
+
+#visual .image img {
+	max-width:none;
+	width:100%;	
+}
+
+#patches {
+	position:absolute;
+	right:140px;
+	bottom:-90px;
+	z-index:20;	
+}
+
+#ruhetag {
+	position: absolute;
+	right: 60px;
+	bottom: -160px;
+	z-index: 10;	
+}
+
+#ruhetag img {
+	height: 200px;
+}
+
+
+#main {
+	padding:4em 4em 2em;
+	box-shadow:#555 0 0 10px;
+	margin-top:4em;
+}
+
+#main nav {
+	overflow:hidden;	
+	margin-bottom:0.5em;
+	font-family:'DIN Next W01';
+}
+
+#main nav ul {
+	float:right;
+	list-style:none;
+	padding:0;
+	margin:0;
+}
+
+#main nav ul li {
+	float:left;
+	margin-left:1.5em;	
+}
+
+#main nav a {
+	color:#575756;
+}
+
+#main nav a:hover, #main nav .active a, #main nav .trail a {
+	color:#b71311;	
+}
+
+#main p, #main table {
+	max-width:45em;
+}
+
+#footer {
+	/* margin-top:4em; */
+	margin-top:3.3em;
+	background-color:#aaa;	
+	color:#575756;
+	box-shadow:#555 0 0 10px;
+	font-size:0.875em;
+	font-family:'DIN Next W01';
+	/*font-size:1rem;*/
+	line-height:1.2;
+}
+
+#footer .inside {
+	max-width:1440px;
+	margin:0 auto;
+	padding:2em 4em;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	font-size:1.2em;
+}
+
+#footer .columns {
+	overflow:hidden;	
+}
+
+#footer .columns > div {
+	float:left;
+	padding-right:2em;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+#footer .columns .social {
+	float:right;	
+}
+
+#footer .columns .social > div {
+		float:left;
+		margin-left:2em;
+	}
+
+
+.ce_gallery {
+	margin:2em 0 0;
+}
+
+.ce_gallery + * {
+	margin-top:2em;
+	margin-top:2rem;	
+}
+
+.ce_gallery .default {
+	font-size:1.2em;
+	max-width:45em;
+}
+
+.ce_gallery .default figure {
+	width:24.25%;
+	float:left;
+	margin-left:1%;
+	margin-bottom:0.8%;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+}
+
+.ce_gallery .default figure:nth-of-type(4n + 6) {
+	margin-left:0;	
+}
+
+.ce_gallery .default figure:first-of-type {
+	margin-left:0;
+	width:49.5%;
+}
+
+.ce_gallery .default figcaption {
+	margin-top:0.5em;
+	/*
+	border-top:1px solid #000;
+	border-bottom:1px solid #000;
+	*/
+	padding:0.5em 0;
+	font-family:'DIN Next W01';
+}
+
+.ce_gallery .default figcaption .price {
+	display:block;
+	color:#b71311;
+	font-size:1.2em;
+	font-weight:bold;
+}
+
+.ce_gallery .default img {
+	width:100%;	
+}
+
+.ce_gallery .line figure {
+	width:23.5%;
+	float:left;
+	margin-left:2%;
+	margin-bottom:1em;
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	padding:1em;
+	background-color:#fff;
+	box-shadow:#aaa 0 0 3px;
+}
+
+.ce_gallery .line figure:nth-of-type(4n + 1) {
+	margin-left:0;
+}
+
+.ce_gallery .line figcaption {
+	margin-top:0.5em;
+	/*
+	border-top:1px solid #000;
+	border-bottom:1px solid #000;
+	*/
+	padding:0.5em 0;
+	font-family:'DIN Next W01';
+}
+
+.ce_gallery .line figcaption .price {
+	display:block;
+	color:#b71311;
+	font-size:1.2em;
+	font-weight:bold;
+}
+
+.ce_gallery .stack {
+	position:relative;	
+}
+
+.ce_gallery .stack figure {
+	position:absolute;
+	top:0;
+	left:0;
+	z-index:10;
+	width:35%;	
+	-moz-box-sizing:border-box;
+	box-sizing:border-box;
+	padding:1em;
+	background-color:#fff;
+	box-shadow:#aaa 0 0 3px;
+	cursor:pointer;
+}
+
+.ce_gallery .stack figcaption {
+	display:none;	
+}
+
+iframe {
+	
+}
+
+
+/* FORMULARE */
+
+div.formbody {
+	overflow:hidden;
+}
+
+div.formbody br {
+	clear:both;	
+}
+
+div.formbody > div {
+	overflow:hidden;	
+}
+
+fieldset {
+	margin:0.5em 0 0.5em 20%;	
+	border:1px solid #575756;
+	width:50%;
+	padding:0.5em 5px;
+}
+
+fieldset legend {
+	background-color:#fff;
+	padding:4px 8px 0;	
+	margin-left:20px;
+}
+
+label {
+	display:inline-block;
+	width:20%;	
+	vertical-align:top;
+	margin:0.5em 0;
+	padding-top:7px;
+	float:left;
+	font-family:'DIN Next W01';
+}
+
+form .captcha_text {
+	clear: both;
+	float: left;
+   font-family: 'DIN Next W01';
+	margin: 0 0 1em 20%;
+   padding-top: 7px;
+}
+
+input, textarea {
+	width:50%;
+	border:1px solid #575756;
+	padding:6px 5px 0;
+	margin:0.5em 0;
+	background-color:#fff;
+	background-image:linear-gradient(#fff 0, #fff 1px, #eee 2px, #fff 10px);
+	float:left;
+	font-family:'DIN Next W01';
+	font-size:1em;
+}
+
+input[type=radio], input[type=checkbox] {
+	width:auto;
+	border:0;
+	padding:0;
+	margin:3px 5px 3px 30px;
+	float:none;
+}
+
+input[type=radio] + label, input[type=checkbox] + label {
+	width:auto;
+	margin:0;
+	padding:0;	
+	float:none;
+}
+
+input[type=submit] {
+	font-family:'DIN Next W01';
+	line-height:1;
+	width:auto;
+	padding:0.3em 1em 0.1em;
+	border-radius:10px;
+	background-color:#b71311;
+	background-image:linear-gradient(rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.1));	
+	color:#fff;
+	margin-left:20%;
+	border:1px solid #b71311;
+	float:none;
+	box-shadow:rgba(0, 0, 0, 0.2) 0 0 5px, inset rgba(255, 255, 255, 0.5) 0 1px 1px;
+}
+
+input[type=submit]:active {
+	background-image:linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3));	
+	color:rgba(255, 255, 255, 0.7);
+}
+
+textarea {
+	height:20em;	
+}
+
+.clear {
+	clear:both;	
+}
+
+.caption {
+	font-size:0.875em;
+	font-family:'DIN Next W01';
+}
+
+.caption p {
+	line-height:1.2;	
+}
+
+.caption :first-child {
+	margin-top:0;	
+}
+
+.ce_gallery + .caption {
+	margin-top:0.5em;	
+}
+
+.caption + * {
+	margin-top:2em;	
+}
+
+#pin-icon,
+#pin-icon-2 {
+	position:absolute;
+	/*left:-120px;*/
+	/*top:20px;*/
+	left: -12px;
+	top: 0;
+    transform: translateY(-55%);
+	z-index:100;
+	width: 245px;
+}
+
+#pin-icon-2 {
+	top: -78px;
+	left: 200px;
+	width: 150px;
+}
+
+#pin-icon img,
+#pin-icon-2 img,
+#pin-icon2 img {
+	width:100%;	
+}
+
+#pin-icon2 {
+	position:absolute;
+    top: 0;
+    transform: translateY(calc(-55% - 0.125vw));
+    left: 270px;
+    width: 229px;
+    z-index:100;
+    filter: drop-shadow(4px 4px 5px rgba(0, 0, 0, .55));
+}
+
+.single_image {
+	margin:2em 0 1em;	
+	font-size:1.2em;
+	max-width:45em;
+}
+
+.float_container {
+	overflow:hidden;
+	max-width:45em;
+	margin-bottom:1em;
+}
+
+.float_container + .float_container {
+	border-top:4px solid #b71311;
+	padding-top:1em;
+}
+
+.float, .hcWidgetMain {
+	float:left;
+}
+
+.float.margin {
+	margin-left:4em;
+}
+
+.highlight p {
+	font-size:2em;
+	line-height:1;
+	font-family: 'DIN Next W01';
+	margin:1.5rem 0;
+}
+
+
+
+#gmaps {
+	position:relative;
+	z-index:1;
+	margin:1em 0;
+}
+
+#gmaps iframe {
+	margin:0;
+}
+
+#gmaps .overlay {
+	position:absolute;
+	left:0;
+	top:0;
+	right:0;
+	bottom:0;
+	z-index:1;
+	background-color:rgba(255, 255, 255, 0.6);
+}
+
+#gmaps .button {
+	position:absolute;
+	left:50%;
+	top:0;
+	z-index:2;
+	width:10em;
+	text-align:center;
+	padding:0.5em 0;
+	cursor:pointer;
+	background-color:#B71311;
+	color:#fff;
+	margin-left:-5em;
+	font-size:1.25em;
+}
+
+.panorama {
+	margin:1em 0;
+	font-size:1.2em;
+	max-width:45em;
+}
+
+
+#news {
+	margin-top:20px;	
+}
+
+#news a {
+	color:#000;	
+}
+
+#news a:hover {
+	color:#555;	
+}
+
+#news img {
+	max-width:100%;	
+	vertical-align:top;
+}
+
+#news .row {
+	border:1px solid rgba(0, 0, 0, 0.2);
+	padding:10px 20px;
+	margin-bottom:20px;
+}
+
+#news .row p:empty {
+	display:none;	
+}
+
+#news .row > a, #news .row > h3 {
+	float:left;	
+	vertical-align:middle;
+	margin:0;
+}
+
+#news .row > h3 {
+	font-family:'DIN Next W01';
+	line-height:52px;
+}
+
+#news .row > a {
+	margin-right:10px;
+	padding-bottom:5px;
+}
+
+#news .row > p, #news .row .story {
+	clear:both;
+	border-top:1px solid #ccc;
+	margin-top:5px;
+	margin-bottom:15px;
+	padding-top:15px;
+}
+
+#news .row > .meta, #news .row > .comments {
+	padding-top:4px;
+	font-size:0.875em;
+}
+
+#news .row > .meta {
+	border-top:1px solid #ccc;
+	margin-top:10px;
+	padding-top:10px;
+}
+
+#news .row .photo {
+	margin-top:10px;	
+}
+
+#news .row .comments > div {
+	background-color:#eee;
+	margin-top:5px;
+	padding:5px;
+}
+
+#news .row .comments a {
+	/*color:#000;*/
+}
+
+#news .row .comments a:hover {
+	/*color:#d00;*/
+}
+
+#news .row .comment > img {
+	float:left;
+	width:30px;
+}
+
+#news .row .comment > h4, #news .row .comment > p, #news .row .comment > div {
+	margin-left:40px;	
+}
+
+#news .row .comment > h4 {
+	margin-top:5px;	
+	padding:0;
+	font-size:1em;
+}
+
+#news .meta img {
+	max-height:1em;	
+}
+
+#language {
+	float:right;
+	overflow: hidden;
+	margin-left:1em;
+   padding-top:28px;
+}
+
+#language .flagge {
+	float:left;
+	margin-left:1em;
+}
+
+#navi_top li.language.last {
+	margin-left:0;
+	border-right:1px solid #b71311;
+}
+
+#navi_top li a.language {
+	min-width:0;
+	background-color: #fff;
+   color: #878787;
+	border-left:1px solid #b71311;
+}
+
+#navi_top li a.language:hover {
+   color: #b71311;
+}
+
+#footer .social .fb_iframe_widget {
+	margin-top:9px;
+}
+
+#footer .social img {
+	margin-top:12px;
+}
+
+#menu_button {
+	display:none;
+	line-height:1.5em;
+	cursor:pointer;
+}
+
+#menu_button span {
+	font-size:1.2em;
+	vertical-align:text-top;
+	font-weight:bold;
+	text-transform:uppercase;
+}
+
+#menu_button svg {
+	width:1.5em;
+	height:1.5em;
+	vertical-align:top;
+}
+
+#menu_button svg line {
+	stroke:#575756;
+}
+
+#menu_button:hover {
+	color:#b71311;
+}
+
+#menu_button:hover svg line {
+	stroke:#b71311;
+}
+
+#navi_main .close {
+	display:none;
+}
+
+.menu-item {
+	display: flex;
+}
+
+.menu-item .text {
+	flex-grow: 1;
+}
+
+.menu-item h2 {
+	margin: 0;
+  text-transform: uppercase;
+  color: rgba(0,0,0,.6);
+}
+
+.menu-item + .menu-item {
+	margin-top: 2rem;
+}
+
+.menu-item .price,
+.menu-item .amount {
+	margin-left: 2rem;
+  min-width: 90px;
+  text-align: right;
+  color: rgba(0,0,0,.6);
+  font-family: 'DIN Next W01';
+  font-size: 24px;
+  font-weight: bold;
+}
+.menu-item .amount {
+  font-weight: normal;
+}
+#getraenkekarte, #speisekarte {
+  width: 1150px;
+  margin: 0 auto;
+}
+#getraenkekarte .menu-item + .menu-item,
+#speisekarte .menu-item + .menu-item {
+  margin-top: 5px;
+}
+#getraenkekarte h1, 
+#speisekarte h1 {
+  font-size: 2em;
+  margin-bottom: 30px;
+  /* margin-top: 50px; */
+  margin-top: 20px;
+}
+#getraenkekarte h2.ce_headline,
+#speisekarte h2.ce_headline {
+  color: silver;
+  font-size: 25px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+#getraenkekarte .menu-item p,
+#speisekarte .menu-item p {
+  margin: 0 0 20px 0;
+  line-height: 24px;
+}
+
+#getraenkekarte h2.ce_headline + .menu-item,
+#speisekarte h2.ce_headline + .menu-item {
+  margin-left: 145px;
+  margin-top: -37px;
+  margin-bottom: 25px;
+}
+#getraenkekarte h2.ce_headline + .menu-item p,
+#speisekarte h2.ce_headline + .menu-item p {
+  margin: 0;
+}
+
+#getraenkekarte .menu_bottom_info p,
+#speisekarte .menu_bottom_info p {
+  margin-left: 0;
+  margin-right: 0;
+  width: 100%;
+  max-width: 100%;
+}
+
+#getraenkekarte .menu_bottom_info p,
+#speisekarte .menu_bottom_info p {
+  line-height: 25px;
+}
+
+#speisekarte .menu_bottom_info,
+#getraenkekarte .menu_bottom_info {
+  margin-top: 80px;
+  margin-bottom: 100px;
+  padding: 40px 0;
+  border: 2px dashed rgba(0,0,0,.2);
+}
+
+#getraenkekarte .menu_tooltip_vegetarian {
+  margin-top: 30px;
+  margin-bottom: 100px;
+}
+
+.menu-item.vegetarian {
+  position: relative;
+}
+.menu-item.vegetarian:before {
+  display: block;
+  content: "";
+  position: absolute;
+  left: -60px;
+  top: -3px;
+  background-image: url(http://www.sepperlwirt.de/files/images/vegeterian_check.png);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100%;
+  width: 45px;
+  height: 48px;
+}
+
+#speisekarte h3.ce_headline {
+  font-weight: bold;
+  font-size: 30px;
+  font-style: initial;
+  font-family: 'DIN Next W01';
+  margin-top: 20px;
+  text-transform: uppercase;
+  color: #b0b0b0;
+}
+
+#getraenkekarte .menu_allergy h3,
+#speisekarte .menu_allergy h3 {
+  font-weight: bold;
+  font-size: 30px;
+  font-style: initial;
+  font-family: 'DIN Next W01';
+  margin-top: 20px;
+  text-transform: uppercase;
+  color: #b0b0b0;
+  margin-top: 60px;
+  margin-bottom: 10px;
+}
+#getraenkekarte .menu_allergy p,
+#speisekarte .menu_allergy p {
+  margin-top: 0;
+  line-height: 25px;
+}
+
+#drinks-top-header {
+  border-top: 1px solid rgba(0,0,0,.6);
+  border-bottom: 1px solid rgba(0,0,0,.6);
+  margin-top: 50px;
+  padding-bottom: 50px;
+}
+
+.drinks-top-header p {
+  text-align: center;
+  margin-bottom: 0;
+  max-width: 100%;
+  font-weight: bold;
+  font-family: 'DIN Next W01';
+  font-size: 40px;
+  color: #b71311;
+  margin-top: 60px;
+  font-style: initial;
+  text-transform: uppercase;
+  color: #b0b0b0;
+}
+.menu_tooltips {
+  margin-top: 40px;
+  padding-top: 15px;
+  border-top: 1px solid rgba(0,0,0,.3);
+}
+.menu_tooltips p {
+  font-size: 19px;
+  line-height: 20px;
+  max-width: 100% !important;
+}
+
+#speisekarte .menu_tooltips p:first-of-type {
+  font-family: 'DIN Next W01' !important; 
+  font-size: 16px !important;
+}
+
+.menu_tooltip_vegetarian {
+  position: relative;
+  padding-left: 50px;
+  margin-top: 50px;
+  padding-top: 30px;
+  border-top: 1px solid rgba(0,0,0,.3);
+}
+.menu_bottom_info h5 {
+  font-weight: bold;
+  font-size: 30px;
+  font-style: initial;
+  font-family: 'DIN Next W01';
+  margin-top: 20px;
+  text-transform: uppercase;
+  color: #b0b0b0;
+}
+.menu_bottom_info h5 + p {
+  margin-top: 0;
+}
+
+.menu_tooltip_vegetarian span {
+  display: inline-block;
+  background-image: url(http://www.sepperlwirt.de/files/images/vegeterian_check.png);
+  width: 45px;
+  height: 48px;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  left: 0;
+  top: -15px;
+  padding-top: 55px;
+}
+.footer-to-top {
+	margin: 65px auto 0;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+}
+.footer-to-top span {
+  font-size: 0.75em;
+  letter-spacing: 1px;
+  font-family: 'DIN Next W01';
+  display: block;
+}
+.footer-to-top > div {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+.footer-to-top > div > div {
+  width: 50px;
+  height: 50px;
+  background-image: url(../images/to_top.svg);
+  background-repeat: no-repeat;
+  background-size: 100%;
+  transition: background-image .2s ease-in-out, color .2s ease-in-out;
+  margin-top: -8px;
+}
+.footer-to-top > div:hover {
+  color: #b71311;
+}
+.footer-to-top > div:hover > div {
+	background-image: url(../images/to_top_hover.svg);
+}
+
+.page_header_ce {
+  width: 400px;
+  height: 93px;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  margin: 50px auto 0;
+}
+#getraenkekarte .page_header_ce {
+  background-image: url('http://www.sepperlwirt.de/files/images/getranke_headerpic.jpg');
+}
+
+#speisekarte .page_header_ce {
+  background-image: url('http://www.sepperlwirt.de/files/images/speise_headerpic.jpg')
+}
+
+
+@media screen and (max-width: 1360px) {
+  #getraenkekarte, #speisekarte {
+    width: 100%;
+  }
+	#pin-icon, #pin-icon-2 {
+	    width: 215px;
+	}
+	#pin-icon2 {
+		transform: translateY(calc(-55% - 0.25rem));
+		left: 240px;
+		width: 199px;
+	}
+}
+
+@media screen and (max-width: 1300px) {
+		
+	#footer .columns .social > div {
+		float:none;
+		margin:0 0 1em 0;
+	}
+}
+
+@media screen and (max-width: 1024px) {
+	.home_table {
+	    width: 100% !important;
+    	margin: 0 !important;
+	}
+	#pin-icon, #pin-icon-2 {
+	    width: 175px;
+		transform: translateY(-45%);
+	}
+	#pin-icon2 {
+		transform: translateY(calc(-45% - 0.375rem));
+		left: 200px;
+		width: 165px;
+	}
+}
+
+
+@media screen and (max-width: 990px) {
+	#navi_top {
+		float:none;
+		clear:both;
+		width:100%;	
+		padding:2em 0;
+	}
+	
+	#navi_top ul {
+		float:none;	
+	}
+	
+	#footer .columns > div {
+		float:left;
+		margin:1em 0;
+	}
+	
+	#footer .columns .social {
+		float:left;
+		padding-right:2em;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
+	}
+	
+	#footer .columns .social > div {
+		float:left;
+		margin-right:2em;
+	}
+}
+
+@media screen and (min-width: 801px) {
+	#navi_main ul {
+		display:block !important;
+	}
+}
+
+@media screen and (max-width: 800px) {
+	body.cropped {
+		overflow:hidden;
+	}
+	
+	#main {
+		padding: 3em 4em 2em;
+	}
+	
+	#navi_top li {
+		clear:both;
+		margin:0.5em 0;
+	}
+	
+	#navi_top li.last {
+		clear:none;
+	}
+	
+	#menu_button {
+		display:block;
+	}
+	
+	#navi_main {
+		position:static;
+		padding:0;
+		margin:0 0 1em;
+	}
+	
+	#navi_main > ul {
+		display:none;
+		position:fixed;
+		left:0;
+		top:0;
+		right:0;
+		bottom:0;
+		overflow:auto;
+		z-index:100000;
+		background-color:#fff;
+		padding:2em 0;
+	}
+	
+	#navi_main > ul div {
+		display:block !important;
+		height:auto !important;
+		margin:0 !important;
+		padding:0 !important;
+	}
+	
+	#navi_main > ul > li > a {
+		margin: 0;
+		font-weight: bold;
+	}
+	
+	#navi_main ul ul {
+		float:none;
+		margin:0 !important;
+	}
+	
+	#navi_main .close {
+		display:block;
+		position:absolute;
+		top: .5em;
+		right: .5em;
+		z-index:1;
+		color:#000;
+		font-size:2em;
+		font-weight:bold;
+		cursor:pointer;
+	}
+	
+	#navi_main .close:hover {
+		color: #b71311;
+	}
+	
+	#main nav ul {
+		float:none;
+		margin-top: 2em;
+	}
+	
+	#main nav ul li {
+		float:none;
+		margin: .5em 0;
+	}
+	
+	.float.margin {
+		margin:0;
+	}
+	
+	.float {
+		float:none;
+		margin:1em 0;
+		width:auto !important;
+	}
+	
+	#pdf_downloads tr td:first-child {
+		display:none;
+	}
+	
+	#pdf_downloads a {
+		margin:1em 0;
+		display:block;
+	}
+	
+	#pdf_downloads br {
+		display:none;
+	}
+	
+	.ce_gallery .line figure {
+		width: calc(50% - .5em);
+		margin-left: 1em;
+	}
+	
+	.ce_gallery .line figure:nth-of-type(2n + 1) {
+		margin-left: 0;
+		clear: both;
+	}
+	
+	#patches {
+		right: 0;
+		bottom: 0;
+		transform: translate(0, 40%);
+		max-width: 26%;
+	}
+	
+	#pin-icon {
+		left: unset;
+	    right: 29vw;
+	    top: 0;
+	    width: 25vw;
+	    transform: translateY(-55%);
+	}
+	#pin-icon2 {
+	    right: 1vw;
+	    left: unset;
+	    top: 0;
+	    width: 23.5vw;
+	    transform: translateY(calc(-55% - 0.8vw));
+	}
+	
+  .menu-item h2, .menu-item .amount, .menu-item .price {
+    font-size: 16px;
+  }
+  #getraenkekarte h1, #speisekarte h1 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    /* margin-top: 40px; */
+    margin-top: 20px;
+  }
+  #getraenkekarte .menu-item p, #speisekarte .menu-item p {
+    font-size: 15px;
+    line-height: 18px;
+  }
+  #getraenkekarte h2.ce_headline, #speisekarte h2.ce_headline {
+    color: silver;
+    font-size: 18px;
+  }
+  #getraenkekarte h2.ce_headline + .menu-item, 
+  #speisekarte h2.ce_headline + .menu-item {
+    margin-top: -30px;
+  }
+  #getraenkekarte .menu_allergy p {
+    line-height: 21px;
+    font-size: 18px;
+  }
+  #getraenkekarte .menu_bottom_info p,
+  #speisekarte .menu_bottom_info p  {
+    font-size: 16px;
+    line-height: 21px;
+  }
+  .menu_bottom_info h5 {
+    font-size: 24px;
+  }
+  .drinks-top-header p {
+    font-size: 30px;
+  }
+  #speisekarte h3.ce_headline {
+    font-weight: bold;
+    font-size: 24px;
+  }
+  .menu-item .price {
+    min-width: 60px;
+  }
+  .menu-item .amount {
+    min-width: 35px;
+  }
+  #drinks-top-header {
+    padding-bottom: 30px;
+  }
+  #drinks-top-header.drinks-top-header p {
+    font-size: 20px;
+    margin-top: 37px;
+  }
+  .page_header_ce {
+    width: 300px;
+    height: 65px;
+  }
+  
+  .hcWidgetMain {
+  	float: none;
+  	margin: 0 auto;
+  	width: 300px !important;
+  }
+  
+  #hcWidget16501020140708 .templateS {
+  	width: 300px !important;
+  	margin: 0!important;
+  }
+  
+  #hcWidget16501020140708 #hcWidgetImage {
+  	width: 200px !important;
+  	margin: 0 !important;
+  }
+  
+  #hcWidget16501020140708 #hcWidgetImage img {
+  	width: 100%;
+  }
+  
+  #hcWidget16501020140708 .hcWidgetLogoRight img {
+    margin-left: -190px !important;
+    width: 180px;
+    margin-top: -20px;
+  }
+  
+  .float h2 {
+  	margin-top: 0;
+  }
+  
+  #hcWidget16501020140708 #hcWidgetButton {
+  	width: 60%;
+  	margin: 0 auto !important;
+  }
+  
+  #hcWidget16501020140708 .hcWidgetFactboxlogo {
+  	margin-left: 90px;
+  }
+  
+  #hcWidget16501020140708 .hcWidgetFactbox {
+  	width: 100%;
+  	text-align: center;
+  }
+  
+  .wt-widget.wt-widget-classic {
+  	margin: 0 auto;
+  }
+  
+  .wt-widget-backlink {
+  	margin: 1em auto;
+  	text-align: center;
+  }
+  
+  .wt-widget-classic .wt-widget-searchbar .wt-widget-searchbar-button {
+  	top: -6px;
+  }
+}
+
+
+@media screen and (max-width: 480px) {
+	#pin-icon {
+		right: 33vw;
+	    width: 30vw;
+	}
+	#pin-icon2 {
+		width: 28.5vw;
+		right: 2vw;
+	}
+	p {
+		font-size:1em;	
+	}
+	
+	h1 {
+		font-size: 1.5em;
+	}
+	
+	#main {
+		padding:2em 1em 2em;
+	}
+	
+	#footer .inside {
+		padding:2em 1em;
+		-moz-box-sizing:border-box;
+		box-sizing:border-box;
+		font-size:1em;
+	}
+	
+	.ce_gallery .line figure:nth-of-type(1n+1) {
+		 margin-left: 0;
+	}
+	.ce_gallery .line figure {
+		 width: 94%;
+	}
+  .menu-item h2, .menu-item .amount, .menu-item .price {
+    font-size: 14px;
+}
+  .menu-item .price, .menu-item .amount {
+    min-width: 65px;
+  }
+  #getraenkekarte h2.ce_headline, #speisekarte h2.ce_headline {
+    color: silver;
+    font-size: 15px;
+  }
+  #getraenkekarte h2.ce_headline + .menu-item, #speisekarte h2.ce_headline + .menu-item {
+    margin-top: -27px;
+    margin-left: 85px;
+}
+  #getraenkekarte .menu_bottom_info, #speisekarte .menu_bottom_info {
+    padding: 40px 10px;
+  }
+  #getraenkekarte h1, #speisekarte h1 {
+    font-size: 1.2em;
+  }
+  .menu-item.vegetarian:before {
+    left: -15px;
+    top: -5px;
+    width: 13px;
+    height: 24px;
+  }
+  .page_header_ce {
+    width: 270px;
+    height: 58px;
+  }
+  .hp_link {
+  	display: inline-block;
+  	font-size: 17px !important;
+  }
+}
+
+@media screen and (max-width: 399px) {
+  .menu-item .price {
+    min-width: 50px;
+    margin-left: 10px;
+  }
+  .menu-item .amount {
+    min-width: 30px;
+    margin-left: 10px;
+  }
+  .home_table {
+    font-size: 15px;
+  }
+}
+
+@media all and (min-width: 1800px) {
+	#ruhetag {
+		bottom: -270px;
+	}
+	
+	#ruhetag img {
+		height: auto;
+	}
+}
+
+@media print {
+  #getraenkekarte .page_header_ce {
+    content: url('http://www.sepperlwirt.de/files/images/getranke_headerpic.jpg');
+  }
+
+  #speisekarte .page_header_ce {
+    content: url('http://www.sepperlwirt.de/files/images/speise_headerpic.jpg')
+  }
+  .menu_tooltip_vegetarian span {
+    content: url(http://www.sepperlwirt.de/files/images/vegeterian_check.png);
+  }
+  
+  .menu-item.vegetarian:before {
+    content: url(http://www.sepperlwirt.de/files/images/vegeterian_check.png);
+  }
+}
+
+@page {
+  size:A4 portrait;
+  -webkit-print-color-adjust: exact;
+}
+
+.single_image_center {
+  width: 100%;
+  max-width: 100%;
+  text-align: center;
+}
+.hp_link_cont {
+  text-align: center;
+  padding-bottom: 40px;
+  margin-bottom: 60px;
+  border-bottom: 1px solid rgba(0,0,0,.6);
+}
+.hp_link {
+  font-family: 'DIN Next W01';
+  font-size: 20px;
+  margin-right: 40px;
+}
+
+fieldset span {
+    display: flex;
+    align-items: center;
+}
+
+fieldset.checkbox_container {
+    border: none;
+    margin-left:17%;
+}
+
+/*.opening-hours {
+	float: right;
+	width: 75%;
+}
+
+.opening-hours .img-cont {
+	border-top: 4px solid #b71311;
+    margin-top: 19px;
+    float: left;
+    width: 40%;
+    height: 440px;
+    border-bottom: 4px solid #b71311;
+}
+
+.outline {
+	height: 400px;
+    margin: 19px 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+
+.hours {
+	float: left;
+	width: 60%;
+	line-height: 1;
+	color: #b71311;
+}
+.hours tr:last-child td {
+	border-bottom: 1px solid #ccc;
+}
+
+.hours td{
+	border: none;
+}
+
+.hours td:nth-child(2n) {
+	padding-left: 0;
+	width: calc(100% - 195px);
+}
+
+.hours td:nth-child(odd) {
+	padding-right: 5px;
+	width: 90px;
+}*/
+
+.center {
+	max-width: 880px;
+	margin: 0 auto;
+}
+
+.center h2 {
+	font-style: italic;
+	text-align: left;
+	margin-left: 20px;
+}
+
+
+#startseite > div > ul > li > strong {
+    font-size: 1.2em;
+}
+
+
