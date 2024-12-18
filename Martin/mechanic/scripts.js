@@ -356,14 +356,21 @@
 		var wh = $(window).innerHeight();
 		var calcBG = ((st*2+wh))/(wh*2);
 		var calcTXT = (wh-st)/(wh/2);// 2.5
+		// var newElement = $(text_wrap).height();
+
+		var newElement = $('.text_wrap');
+		var newElementHeight = newElement.height();
 		
 		if (ww > 1199) {
 			txtCont.css('opacity',calcTXT);
 			introBG.width(calcBG*100+'%');
 			
-			if(st+wh>msContHeight) {
+			// hide red element
+			if(st+wh-300>msContHeight+newElementHeight) {
 				introCont.css('opacity',0);
 				header.addClass('always_show');
+
+
 			} else {
 				introCont.css('opacity',1);
 				header.removeClass('always_show');

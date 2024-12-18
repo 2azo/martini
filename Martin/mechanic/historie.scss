@@ -64,14 +64,15 @@
 			display: block;
 			margin: 0 0 1.25rem 0.25rem;
 		}
-		&:after {
-			content: "history";
-			width: 7px;
-			height: 4rem;
-			// background-color: var(--black);
-			display: block;
-			margin: 0 0 1.25rem 0.25rem;
-		}
+		// &:after {
+		// 	content: "history";
+		// 	// content: "";
+		// 	width: 7px;
+		// 	height: 4rem;
+		// 	// background-color: var(--black);
+		// 	display: block;
+		// 	margin: 0 0 1.25rem 0.25rem;
+		// }
 	}
 	.history_wrap {
 		display: flex;

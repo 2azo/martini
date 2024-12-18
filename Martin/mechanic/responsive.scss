@@ -13,6 +13,7 @@
 @media all and (max-width: 1599px) {
 	.infoshop_block {
 	.infoshop_content{
+
 		.infoshop_product {
 			flex-direction: column-reverse;
 			.infoshop_product_left {
@@ -1542,6 +1543,8 @@
 
 @media all and (max-width: 499px) {
 
+	
+
 	header.shrink:not(.hide) {
 		~ nav {
 		  top: 3.75rem;
@@ -1571,11 +1574,15 @@
 	}
 
 	.history_block .pre_text:after {
-		// margin: 0;
-        // padding-left: 2rem;
-        // padding-right: 2rem;
-        // width: 100%;
-        // box-sizing: border-box;
+	// &:after {
+		content: "history";
+		// content: "";
+		width: 7px;
+		height: 4rem;
+		// background-color: var(--black);
+		display: block;
+		margin: 0 0 1.25rem 0.25rem;
+		// }
 
 
 		margin: 0;
@@ -1588,11 +1595,20 @@
         writing-mode: vertical-rl;
         text-transform: uppercase;
         transform: rotate(-180deg);
+
+		
 	}
+
+	
 
 
 	body > div.content-wrapper > div.history_block.content_block--wide > div.pre_text{
 		margin-left: 24px;
+	}
+
+	body.unternehmen > div.content-wrapper > div.history_block.content_block--wide > div.pre_text{
+		margin-left: 24px;
+		margin-top: 24%;
 	}
 
 	// body > div.content-wrapper > div.history_block.content_block--wide > div.pre_text::after{
