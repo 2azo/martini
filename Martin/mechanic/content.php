@@ -767,13 +767,7 @@
 					</div>
 					
 				</section>
-		<?php elseif (get_row_layout() == 'newsletter'): ?>
-			<div class="newsletter_block" >
-				<div class="newsletter_title_2">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
-				<div class="newsletter_form">
-					<?= do_shortcode("[newsletter_form]"); ?>
-				</div>
-			</div>
+
 		
 		<?php elseif (get_row_layout() == 'image_fade_scroll'): 
 			$image1 = get_sub_field('image1');
@@ -812,6 +806,8 @@
 					</div>
 				</div>
 			</div>
+
+		
 		
 		
 		<?php elseif (get_row_layout() == 'scroll_sections'):
