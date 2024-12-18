@@ -55,7 +55,11 @@
 						<input id="phone" type="tel" name="phone" required="">
 						<label for="phone">Telefon</label>
 					</div>
-					<div class="input_cont required full">
+					<div class="input_cont">
+						<input id="subject" type="text" name="subject">
+						<label for="subject">Stichwort</label>
+					</div>
+					<div class="input_cont required">
 					   <div class="select">
 						<select name="appt" id="appt">
 							<option value="08:00 - 10:00 Uhr">von 08:00 Uhr bis 10:00 Uhr</option>
@@ -799,6 +803,13 @@
 					<script src="https://static.elfsight.com/platform/platform.js" data-use-service-core defer></script>
 					<div class="elfsight-app-07dd6383-5987-4d17-a3ab-874c172e2760" data-elfsight-app-lazy></div>
 				</div>
+				
+			</div>
+			
+
+		<?php elseif (get_row_layout() == 'newsletter'): ?>
+			<?php if (get_sub_field('newsletter')): ?>
+			<div class="linkedin_feed reveal" data-anchor="<?=get_sub_field('anchor');?>" >
 				<div class="news_newsletter_block" >
 					<div class="newsletter_title">Bleiben Sie auf dem Laufenden. Mit unserem Newsletter.</div>
 					<div class="newsletter_form">
@@ -806,6 +817,7 @@
 					</div>
 				</div>
 			</div>
+			<?php endif; ?>
 
 		
 		

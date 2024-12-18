@@ -881,6 +881,7 @@
 				success: function(msg) {
 					if(msg == "success") {
 						message.text('E-Mail erfolgreich gesendet!');
+						// message.text('E-Mail erfolgreich gesendet! Danke für Ihre Anfrage!');
 						$(".input_cont").each(function() {
 							$(this).find('input[type=text],input[type=tel],input[type=email],textarea').val('');
 						});
