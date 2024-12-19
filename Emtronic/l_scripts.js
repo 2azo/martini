@@ -562,13 +562,15 @@
 			})
 			.addTo(controller);
 	});
-
+	
+	// bug (no rotating)
 	$('.career_list li').click(function() {
 		var self = $(this);
 		var rawSelf = self.get(0);
 		var parent = self.closest('.career_block');
 		var index = parent.find('.career_list li').index(this);
 		if (self.hasClass("active")) return;
+        // element.find -> find within the element
 		parent.find('.career_list li.active').removeClass('active');
 		self.addClass('active');
 		parent.find('.career_content').stop().slideUp(500);
@@ -578,6 +580,26 @@
 		}
 	});
 
+	// delete this block
+	$('.acc_block .title .toggle').click(function() {
+		var self = $(this);
+		var el = self.closest('.item');
+		var acc = el.closest('.acc_block');
+		var cont = el.find('.cont');
+		var id = el.data('id');
+		if(el.hasClass('active')) {
+			el.removeClass('active');
+			cont.stop().slideUp(300);
+			$('.image[data-id="'+id+'"]').slideUp(300);
+		} else {
+			$('.item.active .cont').stop().slideUp(300);
+			$('.images .image').stop().slideUp(300);
+			$('.item').removeClass('active');
+			el.addClass('active');
+			cont.stop().slideDown(300);
+			$('.image[data-id="'+id+'"]').stop().slideDown(300);
+		}
+	});
 	
 	$(".career_content_title").click(function() {
 		var self = $(this);
