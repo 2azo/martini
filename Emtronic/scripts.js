@@ -374,8 +374,23 @@
 		if(hash.length) {
 			// const accAnchor = $(`.acc_block .list [data-id="${hash}"]`);
 			const accAnchor = $(`.acc_block .list [data-anchor="${hash}"]`);
+			// const accAnchor1 = $(`li [data-anchor="${hash}"]`);
+			const accAnchor1 = $(`[data-anchor="${hash}"]`);
+			
+			// console.log("accAnchor ", accAnchor)
+			// console.log("accAnchor1 ", accAnchor1)
+			
+			// console.log("hash ", hash)
+
+			// console.log("1 ")
 			if (accAnchor.length) {
+				// console.log("2")
 				accAnchor.find(".toggle").click();
+			}
+
+			else if (accAnchor1.length) {
+				// console.log("3");
+				accAnchor1.find(".toggle").click();
 			}
 		}
 	}

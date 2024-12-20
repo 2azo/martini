@@ -346,50 +346,64 @@
 			<?php endif; ?>
 			
 		<?php elseif (get_row_layout() == 'karriere_block'): ?>
-			<?php if(have_rows('item')):
+			<?php if (have_rows('item')):
 				$titles = [];
 				$count = 0;
 			?>
 				<section class="career_block content_block--wide reveal">
 					<div class="career_content_wrap">
-						<?php while(have_rows('item')): the_row(); 
-							$genders = get_sub_field('gender');						
+						<?php while (have_rows('item')): the_row();
+							$genders = get_sub_field('gender');
 							$mtitle = get_sub_field('title');
+							$anchor = get_sub_field('anchor'); // Get the anchor field
 							$gender_list = [];
-							foreach($genders as $gender => $val){
-								if($val == 1){
-									array_push($gender_list,$gender);
+							foreach ($genders as $gender => $val) {
+								if ($val == 1) {
+									array_push($gender_list, $gender);
 								}
 							}
-							if(count($gender_list)!=0) {
-								array_push($titles, array($mtitle, '<div class="gender">'.implode("/",$gender_list).'</div>'));
+							if (count($gender_list) != 0) {
+								array_push($titles, array($mtitle, '<div class="gender">' . implode("/", $gender_list) . '</div>', $anchor));
 							} else {
-								array_push($titles, array($mtitle, ""));
+								array_push($titles, array($mtitle, "", $anchor));
 							}
 						?>
-							<div class="career_content_title<?=($count === 0)?' active':"";?>"><?=$mtitle;?><?php if(count($gender_list)!=0):?><div class="gender"><?=implode("/",$gender_list);?></div><?php endif; ?></div>
-							<div class="career_content" <?=($count === 0)?'style="display:block;"':"";?>>
-								<div class="career_title"><?=$mtitle;?><?php if(count($gender_list)!=0):?><div class="gender"><?=implode("/",$gender_list);?></div><?php endif; ?></div>
-								<div class="career_text"><?=get_sub_field('text');?></div>
+							<div class="career_content_title<?= ($count === 0) ? ' active' : ""; ?>">
+								<?= $mtitle; ?>
+								<?php if (count($gender_list) != 0): ?>
+									<div class="gender"><?= implode("/", $gender_list); ?></div>
+								<?php endif; ?>
+							</div>
+							<div class="career_content" <?= ($count === 0) ? 'style="display:block;"' : ""; ?>>
+								<div class="career_title"><?= $mtitle; ?><?php if (count($gender_list) != 0): ?>
+									<div class="gender"><?= implode("/", $gender_list); ?></div>
+								<?php endif; ?></div>
+								<div class="career_text"><?= get_sub_field('text'); ?></div>
 							</div>
 						<?php 
 							$count++;
-							endwhile; 
+						endwhile; 
 						?>
 					</div>
-					<div class="career_sidebar">
+					<div class="career_sidebar acc_block list">
 						<ul class="career_list">
-							<?php foreach($titles as $key => $val): ?>
-								<li class="<?=($key === array_key_first($titles))?"active":"";?>"><?=$val[0];?><?=$val[1];?><div class="toggle">+</div></li>
+							<?php foreach ($titles as $key => $val): ?>
+								<li class="<?= ($key === array_key_first($titles)) ? "active" : ""; ?>" data-anchor="<?= esc_attr($val[2]); ?>">
+									<?= $val[0]; ?>
+									<?= $val[1]; ?>
+									<div class="toggle">+</div>
+								</li>
 							<?php endforeach; ?>
 						</ul>
 						<div class="career_contact">
 							<?php the_sub_field('contact_text'); ?>
-							<div class="logo" data-svg="<?=get_template_directory_uri();?>/img/logo_sign.svg"></div>
+							<div class="logo" data-svg="<?= get_template_directory_uri(); ?>/img/logo_sign.svg"></div>
 						</div>
 					</div>
 				</section>
 			<?php endif; ?>
+
+
 			
 		<?php elseif (get_row_layout() == 'news_block'): 			
 				$posts = [];
