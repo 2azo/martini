@@ -166,16 +166,7 @@
 		v = 100
 		console.log("v start -> ", v)
 		e = decodeURI(e).toLowerCase();
-
-		// const hashOffsetMap = {
-		// 	'kontakt': -200,
-		// 	'produkte': 200,   
-		// 	'referenzen': 60,
-		// 	'aktuelles': -150,
-		// 	'unternehmen': 75,
-		// 	'karriere': 55,
-		// 	'infoshop': 75
-		// };
+		console.log("e -> ", e)
 
 		// counting for responsive design
 		const hashOffsetMap = { 
@@ -186,6 +177,10 @@
 			'unternehmen': window.innerWidth < 768 ? 35 : 75, 
 			'karriere': window.innerWidth < 768 ? 25 : 55, 
 			'infoshop': window.innerWidth < 768 ? 35 : 75 
+		};
+		
+		const specialMap = { 
+			'overview': window.innerWidth < 768 ? 0 : 75 
 		}; 
 	
 		const getTarget = (() => {
@@ -214,15 +209,25 @@
 		}
 	
 		hashPart = hashPart[0];
-		console.log("v before -> ", v)
+		// console.log("v before -> ", v)
+
+		// if (e === "overview"){ verticalOffset = 0;};
 		
 		// Determine the vertical offset based on the hash part
-		const verticalOffset = hashPart 
-			? (hashOffsetMap[hashPart]) 
-			: v;
+		// const verticalOffset = hashPart 
+		// 	? (hashOffsetMap[hashPart]) ?? 0
+		// 	: v;
+
+		// "overview" is the small weird box
+		const verticalOffset = e === "overview"
+			? 0
+			: hashPart
+				? (hashOffsetMap[hashPart])
+				: v;
 		
-		console.log("v after -> ", v)
-		console.log("verticalOffset -> ", verticalOffset)
+		// console.log("v after -> ", v)
+		
+		// console.log("verticalOffset -> ", verticalOffset)
 		
 		// Use getBoundingClientRect() for viewport-relative positioning
 		const rect = target[0].getBoundingClientRect();
@@ -850,7 +855,7 @@
 				data: data,
 				success: function(msg) {
 					if(msg == "success") {
-						message.text('E-Mail erfolgreich gesendet!');
+						message.text('E-Mail erfolgreich gesendet! Danke für Ihre Anfrage!');
 						$(".input_cont").each(function() {
 							$(this).find('input[type=text],input[type=tel],input[type=email],textarea').val('');
 						});
